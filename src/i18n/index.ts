@@ -12,6 +12,9 @@ const resources = {
             about: "About",
             contact: "Contact",
             madeBy: "Made by students, for students.",
+            landingTitle: "Discover and evaluate courses together",
+            landingDesc:
+                "StudyShare is a platform where students can review courses anonymously – so you can make informed decisions",
         },
     },
     sv: {
@@ -22,6 +25,9 @@ const resources = {
             about: "Om",
             contact: "Kontakt",
             madeBy: "Gjord av studenter, för studenter.",
+            landingTitle: "Upptäck och utvärdera kurser tillsammans",
+            landingDesc:
+                "StudyShare är en plattform där studenter kan recensera kurser anonymt - så att du kan fatta välgrundade beslut",
         },
     },
 };
