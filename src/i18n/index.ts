@@ -47,6 +47,9 @@ const resources = {
             workload: "Workload",
             reviews: "Student Reviews",
             rating: "Rating",
+            notFoundText:
+                "Sorry, we couldn't find the page you were looking for.",
+            backToHome: "Back to home page",
         },
     },
     sv: {
@@ -94,6 +97,8 @@ const resources = {
             workload: "Arbetsbelastning",
             reviews: "Studentrecensioner",
             rating: "Betyg",
+            notFoundText: "Ledsen, sidan du letar efter finns inte.",
+            backToHome: "Tillbaka till startsidan",
         },
     },
 };
