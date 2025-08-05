@@ -50,29 +50,20 @@ const Landing = () => {
             {/* 💡 How It Works Section */}
             <section className="w-full max-w-6xl px-6 py-20 bg-white space-y-10">
                 <h2 className="text-2xl sm:text-3xl font-bold text-center">
-                    {t("howItWorksTitle") || "How it works"}
+                    {t("howItWorksTitle")}
                 </h2>
                 <div className="flex flex-col md:flex-row gap-6">
                     <InfoCard
-                        title={t("browseCourses") || "Browse Courses"}
-                        description={
-                            t("browseDesc") ||
-                            "Search for your university courses and read honest reviews from other students."
-                        }
+                        title={t("browseCourses")}
+                        description={t("browseDesc")}
                     />
                     <InfoCard
-                        title={t("writeReviews") || "Write Reviews"}
-                        description={
-                            t("writeDesc") ||
-                            "Share your experience anonymously to help others make informed choices."
-                        }
+                        title={t("writeReviews")}
+                        description={t("writeDesc")}
                     />
                     <InfoCard
-                        title={t("saveCourses") || "Save Favorites"}
-                        description={
-                            t("saveDesc") ||
-                            "Bookmark useful courses to revisit later or compare options."
-                        }
+                        title={t("saveCourses")}
+                        description={t("saveDesc")}
                     />
                 </div>
             </section>

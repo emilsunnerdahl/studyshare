@@ -28,6 +28,14 @@ const resources = {
             emailLabel: "Your email",
             messageLabel: "Your message",
             sendMessage: "Send message",
+            howItWorksTitle: "How to use StudyShare?",
+            browseCourses: "Browse New Courses",
+            browseDesc: "Browse new courses and make your master special.",
+            writeReviews: "Write Reviews",
+            writeDesc:
+                "Write reviews on courses you've read to help other students with their course choices.",
+            saveCourses: "Save Favorites",
+            saveDesc: "Save courses as favorites to find them easily again.",
         },
     },
     sv: {
@@ -54,6 +62,16 @@ const resources = {
             emailLabel: "Din mail",
             messageLabel: "Ditt meddelande",
             sendMessage: "Skicka meddelande",
+            howItWorksTitle: "Hur fungerar StudyShare?",
+            browseCourses: "Upptäck Nya Kurser",
+            browseDesc:
+                "Upptäck och utforska nya kurser för att sätta ihop din personliga specialisering.",
+            writeReviews: "Skriv Recensioner",
+            writeDesc:
+                "Skriv recensioner på kurser du läst för att hjälpa andra studenter inför sitt kursval.",
+            saveCourses: "Spara Favoriter",
+            saveDesc:
+                "Spara kurser som favoriter för att enkelt hitta tillbaka senare.",
         },
     },
 };
