@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/lib/supabaseClient";
 
 const Auth = () => {
     const [isSignUp, setIsSignUp] = useState(false);
@@ -29,7 +30,7 @@ const Auth = () => {
         return errs;
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const errs = validate();
         if (Object.keys(errs).length > 0) {
@@ -38,7 +39,21 @@ const Auth = () => {
         }
 
         // Place Supabase sign in/up logic here later
-        alert(isSignUp ? "Signing up..." : "Signing in...");
+
+        if (!isSignUp) {
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: formData.email,
+                password: formData.password,
+            });
+            if (error) {
+                console.error("Login error:", error.message);
+            } else {
+                console.log("Login success:", data);
+                navigate("/");
+            }
+        } else {
+            console.log("sign up here");
+        }
     };
 
     return (
