@@ -9,7 +9,7 @@ const ReviewForm = () => {
     //const { user } = useAuth();
     const user = null;
 
-    if (user) {
+    if (!user) {
         navigate("/auth");
         return null;
     }

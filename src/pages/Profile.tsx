@@ -6,7 +6,11 @@ import FormField from "../components/FormField";
 const Profile = () => {
     const navigate = useNavigate();
     //const { user } = useAuth();
-    const user = null;
+    const user = {
+        full_name: "emil sunnerdahl",
+        username: "emil",
+        email: "emil@gmail.com",
+    };
 
     const [formData, setFormData] = useState({
         full_name: "",
