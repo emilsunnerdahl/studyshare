@@ -36,6 +36,8 @@ const resources = {
                 "Write reviews on courses you've read to help other students with their course choices.",
             saveCourses: "Save Favorites",
             saveDesc: "Save courses as favorites to find them easily again.",
+            coursesTitle: "Computer Science Courses",
+            coursesDesc: "LTH Computer Science (D) - School Year 2025/26",
         },
     },
     sv: {
@@ -72,6 +74,8 @@ const resources = {
             saveCourses: "Spara Favoriter",
             saveDesc:
                 "Spara kurser som favoriter för att enkelt hitta tillbaka senare.",
+            coursesTitle: "Datavetenskapliga Specialiseringar",
+            coursesDesc: "LTH Datateknik (D) - Läsår 2025/26",
         },
     },
 };
