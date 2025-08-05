@@ -5,10 +5,7 @@ import { Button } from "./Button";
 
 const Navbar = () => {
     const { t } = useTranslation();
-
-    const handleSignOut = async () => {
-        console.log("fix sign out");
-    };
+    const navigate = useNavigate();
 
     return (
         <header>
@@ -23,7 +20,9 @@ const Navbar = () => {
                 </div>
 
                 <div>
-                    <Button onClick={handleSignOut}>{t("signIn")}</Button>
+                    <Button onClick={() => navigate("/auth")}>
+                        {t("signIn")}
+                    </Button>
                 </div>
             </div>
         </header>
