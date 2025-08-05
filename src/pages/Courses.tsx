@@ -680,13 +680,10 @@ const Courses = () => {
     return (
         <main className="flex flex-col items-center w-full px-6 py-10 space-y-16">
             <header className="text-center max-w-3xl">
-                <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900">
-                    {t("coursesTitle") || "Courses by Specialization"}
+                <h1 className="text-3xl sm:text-4xl font-extrabold text-datarosa">
+                    {t("coursesTitle")}
                 </h1>
-                <p className="mt-4 text-gray-700 text-lg">
-                    {t("coursesDesc") ||
-                        "Explore recommended courses for each specialization in Computer Science at LTH."}
-                </p>
+                <p className="mt-4 text-gray-700 text-lg">{t("coursesDesc")}</p>
             </header>
 
             {courses.map((spec) => (
