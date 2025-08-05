@@ -49,7 +49,7 @@ const resources = {
             landingTitle: "Upptäck och utvärdera kurser tillsammans",
             landingDesc:
                 "StudyShare är en plattform där studenter kan recensera kurser anonymt - så att du kan fatta välgrundade beslut",
-            aboutUsTitle: "Vilka är vi",
+            aboutUsTitle: "Vilka vi är",
             aboutUsDesc:
                 "Vi är två studenter på datateknik på LTH som vill göra det lättare för studenter att navigera i valet av specialiseringskurser.",
             aboutSiteTitle: "Vad är StudyShare?",

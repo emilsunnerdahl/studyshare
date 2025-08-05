@@ -1,35 +1,12 @@
 import { useTranslation } from "react-i18next";
 import { Button } from "../components/Button";
-
-// 💡 Flytta gärna till components/
-const InfoCard = ({
-    title,
-    description,
-}: {
-    title: string;
-    description: string;
-}) => (
-    <div className="bg-white border-t-4 border-indigo-500 rounded-xl shadow-md p-6 flex-1 transition hover:shadow-xl">
-        <h3 className="text-xl font-semibold mb-3">{title}</h3>
-        <p className="text-gray-600 leading-relaxed">{description}</p>
-    </div>
-);
-
-const TestimonialCard = ({
-    quote,
-    author,
-}: {
-    quote: string;
-    author: string;
-}) => (
-    <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm text-left flex-1">
-        <p className="italic text-gray-700 mb-2">"{quote}"</p>
-        <p className="text-sm text-gray-600 font-medium">– {author}</p>
-    </div>
-);
+import { useNavigate } from "react-router-dom";
+import InfoCard from "../components/InfoCard";
+import TestimonialCard from "../components/TestimonialCard";
 
 const Landing = () => {
     const { t } = useTranslation();
+    const navigate = useNavigate();
 
     return (
         <main className="flex flex-col items-center">
@@ -42,7 +19,9 @@ const Landing = () => {
                     {t("landingDesc")}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Button>{t("courses")}</Button>
+                    <Button onClick={() => navigate("/courses")}>
+                        {t("courses")}
+                    </Button>
                     <Button>{t("signIn")}</Button>
                 </div>
             </section>
