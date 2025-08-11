@@ -50,7 +50,7 @@ const Landing = () => {
             {/* 💬 Testimonials Section */}
             <section className="w-full max-w-6xl px-6 py-20 bg-gray-50 space-y-10">
                 <h2 className="text-2xl sm:text-3xl font-bold text-center">
-                    {t("testimonialsTitle") || "What students say"}
+                    {t("testimonialsTitle")}
                 </h2>
                 <div className="flex flex-col md:flex-row gap-6">
                     <TestimonialCard
@@ -71,10 +71,9 @@ const Landing = () => {
             {/* 🚀 Call to Action Section */}
             <section className="w-full px-6 py-16 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center space-y-6">
                 <h2 className="text-2xl sm:text-3xl font-semibold">
-                    {t("readyToStart") ||
-                        "Ready to find your next great course?"}
+                    {t("readyToStart")}
                 </h2>
-                <Button>{t("signUpNow") || "Sign up now"}</Button>
+                <Button>{t("signUpNow")}</Button>
             </section>
         </main>
     );

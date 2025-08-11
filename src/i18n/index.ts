@@ -50,6 +50,9 @@ const resources = {
             notFoundText:
                 "Sorry, we couldn't find the page you were looking for.",
             backToHome: "Back to home page",
+            readyToStart: "Ready to find your next great course?",
+            signUpNow: "Sign up now!",
+            testimonialsTitle: "What students say",
         },
     },
     sv: {
@@ -99,6 +102,9 @@ const resources = {
             rating: "Betyg",
             notFoundText: "Ledsen, sidan du letar efter finns inte.",
             backToHome: "Tillbaka till startsidan",
+            readyToStart: "Redo att hitta din nästa favoritkurs?",
+            signUpNow: "Logga in nu!",
+            testimonialsTitle: "Vad studenter säger",
         },
     },
 };
