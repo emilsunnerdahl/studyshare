@@ -52,7 +52,42 @@ const Auth = () => {
                 navigate("/");
             }
         } else {
+            // --- SIGN UP ---
             console.log("sign up here");
+
+            const email = formData.email.trim();
+            const password = formData.password; //Don't trim
+            const full_name = formData.full_name.trim();
+            const username = formData.username.trim();
+
+            const {data, error } = await supabase.auth.signUp({
+                email,
+                password,
+                options: {
+                    emailRedirectTo: `${window.location.origin}/auth/callback`,
+                    data: { 
+                        full_name,
+                        username,
+                    },
+                },
+
+            });
+
+            if (error) {
+                console.error("Sign-up error:", error.message);
+                // Optionally surface this in UI:
+                setErrors((prev) => ({ ...prev, _form: error.message }));
+                return;
+            }
+
+            // If email confirmations are ON in Supabase, there won't be a session yet.
+            // Show a notice instead of navigating immediately.
+            if (!data.session) {
+                alert("Check your inbox to confirm your email, then sign in.");
+            } else {
+                // If confirmations are OFF, you may get a session right away.
+                navigate("/");
+            }
         }
     };
 
@@ -146,6 +181,11 @@ const Auth = () => {
                     >
                         {isSignUp ? "Sign up" : "Sign in"}
                     </button>
+                    {errors._form && (
+                        <p className="text-sm text-red-600 mt-2">
+                            {errors._form}
+                        </p>
+                    )}
                 </form>
 
                 <div className="flex justify-between text-sm text-gray-600 mt-2">
