@@ -63,13 +63,7 @@ const Auth = () => {
             const {data, error } = await supabase.auth.signUp({
                 email,
                 password,
-                options: {
-                    emailRedirectTo: `${window.location.origin}/auth/callback`,
-                    data: { 
-                        full_name,
-                        username,
-                    },
-                },
+                //options: { emailRedirectTo: `${window.location.origin}/auth/callback`, data: {full_name, username,},},
 
             });
 
@@ -89,6 +83,22 @@ const Auth = () => {
                 navigate("/");
             }
         }
+    };
+
+    
+    const handleResend = async () => {
+        const email = formData.email.trim();
+        if (!email) return setErrors(p => ({ ...p, _form: "Enter your email first." }));
+
+        const { error } = await supabase.auth.resend({
+            type: "signup",
+            email,
+            options: {
+            emailRedirectTo: `${window.location.origin}/auth/callback`,
+            },
+        });
+        if (error) setErrors(p => ({ ...p, _form: error.message }));
+        else alert("Confirmation email resent. Check your inbox/spam.");
     };
 
     return (
@@ -181,6 +191,17 @@ const Auth = () => {
                     >
                         {isSignUp ? "Sign up" : "Sign in"}
                     </button>
+
+                    {isSignUp && (
+                    <button
+                        type="button"
+                        onClick={handleResend}
+                        className="text-sm text-indigo-600 hover:underline mt-2"
+                    >
+                        Resend confirmation email
+                    </button>
+                    )}
+
                     {errors._form && (
                         <p className="text-sm text-red-600 mt-2">
                             {errors._form}
