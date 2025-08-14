@@ -49,6 +49,30 @@ const Auth = () => {
                 console.error("Login error:", error.message);
             } else {
                 console.log("Login success:", data);
+
+                try {
+                    console.log("Upserting user profile row…");
+                    const user = data.user!;
+                    const { error: upsertError } = await supabase
+                        .from("users")
+                        .upsert({
+                            id: user.id,                                     // must equal auth.users.id
+                            email: user.email,                               // safe to store
+                            full_name: user.user_metadata?.full_name ?? null,
+                            username: user.user_metadata?.username ?? null,
+                        });
+                    if (upsertError) {
+                        console.error("Profile upsert error:", upsertError.message);
+                        // Optional: surface in UI
+                        // setErrors((p) => ({ ...p, _form: upsertError.message }));
+                    } else {
+                        console.log("Profile upsert complete.");
+                    }
+                } catch (e) {
+                    console.error("Profile upsert threw:", e);
+                }
+
+
                 navigate("/");
             }
         } else {
