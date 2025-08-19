@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
 type CourseStats = {
@@ -20,72 +20,54 @@ type Review = {
     fun: number;
     lectures: number;
     material: number;
-    workload_hours: number;
+    workload: number;
     comment: string;
     created_at: string;
-    profiles: {
-        username: string;
-        full_name: string;
-    } | null;
+};
+
+type AvgReviews = {
+    rating: number;
+    difficulty: number;
+    fun: number;
+    lectures: number;
+    material: number;
+    workload: number;
 };
 
 type Course = {
     code: string;
     name: string;
+    id: string;
     credits: number;
 };
-
-const mockStats: CourseStats = {
-    avg_rating: 4.2,
-    avg_difficulty: 3.4,
-    avg_fun: 4.0,
-    avg_lectures: 3.7,
-    avg_material: 4.1,
-    avg_workload: 12,
-    review_count: 17,
-};
-
-const mockReviews: Review[] = [
-    {
-        id: "1",
-        rating: 5,
-        difficulty: 3,
-        fun: 5,
-        lectures: 4,
-        material: 4,
-        workload_hours: 10,
-        comment: "Fantastic course with engaging lectures!",
-        created_at: "2025-05-01",
-        profiles: {
-            username: "anna123",
-            full_name: "Anna Svensson",
-        },
-    },
-    {
-        id: "2",
-        rating: 4,
-        difficulty: 4,
-        fun: 4,
-        lectures: 3,
-        material: 5,
-        workload_hours: 14,
-        comment: "Challenging but very rewarding.",
-        created_at: "2025-05-10",
-        profiles: null,
-    },
-];
-
-const allCourses: Course[] = [
-    { code: "FMAN20", name: "Bildanalys", credits: 7.5 },
-    { code: "EDAF80", name: "Datorgrafik", credits: 7.5 },
-    // Extend as needed or import from main dataset
-];
 
 const CourseDetail = () => {
     const { code } = useParams<{ code: string }>();
     const { t } = useTranslation();
 
     const [course, setCourse] = useState<Course | null>(null);
+    const [reviews, setReviews] = useState<Review[]>([]);
+
+    const avgRating: AvgReviews | null = useMemo(() => {
+        if (reviews.length === 0) return null;
+        const rating = reviews.reduce((s, r) => s + r.rating, 0);
+        const difficulty = reviews.reduce((s, r) => s + r.difficulty, 0);
+        const fun = reviews.reduce((s, r) => s + r.fun, 0);
+        const lectures = reviews.reduce((s, r) => s + r.lectures, 0);
+        const material = reviews.reduce((s, r) => s + r.material, 0);
+        const workload = reviews.reduce((s, r) => s + r.workload, 0);
+
+        const length = reviews.length;
+
+        return {
+            rating: rating / length,
+            difficulty: difficulty / length,
+            fun: fun / length,
+            lectures: lectures / length,
+            material: material / length,
+            workload: workload / length,
+        };
+    }, [reviews]);
 
     const fetchCourse = async () => {
         const { data, error } = await supabase
@@ -93,6 +75,7 @@ const CourseDetail = () => {
             .select(
                 `
                 code,
+                id,
                 course_translations(
                 name)`
             )
@@ -107,12 +90,41 @@ const CourseDetail = () => {
                 return;
             }
 
-            console.log(data);
+            console.log(data.id);
+
             setCourse({
                 code: data.code,
                 name: data.course_translations[0].name,
+                id: data.id,
                 credits: 5,
             });
+
+            fetchReviews(data.id);
+        }
+    };
+
+    const fetchReviews = async (course_id: string) => {
+        const { data, error } = await supabase
+            .from("reviews")
+            .select(
+                `
+                created_at,
+                difficulty,
+                fun,
+                lectures,
+                material,
+                workload,
+                rating,
+                id,
+                comment
+                `
+            )
+            .eq("course_id", course_id);
+
+        if (error) {
+            console.error(error);
+        } else {
+            setReviews(data);
         }
     };
 
@@ -146,44 +158,41 @@ const CourseDetail = () => {
             <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 bg-gray-50 p-6 rounded-lg shadow">
                 <StatBox
                     label={t("averageRating") || "Avg. Rating"}
-                    value={mockStats.avg_rating}
+                    value={avgRating?.rating}
                 />
                 <StatBox
                     label={t("difficulty") || "Difficulty"}
-                    value={mockStats.avg_difficulty}
+                    value={avgRating?.difficulty}
                 />
-                <StatBox label={t("fun") || "Fun"} value={mockStats.avg_fun} />
+                <StatBox label={t("fun") || "Fun"} value={avgRating?.fun} />
                 <StatBox
                     label={t("lectures") || "Lectures"}
-                    value={mockStats.avg_lectures}
+                    value={avgRating?.lectures}
                 />
                 <StatBox
                     label={t("material") || "Material"}
-                    value={mockStats.avg_material}
+                    value={avgRating?.material}
                 />
                 <StatBox
                     label={t("workload") || "Workload"}
-                    value={`${mockStats.avg_workload} h/week`}
+                    value={avgRating?.workload}
                 />
             </section>
 
             {/* 💬 Reviews Section */}
             <section>
                 <h2 className="text-2xl font-semibold mb-6">
-                    {t("reviews") || "Student Reviews"} (
-                    {mockStats.review_count})
+                    {t("reviews") || "Student Reviews"} ({reviews.length})
                 </h2>
                 <div className="space-y-6">
-                    {mockReviews.map((r) => (
+                    {reviews.map((r) => (
                         <div
                             key={r.id}
                             className="border border-gray-200 rounded-xl p-5 shadow-sm"
                         >
                             <div className="flex justify-between items-center mb-2">
-                                <div className="text-sm font-medium text-gray-800">
-                                    {r.profiles?.full_name ||
-                                        r.profiles?.username ||
-                                        "Anonymous"}
+                                <div className="text-lg font-medium text-gray-800">
+                                    {r.comment}
                                 </div>
                                 <div className="text-xs text-gray-500">
                                     {new Date(
@@ -214,10 +223,9 @@ const CourseDetail = () => {
                                 />
                                 <ReviewStat
                                     label={t("workload") || "Workload"}
-                                    value={`${r.workload_hours} h/week`}
+                                    value={`${r.workload}`}
                                 />
                             </div>
-                            <p className="text-gray-700 italic">{r.comment}</p>
                         </div>
                     ))}
                 </div>
@@ -234,11 +242,11 @@ const StatBox = ({
     value,
 }: {
     label: string;
-    value: number | string;
+    value: number | undefined;
 }) => (
     <div className="bg-white p-4 rounded-lg border text-center">
         <div className="text-sm text-gray-500">{label}</div>
-        <div className="text-xl font-semibold text-indigo-600">{value}</div>
+        <div className="text-xl font-semibold text-datarosa">{value}</div>
     </div>
 );
 
