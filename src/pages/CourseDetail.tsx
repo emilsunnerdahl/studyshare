@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
 
 type CourseStats = {
     avg_rating: number;
@@ -83,7 +85,40 @@ const CourseDetail = () => {
     const { code } = useParams<{ code: string }>();
     const { t } = useTranslation();
 
-    const course = allCourses.find((c) => c.code === code);
+    const [course, setCourse] = useState<Course | null>(null);
+
+    const fetchCourse = async () => {
+        const { data, error } = await supabase
+            .from("courses")
+            .select(
+                `
+                code,
+                course_translations(
+                name)`
+            )
+            .eq("code", code)
+            .eq("course_translations.language_code", "sv")
+            .maybeSingle();
+
+        if (error) {
+            console.error(error);
+        } else {
+            if (!data) {
+                return;
+            }
+
+            console.log(data);
+            setCourse({
+                code: data.code,
+                name: data.course_translations[0].name,
+                credits: 5,
+            });
+        }
+    };
+
+    useEffect(() => {
+        fetchCourse();
+    }, []);
 
     if (!course) {
         return (
