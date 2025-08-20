@@ -1,7 +1,8 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState, useMemo } from "react";
 import { supabase } from "@/lib/supabaseClient";
+import { Button } from "@/components/Button";
 
 type CourseStats = {
     avg_rating: number;
@@ -44,9 +45,14 @@ type Course = {
 const CourseDetail = () => {
     const { code } = useParams<{ code: string }>();
     const { t } = useTranslation();
+    const navigate = useNavigate();
 
     const [course, setCourse] = useState<Course | null>(null);
     const [reviews, setReviews] = useState<Review[]>([]);
+
+    const round1 = (num: number) => {
+        return Math.round(num * 10) / 10;
+    };
 
     const avgRating: AvgReviews | null = useMemo(() => {
         if (reviews.length === 0) return null;
@@ -60,12 +66,12 @@ const CourseDetail = () => {
         const length = reviews.length;
 
         return {
-            rating: rating / length,
-            difficulty: difficulty / length,
-            fun: fun / length,
-            lectures: lectures / length,
-            material: material / length,
-            workload: workload / length,
+            rating: round1(rating / length),
+            difficulty: round1(difficulty / length),
+            fun: round1(fun / length),
+            lectures: round1(lectures / length),
+            material: round1(material / length),
+            workload: round1(workload / length),
         };
     }, [reviews]);
 
@@ -89,8 +95,6 @@ const CourseDetail = () => {
             if (!data) {
                 return;
             }
-
-            console.log(data.id);
 
             setCourse({
                 code: data.code,
@@ -146,9 +150,16 @@ const CourseDetail = () => {
         <main className="p-6 space-y-12 max-w-5xl mx-auto">
             {/* 📘 Header */}
             <header className="space-y-2">
-                <h1 className="text-3xl font-bold text-gray-900">
-                    {course.name}
-                </h1>
+                <div className="flex justify-between">
+                    <h1 className="text-3xl font-bold text-gray-900">
+                        {course.name}
+                    </h1>
+                    <Button
+                        onClick={() => navigate("/courses/" + code + "/review")}
+                    >
+                        Create review
+                    </Button>
+                </div>
                 <div className="text-gray-600 text-sm">
                     {course.code} • {course.credits} hp
                 </div>

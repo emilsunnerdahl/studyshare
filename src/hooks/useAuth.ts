@@ -1,29 +1,51 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
-import type { User } from "@supabase/supabase-js";
+import type { Session, User } from "@supabase/supabase-js";
 
-export function useAuth() {
+type AuthState = {
+    user: User | null;
+    session: Session | null;
+    loading: boolean;
+    error: string | null;
+};
+
+export function useAuth(): AuthState {
     const [user, setUser] = useState<User | null>(null);
+    const [session, setSession] = useState<Session | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const getSession = async () => {
-            const {
-                data: { user },
-            } = await supabase.auth.getUser();
+        let mounted = true;
 
-            setUser(user);
+        const init = async () => {
+            setLoading(true);
+            const { data, error } = await supabase.auth.getSession();
+            if (!mounted) return;
+
+            if (error) {
+                setError(error.message);
+            }
+            setSession(data.session ?? null);
+            setUser(data.session?.user ?? null);
+            setLoading(false);
         };
 
-        getSession();
+        init();
 
-        const { data: subscription } = supabase.auth.onAuthStateChange(
-            (_event, session) => {
-                setUser(session?.user ?? null);
-            }
-        );
+        const {
+            data: { subscription },
+        } = supabase.auth.onAuthStateChange((_event, newSession) => {
+            if (!mounted) return;
+            setSession(newSession);
+            setUser(newSession?.user ?? null);
+        });
 
-        return () => subscription.subscription.unsubscribe();
+        return () => {
+            mounted = false;
+            subscription.unsubscribe();
+        };
     }, []);
 
-    return { user };
+    return { user, session, loading, error };
 }

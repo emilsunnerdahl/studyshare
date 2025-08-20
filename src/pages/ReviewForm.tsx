@@ -1,18 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import RatingField from "../components/RatingField";
-//import { useAuth } from "@/hooks/useAuth"; // Replace with your actual auth hook
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/lib/supabaseClient";
 
 const ReviewForm = () => {
     const { code } = useParams<{ code: string }>();
     const navigate = useNavigate();
-    //const { user } = useAuth();
-    const user = null;
+    const { user, loading } = useAuth();
+    const [courseId, setCourseId] = useState<string>("");
 
-    if (!user) {
-        navigate("/auth");
-        return null;
-    }
+    useEffect(() => {
+        if (loading) return;
+
+        if (!user) {
+            navigate("/auth");
+        }
+    }, [user, loading]);
+
+    useEffect(() => {
+        const fetchCourse = async () => {
+            const { data, error } = await supabase
+                .from("courses")
+                .select("id")
+                .eq("code", code)
+                .maybeSingle();
+
+            if (error) {
+                console.error("Error fetching course" + error.message);
+            } else {
+                if (!data) {
+                    console.log("Course not found");
+                    return;
+                }
+
+                setCourseId(data.id);
+            }
+        };
+
+        fetchCourse();
+    }, []);
 
     const [formData, setFormData] = useState({
         rating: 0,
@@ -20,7 +47,7 @@ const ReviewForm = () => {
         fun: 0,
         lectures: 0,
         material: 0,
-        workload_hours: 0,
+        workload: 0,
         comment: "",
     });
 
@@ -30,7 +57,7 @@ const ReviewForm = () => {
         setFormData({ ...formData, [field]: value });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (
             Object.values(formData).some(
@@ -48,6 +75,12 @@ const ReviewForm = () => {
 
         // Submit to Supabase here later
         console.log("Review submitted:", { ...formData, course_code: code });
+
+        const { error } = await supabase.from("reviews").insert({
+            ...formData,
+            course_id: courseId,
+            user_id: user?.id,
+        });
 
         navigate(`/courses/${code}`);
     };
@@ -84,25 +117,11 @@ const ReviewForm = () => {
                     value={formData.material}
                     onChange={(val) => handleStarChange("material", val)}
                 />
-
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Weekly workload (hours)
-                    </label>
-                    <input
-                        type="number"
-                        className="w-full border border-gray-300 rounded-md px-4 py-2"
-                        value={formData.workload_hours}
-                        onChange={(e) =>
-                            setFormData({
-                                ...formData,
-                                workload_hours: parseInt(e.target.value, 10),
-                            })
-                        }
-                        min={1}
-                        max={99}
-                    />
-                </div>
+                <RatingField
+                    label="Workload"
+                    value={formData.workload}
+                    onChange={(val) => handleStarChange("workload", val)}
+                />
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
