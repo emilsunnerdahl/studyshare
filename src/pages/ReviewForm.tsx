@@ -73,9 +73,6 @@ const ReviewForm = () => {
             return;
         }
 
-        // Submit to Supabase here later
-        console.log("Review submitted:", { ...formData, course_code: code });
-
         const { error } = await supabase.from("reviews").insert({
             ...formData,
             course_id: courseId,
