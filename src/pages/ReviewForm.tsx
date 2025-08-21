@@ -73,14 +73,11 @@ const ReviewForm = () => {
             return;
         }
 
-        // ADDED: guard to ensure courseId is loaded before submitting
         if (!courseId) {
             setErrors("Course not found or not loaded yet.");
             return;
         }
 
-        // ADDED: use UPSERT so each user can only have one review per course.
-        // This relies on a UNIQUE constraint on (user_id, course_id) and RLS that allows users to update their own rows.
         const { error } = await supabase
             .from("reviews")
             .upsert(
@@ -94,7 +91,6 @@ const ReviewForm = () => {
             .select()
             .single();
 
-        // ADDED: basic error handling for the upsert
         if (error) {
             setErrors(error.message);
             return;
