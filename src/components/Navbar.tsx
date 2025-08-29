@@ -8,6 +8,7 @@ import { Button } from "./Button";
 const Navbar = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const location = useLocation(); // ✨ CHANGED: we'll use this to hide the Profile button on the Profile page
 
     const { user } = useAuth();
 
@@ -27,9 +28,21 @@ const Navbar = () => {
                     </Link>
                 </div>
 
-                <div>
+                {/* ✨ CHANGED: wrap right-side actions so we can show both Profile and Sign out */}
+                <div className="flex items-center gap-3"> {/* ✨ CHANGED */}
                     {user ? (
-                        <Button onClick={handleSignOut}>Sign out</Button>
+                        <>
+                            {/* ✨ CHANGED: show a Profile button if we're not already on /profile */}
+                            {location.pathname !== "/profile" && ( // ✨ CHANGED
+                                <Button onClick={() => navigate("/profile")}> {/* ✨ CHANGED */}
+                                    {/* If you prefer i18n: t("profile", { defaultValue: "Profile" }) */}
+                                    {t("profile")}
+                                </Button>
+                            )}
+                            <Button onClick={handleSignOut}>
+                                {t("Sign out")}
+                            </Button>
+                        </>
                     ) : (
                         <Button onClick={() => navigate("/auth")}>
                             {t("signIn")}
