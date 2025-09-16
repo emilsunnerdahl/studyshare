@@ -56,13 +56,16 @@ const Auth = () => {
                     const { error: upsertError } = await supabase
                         .from("users")
                         .upsert({
-                            id: user.id,                                     // must equal auth.users.id
-                            email: user.email,                               // safe to store
+                            id: user.id, // must equal auth.users.id
+                            email: user.email, // safe to store
                             full_name: user.user_metadata?.full_name ?? null,
                             username: user.user_metadata?.username ?? null,
                         });
                     if (upsertError) {
-                        console.error("Profile upsert error:", upsertError.message);
+                        console.error(
+                            "Profile upsert error:",
+                            upsertError.message
+                        );
                         // Optional: surface in UI
                         // setErrors((p) => ({ ...p, _form: upsertError.message }));
                     } else {
@@ -72,25 +75,21 @@ const Auth = () => {
                     console.error("Profile upsert threw:", e);
                 }
 
-
                 navigate("/");
             }
         } else {
             // --- SIGN UP ---
-            console.log("sign up here");
-
             const email = formData.email.trim();
             const password = formData.password; //Don't trim
             const full_name = formData.full_name.trim();
             const username = formData.username.trim();
 
-            const {data, error } = await supabase.auth.signUp({
+            const { data, error } = await supabase.auth.signUp({
                 email,
                 password,
-                options: { 
-                    data: {full_name, username,},
+                options: {
+                    data: { full_name, username },
                 },
-
             });
 
             if (error) {
@@ -111,19 +110,22 @@ const Auth = () => {
         }
     };
 
-    
     const handleResend = async () => {
         const email = formData.email.trim();
-        if (!email) return setErrors(p => ({ ...p, _form: "Enter your email first." }));
+        if (!email)
+            return setErrors((p) => ({
+                ...p,
+                _form: "Enter your email first.",
+            }));
 
         const { error } = await supabase.auth.resend({
             type: "signup",
             email,
             options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback`,
+                emailRedirectTo: `${window.location.origin}/auth/callback`,
             },
         });
-        if (error) setErrors(p => ({ ...p, _form: error.message }));
+        if (error) setErrors((p) => ({ ...p, _form: error.message }));
         else alert("Confirmation email resent. Check your inbox/spam.");
     };
 
@@ -219,13 +221,13 @@ const Auth = () => {
                     </button>
 
                     {isSignUp && (
-                    <button
-                        type="button"
-                        onClick={handleResend}
-                        className="text-sm text-indigo-600 hover:underline mt-2"
-                    >
-                        Resend confirmation email
-                    </button>
+                        <button
+                            type="button"
+                            onClick={handleResend}
+                            className="text-sm text-indigo-600 hover:underline mt-2"
+                        >
+                            Resend confirmation email
+                        </button>
                     )}
 
                     {errors._form && (
