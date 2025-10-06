@@ -7,12 +7,14 @@ export async function handler(event) {
   try {
     const { name, email, message } = JSON.parse(event.body);
 
-    await resend.emails.send({
+    const result = await resend.emails.send({
       from: "StudyShare <contact@studyshare.se>", // måste vara en verifierad domän eller avsändare
       to: ["team@studyshare.se"], // mottagaradress (din)
       subject: `New message from ${name}`,
       text: `Email: ${email}\n\n${message}`,
     });
+
+    console.log("Resend result:", result);
 
     return {
       statusCode: 200,
