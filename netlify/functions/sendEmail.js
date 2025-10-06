@@ -9,7 +9,7 @@ export async function handler(event) {
 
     await resend.emails.send({
       from: "StudyShare <contact@studyshare.se>", // måste vara en verifierad domän eller avsändare
-      to: ["you@studyshare.se"], // mottagaradress (din)
+      to: ["team@studyshare.se"], // mottagaradress (din)
       subject: `New message from ${name}`,
       text: `Email: ${email}\n\n${message}`,
     });
