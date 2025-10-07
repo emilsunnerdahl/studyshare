@@ -1,0 +1,10 @@
+{
+  "signIn": "Sign in",
+  "signUp": "Sign up",
+  "createAccount": "Create account",
+  "forgotPassword": "Forgot password?",
+  "haveAccount": "Already have an account? Sign in",
+  "noAccount": "Don't have an account? Sign up",
+  "backToHome": "Back to home",
+  "resendEmail": "Resend confirmation email"
+}

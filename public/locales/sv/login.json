@@ -1,0 +1,10 @@
+{
+  "signIn": "Logga in",
+  "signUp": "Skapa konto",
+  "createAccount": "Skapa konto",
+  "forgotPassword": "Glömt lösenordet?",
+  "haveAccount": "Har du redan ett konto? Logga in",
+  "noAccount": "Har du inte ett konto? Skapa konto",
+  "backToHome": "Tillbaka hem",
+  "resendEmail": "Skicka email igen"
+}
