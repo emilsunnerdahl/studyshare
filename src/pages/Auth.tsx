@@ -40,20 +40,16 @@ const Auth = () => {
       return;
     }
 
-    // Place Supabase sign in/up logic here later
-
     if (!isSignUp) {
       const { data, error } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password,
       });
       if (error) {
-        console.error("Login error:", error.message);
+        setErrors((prev) => ({ ...prev, _form: error.message }));
+        return;
       } else {
-        console.log("Login success:", data);
-
         try {
-          console.log("Upserting user profile row…");
           const user = data.user!;
           const { error: upsertError } = await supabase.from("users").upsert({
             id: user.id, // must equal auth.users.id
@@ -62,11 +58,7 @@ const Auth = () => {
             username: user.user_metadata?.username ?? null,
           });
           if (upsertError) {
-            console.error("Profile upsert error:", upsertError.message);
-            // Optional: surface in UI
-            // setErrors((p) => ({ ...p, _form: upsertError.message }));
-          } else {
-            console.log("Profile upsert complete.");
+            setErrors((p) => ({ ...p, _form: upsertError.message }));
           }
         } catch (e) {
           console.error("Profile upsert threw:", e);
@@ -81,6 +73,12 @@ const Auth = () => {
       const full_name = formData.full_name.trim();
       const username = formData.username.trim();
 
+      if (!email.endsWith("@student.lu.se"))
+        return setErrors((p) => ({
+          ...p,
+          email: t("studentEmail"),
+        }));
+
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -91,7 +89,6 @@ const Auth = () => {
 
       if (error) {
         console.error("Sign-up error:", error.message);
-        // Optionally surface this in UI:
         setErrors((prev) => ({ ...prev, _form: error.message }));
         return;
       }
@@ -113,6 +110,12 @@ const Auth = () => {
       return setErrors((p) => ({
         ...p,
         _form: "Enter your email first.",
+      }));
+
+    if (!email.endsWith("@student.lu.se"))
+      return setErrors((p) => ({
+        ...p,
+        _form: t("studentEmail"),
       }));
 
     const { error } = await supabase.auth.resend({
@@ -172,7 +175,7 @@ const Auth = () => {
 
           <div>
             <label className="text-sm font-medium text-gray-700 block mb-1">
-              Email
+              {t("email")}
             </label>
             <input
               type="email"

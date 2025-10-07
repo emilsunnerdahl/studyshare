@@ -6,5 +6,6 @@
   "haveAccount": "Already have an account? Sign in",
   "noAccount": "Don't have an account? Sign up",
   "backToHome": "Back to home",
-  "resendEmail": "Resend confirmation email"
+  "resendEmail": "Resend confirmation email",
+  "studentEmail": "Email must end with @student.lu.se."
 }

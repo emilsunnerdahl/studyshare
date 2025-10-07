@@ -6,5 +6,7 @@
   "haveAccount": "Har du redan ett konto? Logga in",
   "noAccount": "Har du inte ett konto? Skapa konto",
   "backToHome": "Tillbaka hem",
-  "resendEmail": "Skicka email igen"
+  "resendEmail": "Skicka email igen",
+  "email": "Email - Lunds universitet (@student.lu.se)",
+  "studentEmail": "Email måste sluta med @student.lu.se."
 }
