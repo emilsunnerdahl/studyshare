@@ -11,7 +11,7 @@ const Landing = () => {
     return (
         <main className="flex flex-col items-center">
             {/* 🎯 Hero Section */}
-            <section className="w-full bg-gray-100 px-6 sm:px-8 md:px-12 py-20 text-center space-y-6">
+            <section className="w-full bg-gray-100 px-6 sm:px-8 md:px-12 py-20 text-center space-y-6 rounded-4xl">
                 <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900">
                     {t("landingTitle")}
                 </h1>
@@ -48,7 +48,7 @@ const Landing = () => {
             </section>
 
             {/* 💬 Testimonials Section */}
-            <section className="w-full max-w-6xl px-6 py-20 bg-gray-50 space-y-10">
+            <section className="w-full max-w-6xl px-6 py-20 bg-gray-50 space-y-10 rounded-4xl mb-20">
                 <h2 className="text-2xl sm:text-3xl font-bold text-center">
                     {t("testimonialsTitle")}
                 </h2>
@@ -69,7 +69,7 @@ const Landing = () => {
             </section>
 
             {/* 🚀 Call to Action Section */}
-            <section className="w-full px-6 py-16 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center space-y-6">
+            <section className="w-full px-6 py-16 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center space-y-6 rounded-4xl">
                 <h2 className="text-2xl sm:text-3xl font-semibold">
                     {t("readyToStart")}
                 </h2>
