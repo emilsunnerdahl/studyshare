@@ -7,7 +7,7 @@ const Footer = () => {
     return (
         <footer>
             <div className="flex justify-between p-5 border-t border-gray-400 text-gray-500">
-                <div className="flex items-center">
+                <div className="flex items-center bg-gray-100 px-3 py-1 rounded-full border border-gray-300">
                     <p>{t("madeBy")}</p>
                 </div>
 
