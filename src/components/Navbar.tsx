@@ -21,7 +21,8 @@ const Navbar = () => {
             <div className="flex justify-between p-5 border-b border-gray-400">
                 <div className="flex gap-5 items-center">
                     <Link to="/">
-                        <h1 className="text-2xl font-bold">StudyShare</h1>
+                        <img src="/graylogo.png" alt="StudyShare logo" className="h-8 w-auto mr-2 inline-block" />
+                        <h1 className="text-2xl font-bold inline-block align-middle">StudyShare</h1>
                     </Link>
                     <Link to="/courses" className="">
                         {t("courses")}
