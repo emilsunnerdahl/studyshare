@@ -11,7 +11,9 @@ const Landing = () => {
     return (
         <main className="flex flex-col items-center">
             {/* 🎯 Hero Section */}
-            <section className="w-full bg-gray-100 px-6 sm:px-8 md:px-12 py-20 text-center space-y-6 rounded-4xl">
+            <section className="w-full 
+                 bg-[linear-gradient(45deg,rgba(191,217,255,1)_0%,rgba(245,247,250,1)_44%,rgba(191,217,255,1)_80%)]
+                 px-6 sm:px-8 md:px-12 py-20 text-center space-y-6 rounded-4xl">
                 <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900">
                     {t("landingTitle")}
                 </h1>
