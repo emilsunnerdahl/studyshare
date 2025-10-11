@@ -32,7 +32,7 @@ const Landing = () => {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     {/* Courses  */}
-                    <Button onClick={() => navigate("/courses")}>
+                    <Button onClick={() => navigate("/programs")}>
                         {t("courses")}
                     </Button>
                     {/* Sign in  */}

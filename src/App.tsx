@@ -5,7 +5,8 @@ import Layout from "./components/Layout";
 import ScrollToTop from "./components/ScrollToTop";
 
 import Landing from "./pages/Landing";
-import Courses from "./pages/Courses";
+import Program from "./pages/Program";
+import Programs from "./pages/Programs"
 import CourseDetail from "./pages/CourseDetail";
 import ReviewForm from "./pages/ReviewForm";
 import About from "./pages/About";
@@ -24,10 +25,11 @@ const App = () => {
             <Routes>
                 <Route element={<Layout />}>
                     <Route path="/" element={<Landing />} />
-                    <Route path="/courses" element={<Courses />} />
-                    <Route path="/courses/:code" element={<CourseDetail />} />
+                    <Route path="/programs" element={<Programs />} />
+                    <Route path="/programs/:program" element = {<Program/>} />
+                    <Route path="/programs/:program/:code" element={<CourseDetail />} />
                     <Route
-                        path="/courses/:code/review"
+                        path="/programs/:program/:code/review"
                         element={<ReviewForm />}
                     />
                     <Route path="/about" element={<About />} />

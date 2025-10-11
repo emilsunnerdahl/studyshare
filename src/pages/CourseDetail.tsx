@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { Button } from "@/components/Button";
 import { useAuth } from "@/hooks/useAuth";
 
+
 type Review = {
   id: string;
   rating: number;
@@ -35,7 +36,7 @@ type Course = {
 };
 
 const CourseDetail = () => {
-  const { code } = useParams<{ code: string }>();
+  const { code, program } = useParams<{ code: string; program: string }>();
   const { t } = useTranslation("courseDetail");
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -43,6 +44,7 @@ const CourseDetail = () => {
   const [course, setCourse] = useState<Course | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [hasMyReview, setHasMyReview] = useState(false);
+  
 
   // expand states
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
@@ -185,7 +187,7 @@ const CourseDetail = () => {
 
           <Button
             onClick={() =>
-              user ? navigate(`/courses/${code}/review`) : navigate("/auth")
+              user ? navigate(`/programs/${program}/${code}review`) : navigate("/auth")
             }
           >
             {user
