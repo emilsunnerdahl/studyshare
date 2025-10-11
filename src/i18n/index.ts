@@ -10,7 +10,7 @@ i18n
   .init({
     fallbackLng: "sv",
     lng: "sv", // this sets the language to swedish as default
-    ns: ["common", "login"], // vilka namespaces som finns
+    ns: ["common", "login", "courseDetail"], // vilka namespaces som finns
     defaultNS: "common",
     interpolation: {
       escapeValue: false, // React already escapes
