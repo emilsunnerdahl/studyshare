@@ -3,10 +3,17 @@ import { Button } from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import InfoCard from "../components/InfoCard";
 import TestimonialCard from "../components/TestimonialCard";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/lib/supabaseClient";
 
 const Landing = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const { user } = useAuth();
+
+    const handleSignOut = async () => {
+        await supabase.auth.signOut();
+    };
 
     return (
         <main className="flex flex-col items-center">
@@ -21,10 +28,16 @@ const Landing = () => {
                     {t("landingDesc")}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    {/* Courses  */}
                     <Button onClick={() => navigate("/courses")}>
                         {t("courses")}
                     </Button>
-                    <Button>{t("signIn")}</Button>
+                    {/* Sign in  */}
+                    {!user && (
+                        <Button onClick={() => navigate("/auth")}>
+                            {t("signIn")}
+                        </Button>
+                    )}
                 </div>
             </section>
 
