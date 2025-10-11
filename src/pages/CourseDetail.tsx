@@ -36,7 +36,7 @@ type Course = {
 
 const CourseDetail = () => {
   const { code } = useParams<{ code: string }>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("courseDetail");
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -67,7 +67,13 @@ const CourseDetail = () => {
   const perReviewAverage = useCallback(
     (r: Review) =>
       round1(
-        (r.rating + r.difficulty + r.fun + r.lectures + r.material + r.workload) / 6
+        (r.rating +
+          r.difficulty +
+          r.fun +
+          r.lectures +
+          r.material +
+          r.workload) /
+          6
       ),
     []
   );
@@ -80,7 +86,8 @@ const CourseDetail = () => {
         avgRating.fun +
         avgRating.lectures +
         avgRating.material +
-        avgRating.workload) / 6
+        avgRating.workload) /
+        6
     );
   }, [avgRating]);
 
@@ -88,11 +95,13 @@ const CourseDetail = () => {
   const fetchCourse = async () => {
     const { data: courseRow, error: courseErr } = await supabase
       .from("courses")
-      .select(`
+      .select(
+        `
         code,
         id,
         course_translations!inner(name, language_code)
-      `)
+      `
+      )
       .eq("code", code)
       .eq("course_translations.language_code", "sv")
       .maybeSingle();
@@ -120,7 +129,8 @@ const CourseDetail = () => {
   const fetchReviews = async (course_id: string) => {
     const { data: reviewsData, error: reviewsErr } = await supabase
       .from("reviews")
-      .select(`
+      .select(
+        `
         created_at,
         difficulty,
         fun,
@@ -131,7 +141,8 @@ const CourseDetail = () => {
         id,
         comment,
         user_id
-      `)
+      `
+      )
       .eq("course_id", course_id)
       .order("created_at", { ascending: false });
 
@@ -189,10 +200,7 @@ const CourseDetail = () => {
         </div>
       </header>
 
-      {/* 🪟 Overview (outer window) with two inner windows:
-          A) Title+text, B) Ratings (collapsed to Overall Avg; expands to details and hides Avg) */}
       <section className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
-        {/* Inner window A: Title + text */}
         <div className="p-5 bg-gray-50">
           <h2 className="text-lg font-semibold text-gray-900">
             {t("aboutThisCourse") || "About this course"}
@@ -205,14 +213,12 @@ const CourseDetail = () => {
           </p>
         </div>
 
-        {/* Inner window B: Ratings */}
         <div className="h-px bg-gray-100" />
         <div className="p-5 bg-white">
           <h3 className="text-base font-semibold text-gray-900">
             {t("courseAverages") || "Course Averages"}
           </h3>
 
-          {/* Collapsed: show ONLY Overall Average */}
           {!overviewOpen && (
             <div className="mt-2">
               <div className="text-sm text-gray-600">
@@ -224,31 +230,47 @@ const CourseDetail = () => {
             </div>
           )}
 
-          {/* Expanded: show ALL category scores, hide Overall Average */}
           {overviewOpen && (
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              <StatBox label={t("averageRating") || "Avg. Rating"} value={avgRating?.rating} />
-              <StatBox label={t("difficulty") || "Difficulty"} value={avgRating?.difficulty} />
+              <StatBox
+                label={t("averageRating") || "Avg. Rating"}
+                value={avgRating?.rating}
+              />
+              <StatBox
+                label={t("difficulty") || "Difficulty"}
+                value={avgRating?.difficulty}
+              />
               <StatBox label={t("fun") || "Fun"} value={avgRating?.fun} />
-              <StatBox label={t("lectures") || "Lectures"} value={avgRating?.lectures} />
-              <StatBox label={t("material") || "Material"} value={avgRating?.material} />
-              <StatBox label={t("workload") || "Workload"} value={avgRating?.workload} />
+              <StatBox
+                label={t("lectures") || "Lectures"}
+                value={avgRating?.lectures}
+              />
+              <StatBox
+                label={t("material") || "Material"}
+                value={avgRating?.material}
+              />
+              <StatBox
+                label={t("workload") || "Workload"}
+                value={avgRating?.workload}
+              />
             </div>
           )}
 
-          {/* Grey link at bottom of this inner window (not a separate window) */}
           <div className="mt-4 border-t border-gray-100 pt-3">
             <GreyLinkButton
               onClick={() => setOverviewOpen((v) => !v)}
-              ariaLabel={overviewOpen ? (t("showLess") || "Show less") : (t("showMore") || "Show more")}
+              ariaLabel={
+                overviewOpen
+                  ? t("showLess") || "Show less"
+                  : t("showMore") || "Show more"
+              }
             >
-              {overviewOpen ? (t("less") || "Less") : (t("more") || "More")}
+              {overviewOpen ? t("less") || "Less" : t("more") || "More"}
             </GreyLinkButton>
           </div>
         </div>
       </section>
 
-      {/* 💬 Reviews Section */}
       <section>
         <h2 className="text-2xl font-semibold mb-6">
           {t("reviews") || "Student Reviews"} ({reviews.length})
@@ -263,7 +285,6 @@ const CourseDetail = () => {
                 className="border border-gray-200 rounded-2xl shadow-sm overflow-hidden bg-white"
                 aria-expanded={isOpen}
               >
-                {/* Top inner window: ratings (collapsed = show ONLY overall avg; expanded = show ALL and hide avg) */}
                 <div className="p-5">
                   <div className="flex items-start justify-between">
                     <div className="text-xs text-gray-500">
@@ -271,7 +292,6 @@ const CourseDetail = () => {
                     </div>
                   </div>
 
-                  {/* Collapsed: only overall avg */}
                   {!isOpen && (
                     <div className="mt-1 text-sm text-gray-600">
                       {t("averageRating") || "Average"}:
@@ -281,43 +301,58 @@ const CourseDetail = () => {
                     </div>
                   )}
 
-                  {/* Expanded: detailed ratings, no overall avg */}
                   {isOpen && (
                     <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm text-gray-700">
-                      <ReviewStat label={t("rating") || "Rating"} value={r.rating} />
-                      <ReviewStat label={t("difficulty") || "Difficulty"} value={r.difficulty} />
+                      <ReviewStat
+                        label={t("rating") || "Rating"}
+                        value={r.rating}
+                      />
+                      <ReviewStat
+                        label={t("difficulty") || "Difficulty"}
+                        value={r.difficulty}
+                      />
                       <ReviewStat label={t("fun") || "Fun"} value={r.fun} />
-                      <ReviewStat label={t("lectures") || "Lectures"} value={r.lectures} />
-                      <ReviewStat label={t("material") || "Material"} value={r.material} />
-                      <ReviewStat label={t("workload") || "Workload"} value={r.workload} />
+                      <ReviewStat
+                        label={t("lectures") || "Lectures"}
+                        value={r.lectures}
+                      />
+                      <ReviewStat
+                        label={t("material") || "Material"}
+                        value={r.material}
+                      />
+                      <ReviewStat
+                        label={t("workload") || "Workload"}
+                        value={r.workload}
+                      />
                     </div>
                   )}
 
-                  {/* Grey link at the bottom of this inner window */}
                   <div className="mt-4 border-t border-gray-100 pt-3">
                     <GreyLinkButton
                       onClick={() =>
                         setExpanded((prev) => ({ ...prev, [r.id]: !isOpen }))
                       }
                       ariaLabel={
-                        isOpen ? (t("showLess") || "Show less") : (t("showMore") || "Show more")
+                        isOpen
+                          ? t("showLess") || "Show less"
+                          : t("showMore") || "Show more"
                       }
                     >
-                      {isOpen ? (t("less") || "Less") : (t("more") || "More")}
+                      {isOpen ? t("less") || "Less" : t("more") || "More"}
                     </GreyLinkButton>
                   </div>
                 </div>
 
-                {/* Divider to emphasize “two-window” look */}
                 <div className="h-px bg-gray-100" />
 
-                {/* Bottom inner window: comment/text */}
                 <div className="p-5 bg-gray-50">
                   <h3 className="text-sm font-medium text-gray-800 mb-2">
                     {t("reviewText") || "Review"}
                   </h3>
                   <p className="text-gray-700 whitespace-pre-wrap">
-                    {r.comment?.trim() ? r.comment : (t("noComment") || "No comment provided.")}
+                    {r.comment?.trim()
+                      ? r.comment
+                      : t("noComment") || "No comment provided."}
                   </p>
                 </div>
               </article>
@@ -332,14 +367,26 @@ const CourseDetail = () => {
 export default CourseDetail;
 
 /* Sub-components */
-const StatBox = ({ label, value }: { label: string; value: number | undefined }) => (
+const StatBox = ({
+  label,
+  value,
+}: {
+  label: string;
+  value: number | undefined;
+}) => (
   <div className="bg-white p-4 rounded-lg border text-center">
     <div className="text-sm text-gray-500">{label}</div>
     <div className="text-xl font-semibold text-datarosa">{value}</div>
   </div>
 );
 
-const ReviewStat = ({ label, value }: { label: string; value: number | string }) => (
+const ReviewStat = ({
+  label,
+  value,
+}: {
+  label: string;
+  value: number | string;
+}) => (
   <div className="flex items-baseline gap-2">
     <span className="font-medium text-gray-800">{label}:</span>
     <span className="text-gray-700">{value}</span>
