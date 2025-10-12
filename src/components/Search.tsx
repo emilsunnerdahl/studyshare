@@ -113,23 +113,6 @@ export default function ProgramHeader({
                 </div>
 
                 <div className="mx-auto max-w-3xl px-6 py-16 sm:py-20 text-center">
-                    {/* Titel med svart kontur och accent-fyllnad */}
-                    {/* <h1
-                    //     className="select-none font-extrabold tracking-tight leading-[1.03] text-[clamp(32px,8vw,76px)]"
-                    //     style={{
-                    //         color: "var(--accent)",
-                    //         // Primer: stöd i moderna webkit-browsers
-                    //         WebkitTextStrokeWidth: 3,
-                    //         WebkitTextStrokeColor: "var(--stroke)",
-                    //         WebkitTextFillColor: "var(--accent)",
-                    //         // Fallback: text-shadow simulerar kontur (för Firefox m.fl.)
-                    //         textShadow:
-                    //             "0 1px 0 var(--stroke), 0 -1px 0 var(--stroke), 1px 0 0 var(--stroke), -1px 0 0 var(--stroke), 1px 1px 0 var(--stroke), -1px 1px 0 var(--stroke), 1px -1px 0 var(--stroke), -1px -1px 0 var(--stroke)",
-                    //     } as React.CSSProperties}
-                    // >
-                    //     {title}
-                        
-                    </h1> */}
                     <OutlinedTitle title={title} />
 
                     {subtitle && (

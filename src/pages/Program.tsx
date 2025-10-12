@@ -128,25 +128,6 @@ const Program = () => {
 
   return (
     <main className="flex flex-col items-center w-full px-6 py-10 space-y-16">
-      {/* <header className="text-center max-w-3xl">
-        <h1
-          className="text-3xl sm:text-4xl font-extrabold"
-          style={{ color: colorCode }}
-        >
-          {programName}
-        </h1>
-        <p className="mt-4 text-gray-700 text-lg">
-          {t("programCoursesDesc") ||
-            "Browse specialisations and their courses in this program."}
-        </p>
-        <input
-          type="text"
-          placeholder={t("searchCourse")}
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="w-full p-2 border rounded-lg"
-        />
-      </header> */}
 
       <ProgramHeader
         title={programName}
