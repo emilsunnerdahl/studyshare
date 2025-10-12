@@ -35,9 +35,9 @@ const Program = () => {
               name,
               course_program_sections (
                 courses:courses (
-                  id, code,
+                  id, code, name,
                   course_translations (
-                    name, language_code
+                    language_code
                   )
                 )
               )
@@ -46,10 +46,10 @@ const Program = () => {
         `
       )
       .eq("id", id)
-      .eq(
+      /*       .eq(
         "programs_program_sections.program_sections.course_program_sections.courses.course_translations.language_code",
         "sv"
-      )
+      ) */
       .maybeSingle();
 
     if (error || !data) {
@@ -64,13 +64,12 @@ const Program = () => {
     const specs: Specialisation[] = (data.programs_program_sections || []).map(
       (pm: any) => ({
         title: pm.program_sections.name as string,
-        courses: (pm.program_sections.course_program_sections || []).map((cm: any) => ({
-          code: cm.courses.code as string,
-          name:
-            (cm.courses.course_translations || []).find(
-              (ct: any) => ct.language_code === "sv"
-            )?.name ?? cm.courses.code,
-        })),
+        courses: (pm.program_sections.course_program_sections || []).map(
+          (cm: any) => ({
+            code: cm.courses.code as string,
+            name: cm.courses.name ?? cm.courses.code,
+          })
+        ),
       })
     );
 

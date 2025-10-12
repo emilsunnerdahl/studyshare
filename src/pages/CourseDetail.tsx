@@ -5,7 +5,6 @@ import { supabase } from "@/lib/supabaseClient";
 import { Button } from "@/components/Button";
 import { useAuth } from "@/hooks/useAuth";
 
-
 type Review = {
   id: string;
   rating: number;
@@ -44,7 +43,6 @@ const CourseDetail = () => {
   const [course, setCourse] = useState<Course | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [hasMyReview, setHasMyReview] = useState(false);
-  
 
   // expand states
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
@@ -100,22 +98,21 @@ const CourseDetail = () => {
       .select(
         `
         code,
-        id,
-        course_translations!inner(name, language_code)
+        name,
+        id
       `
       )
       .eq("code", code)
-      .eq("course_translations.language_code", "sv")
       .maybeSingle();
 
     if (courseErr) {
       console.error(courseErr);
       return;
     }
+
     if (!courseRow) return;
 
-    const translatedName =
-      courseRow.course_translations?.[0]?.name ?? courseRow.code;
+    const translatedName = courseRow.name ?? courseRow.code;
 
     setCourse({
       code: courseRow.code,
@@ -187,7 +184,9 @@ const CourseDetail = () => {
 
           <Button
             onClick={() =>
-              user ? navigate(`/programs/${program}/${code}review`) : navigate("/auth")
+              user
+                ? navigate(`/programs/${program}/${code}review`)
+                : navigate("/auth")
             }
           >
             {user
