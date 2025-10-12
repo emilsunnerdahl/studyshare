@@ -23,6 +23,7 @@ const Program = () => {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [colorCode, setColorCode] = useState("");
+  const [query, setQuery] = useState("");
 
   async function getCoursesForProgram(id: string) {
     const { data, error } = await supabase
@@ -89,6 +90,19 @@ const Program = () => {
     getCoursesForProgram(programCode);
   }, [programCode]);
 
+  const filtered = query
+    ? Array.from(
+        new Map(
+          specialisations
+            .map((spec) => spec.courses)
+            .flat()
+            .map((course) => [course.code, course]) // key by code
+        ).values()
+      ).filter((course) =>
+        course.name.toLowerCase().includes(query.toLowerCase().trim())
+      )
+    : [];
+
   if (loading) {
     return (
       <main className="p-10 text-center">
@@ -124,7 +138,28 @@ const Program = () => {
           {t("programCoursesDesc") ||
             "Browse specialisations and their courses in this program."}
         </p>
+        <input
+          type="text"
+          placeholder={t("searchCourse")}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="w-full p-2 border rounded-lg"
+        />
       </header>
+
+      <div className="flex flex-wrap gap-4 w-full">
+        {filtered.map((course) => (
+          <CourseCard
+            credits={5}
+            rating={5}
+            key={`filtered - ${course.code}`}
+            programCode={programCode}
+            colorCode={colorCode}
+            {...course}
+          />
+        ))}
+        {filtered.length == 0 && query != "" && <p>{t("searchResult")}</p>}
+      </div>
 
       {specialisations.map((spec, id) => (
         <section key={id} className="w-full max-w-7xl">

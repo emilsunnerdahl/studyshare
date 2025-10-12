@@ -43,5 +43,7 @@
   "signUpNow": "Logga in nu!",
   "testimonialsTitle": "Vad studenter säger",
   "programsTitle": "Program",
-  "programs": "Program"
+  "programs": "Program",
+  "searchCourse": "Sök kurs...",
+  "searchResult": "Inga sökresultat..."
 }
