@@ -5,7 +5,8 @@ import Layout from "./components/Layout";
 import ScrollToTop from "./components/ScrollToTop";
 
 import Landing from "./pages/Landing";
-import Courses from "./pages/Courses";
+import Program from "./pages/Program";
+import Programs from "./pages/Programs";
 import CourseDetail from "./pages/CourseDetail";
 import ReviewForm from "./pages/ReviewForm";
 import About from "./pages/About";
@@ -18,30 +19,31 @@ import SetNewPassword from "./pages/SetNewPassword";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
-    return (
-        <BrowserRouter>
-            <ScrollToTop />
-            <Routes>
-                <Route element={<Layout />}>
-                    <Route path="/" element={<Landing />} />
-                    <Route path="/courses" element={<Courses />} />
-                    <Route path="/courses/:code" element={<CourseDetail />} />
-                    <Route
-                        path="/courses/:code/review"
-                        element={<ReviewForm />}
-                    />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/profile" element={<Profile />} />
-                </Route>
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="/set-new-password" element={<SetNewPassword />} />
-                <Route path="*" element={<NotFound />} />
-            </Routes>
-        </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <ScrollToTop />
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Landing />} />
+          <Route path="/programs" element={<Programs />} />
+          <Route path="/programs/:program" element={<Program />} />
+          <Route path="/programs/:program/:code" element={<CourseDetail />} />
+          <Route
+            path="/programs/:program/:code/review"
+            element={<ReviewForm />}
+          />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/set-new-password" element={<SetNewPassword />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  );
 };
 
 export default App;

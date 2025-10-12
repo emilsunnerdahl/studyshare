@@ -11,5 +11,7 @@
   "workload": "Workload",
   "rating": "Rating",
   "reviews": "Reviews",
-  "reviewText": "Comment"
+  "reviewText": "Comment",
+  "courses": "Courses",
+  "signInToReview": "Create review"
 }

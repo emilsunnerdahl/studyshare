@@ -35,7 +35,7 @@ type Course = {
 };
 
 const CourseDetail = () => {
-  const { code } = useParams<{ code: string }>();
+  const { code, program } = useParams<{ code: string; program: string }>();
   const { t } = useTranslation("courseDetail");
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -98,22 +98,21 @@ const CourseDetail = () => {
       .select(
         `
         code,
-        id,
-        course_translations!inner(name, language_code)
+        name,
+        id
       `
       )
       .eq("code", code)
-      .eq("course_translations.language_code", "sv")
       .maybeSingle();
 
     if (courseErr) {
       console.error(courseErr);
       return;
     }
+
     if (!courseRow) return;
 
-    const translatedName =
-      courseRow.course_translations?.[0]?.name ?? courseRow.code;
+    const translatedName = courseRow.name ?? courseRow.code;
 
     setCourse({
       code: courseRow.code,
@@ -180,12 +179,17 @@ const CourseDetail = () => {
     <main className="p-6 space-y-12 max-w-5xl mx-auto">
       {/* 📘 Header */}
       <header className="space-y-2">
+        <Button onClick={() => navigate(`/programs/${program}`)}>
+          ← {t("courses")}
+        </Button>
         <div className="flex justify-between gap-4">
           <h1 className="text-3xl font-bold text-gray-900">{course.name}</h1>
 
           <Button
             onClick={() =>
-              user ? navigate(`/courses/${code}/review`) : navigate("/auth")
+              user
+                ? navigate(`/programs/${program}/${code}/review`)
+                : navigate("/auth")
             }
           >
             {user
