@@ -61,7 +61,7 @@ const Programs = () => {
               <button
                 key={p.id}
                 onClick={() => handleClick(p.program_code)}
-                className="p-5 text-left rounded-2xl border-4 border-gray-300 bg-white shadow-sm hover:text-[var(--hoverColor)] hover:border-[var(--hoverColor)] hover:shadow-lg w-full hover:cursor-pointer"
+                className="p-5 text-left rounded-2xl border-4 border-gray-300 bg-white shadow-sm hover:border-[var(--hoverColor)] hover:shadow-lg w-full hover:cursor-pointer hover:bg-[var(--hoverColor)]/30"
                 style={
                   {
                     ["--hoverColor" as any]: p.color_code,
