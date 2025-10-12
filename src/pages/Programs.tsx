@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabaseClient";
 type Program = {
   id: string;
   name: string;
+  program_code: string;
 };
 
 const Programs = () => {
@@ -19,7 +20,7 @@ const Programs = () => {
     (async () => {
       const { data, error } = await supabase
         .from("programs")
-        .select("id, name")
+        .select("id, name, program_code")
         .order("name", { ascending: true });
 
       if (!error && data) setPrograms(data as Program[]);
@@ -53,7 +54,7 @@ const Programs = () => {
             {items.map((p) => (
               <button
                 key={p.id}
-                onClick={() => navigate(`/programs/${p.id}`)}
+                onClick={() => navigate(`/programs/${p.program_code}`)}
                 className="p-5 text-left rounded-2xl border bg-white shadow-sm hover:shadow-lg w-full"
               >
                 <div className="text-lg font-semibold">{p.name}</div>

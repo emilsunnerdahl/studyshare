@@ -16,7 +16,7 @@ type Specialisation = {
 
 const Program = () => {
   const { t } = useTranslation();
-  const { program: programId } = useParams<{ program: string }>();
+  const { program: programCode } = useParams<{ program: string }>();
 
   const [programName, setProgramName] = useState<string>("");
   const [specialisations, setSpecialisations] = useState<Specialisation[]>([]);
@@ -30,6 +30,7 @@ const Program = () => {
         `
           id,
           name,
+          program_code,
           programs_program_sections (
             program_sections:program_sections (
               name,
@@ -45,7 +46,7 @@ const Program = () => {
           )
         `
       )
-      .eq("id", id)
+      .eq("program_code", programCode)
       /*       .eq(
         "programs_program_sections.program_sections.course_program_sections.courses.course_translations.language_code",
         "sv"
@@ -79,11 +80,11 @@ const Program = () => {
   }
 
   useEffect(() => {
-    if (!programId) return;
+    if (!programCode) return;
     setLoading(true);
     setNotFound(false);
-    getCoursesForProgram(programId);
-  }, [programId]);
+    getCoursesForProgram(programCode);
+  }, [programCode]);
 
   if (loading) {
     return (
@@ -130,6 +131,7 @@ const Program = () => {
                 credits={5}
                 rating={5}
                 key={course.code}
+                programCode={programCode}
                 {...course}
               />
             ))}

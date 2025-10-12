@@ -179,13 +179,16 @@ const CourseDetail = () => {
     <main className="p-6 space-y-12 max-w-5xl mx-auto">
       {/* 📘 Header */}
       <header className="space-y-2">
+        <Button onClick={() => navigate(`/programs/${program}`)}>
+          {"Tillbaka till program"}
+        </Button>
         <div className="flex justify-between gap-4">
           <h1 className="text-3xl font-bold text-gray-900">{course.name}</h1>
 
           <Button
             onClick={() =>
               user
-                ? navigate(`/programs/${program}/${code}review`)
+                ? navigate(`/programs/${program}/${code}/review`)
                 : navigate("/auth")
             }
           >
