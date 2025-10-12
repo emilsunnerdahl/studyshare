@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/lib/supabaseClient";
 import CourseCard from "../components/CourseCard";
+import ProgramHeader from "../components/Search";
 
 type Course = {
   code: string;
@@ -127,7 +128,7 @@ const Program = () => {
 
   return (
     <main className="flex flex-col items-center w-full px-6 py-10 space-y-16">
-      <header className="text-center max-w-3xl">
+      {/* <header className="text-center max-w-3xl">
         <h1
           className="text-3xl sm:text-4xl font-extrabold"
           style={{ color: colorCode }}
@@ -145,7 +146,16 @@ const Program = () => {
           onChange={(e) => setQuery(e.target.value)}
           className="w-full p-2 border rounded-lg"
         />
-      </header>
+      </header> */}
+
+      <ProgramHeader
+        title={programName}
+        subtitle={t("programCoursesDesc") ||
+            "Browse specialisations and their courses in this program."}
+        placeholder="Sök kurs…"
+        accent={colorCode} // byt till #FF4D4F (röd), #2F80ED (blå), #34C759 (grön), etc.
+        onSearch={(q) => setQuery(q)}
+      />
 
       <div className="flex flex-wrap gap-4 w-full">
         {filtered.map((course) => (

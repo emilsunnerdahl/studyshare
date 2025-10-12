@@ -47,9 +47,9 @@ const Programs = () => {
         <h1 className="text-3xl sm:text-4xl font-extrabold">
           {t("programsTitle") || "Programs"}
         </h1>
-        <p className="mt-4 text-gray-700 text-lg">
+        {/* <p className="mt-4 text-gray-700 text-lg">
           {t("programsDesc") || "Browse programs and view their courses."}
-        </p>
+        </p> */}
       </header>
 
       {loading ? (
