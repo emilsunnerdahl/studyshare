@@ -22,6 +22,7 @@ const Program = () => {
   const [specialisations, setSpecialisations] = useState<Specialisation[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [colorCode, setColorCode] = useState("");
 
   async function getCoursesForProgram(id: string) {
     const { data, error } = await supabase
@@ -31,6 +32,7 @@ const Program = () => {
           id,
           name,
           program_code,
+          color_code,
           programs_program_sections (
             program_sections:program_sections (
               name,
@@ -61,6 +63,7 @@ const Program = () => {
     }
 
     setProgramName(data.name as string);
+    setColorCode(data.color_code ?? "#000000");
 
     const specs: Specialisation[] = (data.programs_program_sections || []).map(
       (pm: any) => ({
@@ -111,7 +114,10 @@ const Program = () => {
   return (
     <main className="flex flex-col items-center w-full px-6 py-10 space-y-16">
       <header className="text-center max-w-3xl">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-datarosa">
+        <h1
+          className="text-3xl sm:text-4xl font-extrabold"
+          style={{ color: colorCode }}
+        >
           {programName}
         </h1>
         <p className="mt-4 text-gray-700 text-lg">
@@ -132,6 +138,7 @@ const Program = () => {
                 rating={5}
                 key={course.code}
                 programCode={programCode}
+                colorCode={colorCode}
                 {...course}
               />
             ))}

@@ -7,6 +7,7 @@ type Program = {
   id: string;
   name: string;
   program_code: string;
+  color_code: string;
 };
 
 const Programs = () => {
@@ -20,7 +21,7 @@ const Programs = () => {
     (async () => {
       const { data, error } = await supabase
         .from("programs")
-        .select("id, name, program_code")
+        .select("id, name, program_code, color_code")
         .order("name", { ascending: true });
 
       if (!error && data) setPrograms(data as Program[]);
@@ -55,7 +56,8 @@ const Programs = () => {
               <button
                 key={p.id}
                 onClick={() => navigate(`/programs/${p.program_code}`)}
-                className="p-5 text-left rounded-2xl border bg-white shadow-sm hover:shadow-lg w-full"
+                className="p-5 text-left rounded-2xl border-1 bg-white shadow-sm hover:shadow-lg w-full"
+                style={{ boxShadow: `0 4px 12px 0 ${p.color_code}` }}
               >
                 <div className="text-lg font-semibold">{p.name}</div>
                 <div className="text-sm text-gray-500">View courses</div>
