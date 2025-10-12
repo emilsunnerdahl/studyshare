@@ -94,12 +94,12 @@ const Program = () => {
     ? Array.from(
         new Map(
           specialisations
-            .map((spec) => spec.courses)
-            .flat()
+            .flatMap((spec) => spec.courses)
             .map((course) => [course.code, course]) // key by code
         ).values()
       ).filter((course) =>
-        course.name.toLowerCase().includes(query.toLowerCase().trim())
+        course.name.toLowerCase().includes(query.toLowerCase().trim()) || 
+        course.code.toLowerCase().includes(query.toLowerCase().trim())
       )
     : [];
 
