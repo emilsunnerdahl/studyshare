@@ -36,6 +36,11 @@ const Programs = () => {
     navigate(`/programs/${id}`);
   };
 
+  const handleClick = (program_code: string) => {
+    localStorage.setItem("program_code", program_code);
+    navigate(`/programs/${program_code}`);
+  };
+
   return (
     <main className="flex flex-col items-center w-full px-6 py-10 space-y-12">
       <header className="text-center max-w-3xl">
@@ -55,9 +60,13 @@ const Programs = () => {
             {items.map((p) => (
               <button
                 key={p.id}
-                onClick={() => navigate(`/programs/${p.program_code}`)}
-                className="p-5 text-left rounded-2xl border-1 bg-white shadow-sm hover:shadow-lg w-full"
-                style={{ boxShadow: `0 4px 12px 0 ${p.color_code}` }}
+                onClick={() => handleClick(p.program_code)}
+                className="p-5 text-left rounded-2xl border-4 border-gray-300 bg-white shadow-sm hover:text-[var(--hoverColor)] hover:border-[var(--hoverColor)] hover:shadow-lg w-full hover:cursor-pointer"
+                style={
+                  {
+                    ["--hoverColor" as any]: p.color_code,
+                  } as React.CSSProperties
+                }
               >
                 <div className="text-lg font-semibold">{p.name}</div>
                 <div className="text-sm text-gray-500">View courses</div>
