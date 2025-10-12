@@ -11,5 +11,7 @@
   "workload": "Tidsåtgång",
   "rating": "Rating",
   "reviews": "Recensioner",
-  "reviewText": "Kommentar"
+  "reviewText": "Kommentar",
+  "courses": "Kurser",
+  "signInToReview": "Skapa recension"
 }

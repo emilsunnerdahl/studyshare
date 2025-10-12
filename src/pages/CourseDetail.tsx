@@ -180,7 +180,7 @@ const CourseDetail = () => {
       {/* 📘 Header */}
       <header className="space-y-2">
         <Button onClick={() => navigate(`/programs/${program}`)}>
-          {"Tillbaka till program"}
+          ← {t("courses")}
         </Button>
         <div className="flex justify-between gap-4">
           <h1 className="text-3xl font-bold text-gray-900">{course.name}</h1>

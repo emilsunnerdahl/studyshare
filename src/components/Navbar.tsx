@@ -16,6 +16,14 @@ const Navbar = () => {
     await supabase.auth.signOut();
   };
 
+  const checkLocalStorage = () => {
+    const programCode = localStorage.getItem("program_code");
+    if (programCode) {
+      return `/programs/${programCode}`;
+    }
+    return "/programs";
+  };
+
   return (
     <header>
       <div className="flex justify-between p-5 border-b border-gray-400">
@@ -32,6 +40,9 @@ const Navbar = () => {
           </Link>
           <Link to="/programs" className="">
             {t("programs")}
+          </Link>
+          <Link to={checkLocalStorage()} className="">
+            {t("courses")}
           </Link>
         </div>
 
