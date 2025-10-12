@@ -20,7 +20,7 @@ const CourseCard = ({
 }: CourseCardProps) => {
   return (
     <Link
-      className="hover:bg-[var(--hoverColor)]/30 bg-o shadow-md border-2 border-[var(--hoverColor)] rounded-xl p-4 w-full sm:w-[calc(50%-1rem)] md:w-[calc(33%-1rem)] lg:w-[calc(25%-1rem)] transition group"
+      className="hover:bg-[var(--hoverColor)]/30 hover:-translate-y-1 bg-o shadow-md border-2 border-[var(--hoverColor)] rounded-xl p-4 w-full sm:w-[calc(50%-1rem)] md:w-[calc(33%-1rem)] lg:w-[calc(25%-1rem)] transition-transform duration-200"
       to={"/programs/" + programCode + "/" + code}
       style={{ ["--hoverColor" as any]: colorCode } as React.CSSProperties}
     >
