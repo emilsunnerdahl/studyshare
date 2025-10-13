@@ -134,7 +134,7 @@ const Program = () => {
         subtitle={t("programCoursesDesc") ||
             "Browse specialisations and their courses in this program."}
         placeholder="Sök kurs…"
-        accent={colorCode} // byt till #FF4D4F (röd), #2F80ED (blå), #34C759 (grön), etc.
+        accent={colorCode} 
         onSearch={(q) => setQuery(q)}
       />
 
