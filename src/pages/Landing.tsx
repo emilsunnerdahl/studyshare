@@ -29,6 +29,7 @@ const Landing = () => {
 
   return (
     <main className="flex flex-col items-center">
+      <Background />
       {/* 🎯 Hero Section */}
       <section
         className="w-full 
@@ -52,7 +53,7 @@ const Landing = () => {
       </section>
 
       {/* 💡 How It Works Section */}
-      <section className="w-full max-w-6xl px-6 py-20 bg-white space-y-10">
+      <section className="w-full max-w-6xl px-6 py-20 bg-white space-y-10 rounded-4xl mt-10 mb-20">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
           {t("howItWorksTitle")}
         </h2>
@@ -88,5 +89,23 @@ const Landing = () => {
     </main>
   );
 };
+
+function Background() {
+  return (
+    <>
+      <div
+        className="pointer-events-none absolute inset-0 opacity-20 -z-10"
+        style={{
+          backgroundImage: "url('/randomShapes.svg')",
+          backgroundRepeat: 'repeat',
+          backgroundPosition: 'top left',
+          backgroundSize: '1200px',
+        }}
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/10 via-black/20 to-transparent -z-10" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-gradient-to-t from-transparent to-black/40 -z-10" />
+    </>
+  )
+}
 
 export default Landing;
