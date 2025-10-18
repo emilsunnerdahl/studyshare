@@ -4,11 +4,12 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabaseClient";
 
 import { Button } from "./Button";
+import ProfileDropDown from "./ProfileDropDown";
 
 const Navbar = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const location = useLocation(); // ✨ CHANGED: we'll use this to hide the Profile button on the Profile page
+  //const location = useLocation(); 
 
   const { user } = useAuth();
 
@@ -45,24 +46,23 @@ const Navbar = () => {
             {t("courses")}
           </Link>
         </div>
-
-        {/* ✨ CHANGED: wrap right-side actions so we can show both Profile and Sign out */}
         <div className="flex items-center gap-3">
-          {" "}
-          {/* ✨ CHANGED */}
+          {/* {" "}
           {user ? (
             <>
-              {/* ✨ CHANGED: show a Profile button if we're not already on /profile */}
-              {location.pathname !== "/profile" && ( // ✨ CHANGED
+              {location.pathname !== "/profile" && ( 
                 <Button onClick={() => navigate("/profile")}>
                   {" "}
-                  {/* ✨ CHANGED */}
-                  {/* If you prefer i18n: t("profile", { defaultValue: "Profile" }) */}
                   {t("profile")}
                 </Button>
               )}
               <Button onClick={handleSignOut}>{t("Sign out")}</Button>
             </>
+          ) : (
+            <Button onClick={() => navigate("/auth")}>{t("signIn")}</Button>
+          )} */}
+          {user ? (
+            <ProfileDropDown />
           ) : (
             <Button onClick={() => navigate("/auth")}>{t("signIn")}</Button>
           )}
