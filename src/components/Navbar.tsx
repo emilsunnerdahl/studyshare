@@ -27,7 +27,7 @@ const Navbar = () => {
 
   return (
     <header>
-      <div className="flex justify-between p-5 border-b border-gray-400">
+      <div className="flex justify-between p-5 border-b border-gray-400 bg-blue-50/30">
         <div className="flex gap-5 items-center">
           <Link to="/">
             <img
@@ -47,20 +47,6 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="flex items-center gap-3">
-          {/* {" "}
-          {user ? (
-            <>
-              {location.pathname !== "/profile" && ( 
-                <Button onClick={() => navigate("/profile")}>
-                  {" "}
-                  {t("profile")}
-                </Button>
-              )}
-              <Button onClick={handleSignOut}>{t("Sign out")}</Button>
-            </>
-          ) : (
-            <Button onClick={() => navigate("/auth")}>{t("signIn")}</Button>
-          )} */}
           {user ? (
             <ProfileDropDown />
           ) : (
