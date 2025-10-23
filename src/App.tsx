@@ -22,6 +22,8 @@ const App = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <div className="relative">
+      {/* <Background />  */}
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Landing />} />
@@ -42,8 +44,47 @@ const App = () => {
         <Route path="/set-new-password" element={<SetNewPassword />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      </div>
     </BrowserRouter>
   );
 };
+
+function Background() {
+  return (
+    <>
+      {/* pattern */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-20 -z-10"
+        style={{
+          backgroundImage: "url('/randomShapes.svg')",
+          backgroundRepeat: "repeat",
+          backgroundPosition: "top left",
+          backgroundSize: "120px",
+        }}
+      />
+
+      {/* vertical gradient overlay */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/10 via-black/20 to-transparent -z-10" />
+
+      {/* top fade */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-gradient-to-t from-transparent to-black/40 -z-10" />
+
+      {/* subtle horizontal blue side gradient */}
+      <div
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          background: `linear-gradient(to right, 
+            rgba(191,219,254,0.15), 
+            rgba(255,255,255,0), 
+            rgba(255,255,255,0), 
+            rgba(191,219,254,0.15))`,
+        }}
+      />
+    </>
+  );
+}
+
+
+
 
 export default App;
