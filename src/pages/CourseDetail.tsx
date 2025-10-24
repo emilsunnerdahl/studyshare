@@ -31,7 +31,7 @@ type Course = {
   code: string;
   name: string;
   id: string;
-  credits: number;
+  credits: string;
 };
 
 const CourseDetail = () => {
@@ -99,6 +99,7 @@ const CourseDetail = () => {
         `
         code,
         name,
+        credits,
         id
       `
       )
@@ -118,7 +119,7 @@ const CourseDetail = () => {
       code: courseRow.code,
       name: translatedName,
       id: courseRow.id,
-      credits: 5,
+      credits: courseRow.credits,
     });
 
     await fetchReviews(courseRow.id);

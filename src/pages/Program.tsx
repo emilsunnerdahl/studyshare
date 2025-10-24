@@ -130,13 +130,9 @@ const Program = () => {
   }
 
   return (
-    <main className="flex flex-col items-center w-full px-6 py-10 space-y-16">
+    <main className="flex flex-col items-center w-full px-6 py-10">
       <ProgramHeader
         title={programName}
-        subtitle={
-          t("programCoursesDesc") ||
-          "Browse specialisations and their courses in this program."
-        }
         placeholder="Sök kurs…"
         accent={colorCode}
         onSearch={(q) => setQuery(q)}
@@ -156,7 +152,7 @@ const Program = () => {
       </div>
 
       {specialisations.map((spec, id) => (
-        <section key={id} className="w-full max-w-7xl">
+        <section key={id} className="w-full max-w-7xl my-10">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">
             {spec.title}
           </h2>
