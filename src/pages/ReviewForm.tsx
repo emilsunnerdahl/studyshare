@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabaseClient";
 
 const ReviewForm = () => {
-  const { code } = useParams<{ code: string }>();
+  const { program, code } = useParams<{ program: string; code: string }>();
   const navigate = useNavigate();
   const { user, loading } = useAuth();
 
@@ -111,9 +111,7 @@ const ReviewForm = () => {
 
     // SAME: validation, but slightly clearer messages
     if (
-      Object.entries(formData).some(
-        ([, v]) => typeof v === "number" && v === 0
-      )
+      Object.entries(formData).some(([, v]) => typeof v === "number" && v === 0)
     ) {
       setErrors("Please rate all categories.");
       return;
@@ -148,7 +146,7 @@ const ReviewForm = () => {
       return;
     }
 
-    navigate(`/courses/${code}`); // SAME redirect
+    navigate(`/programs/${program}/${code}`); // SAME redirect
   };
 
   // NEW: dynamic title + submit label (falls back to English if translation key missing)
@@ -177,7 +175,9 @@ const ReviewForm = () => {
 
       {/* NEW: show a simple loading state while course/review are being fetched */}
       {isFetching ? (
-        <p className="text-gray-500">{t("loading", { defaultValue: "Loading..." })}</p>
+        <p className="text-gray-500">
+          {t("loading", { defaultValue: "Loading..." })}
+        </p>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-6">
           <RatingField
@@ -219,8 +219,9 @@ const ReviewForm = () => {
               className="w-full border border-gray-300 rounded-md px-4 py-2 resize-none"
               rows={5}
               value={formData.comment}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, comment: e.target.value })) // CHANGED: functional update pattern
+              onChange={
+                (e) =>
+                  setFormData((prev) => ({ ...prev, comment: e.target.value })) // CHANGED: functional update pattern
               }
             />
           </div>
