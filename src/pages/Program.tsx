@@ -9,6 +9,8 @@ type Course = {
   code: string;
   name: string;
   credits: string;
+  avg_rating: number;
+  review_count: number;
 };
 
 type Specialisation = {
@@ -41,7 +43,7 @@ const Program = () => {
               name,
               course_program_sections (
                 courses:courses (
-                  id, code, name, credits,
+                  id, code, name, credits, avg_rating, review_count,
                   course_translations (
                     language_code
                   )
@@ -76,6 +78,8 @@ const Program = () => {
             code: cm.courses.code as string,
             name: cm.courses.name ?? cm.courses.code,
             credits: cm.courses.credits as string,
+            avg_rating: cm.courses.avg_rating as number,
+            review_count: cm.courses.review_count as number,
           })
         ),
       })

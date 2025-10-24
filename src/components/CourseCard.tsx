@@ -5,6 +5,8 @@ type CourseCardProps = {
   code: string;
   name: string;
   credits: string;
+  avg_rating: number;
+  review_count: number;
   rating: number;
   programCode: string | undefined;
   colorCode: string;
@@ -15,6 +17,8 @@ const CourseCard = ({
   name,
   credits,
   rating,
+  avg_rating,
+  review_count,
   programCode,
   colorCode,
 }: CourseCardProps) => {
@@ -33,10 +37,14 @@ const CourseCard = ({
         className="text-sm font-medium flex items-center gap-1"
         style={{ color: colorCode }}
       >
-        {rating.toFixed(1)} / 5.0
+        {avg_rating.toFixed(1)} / 5.0
         <Star size={16} fill="#facc15" className="text-[#facc15]" />
       </div>
-      <p className="text-xs text-gray-400">42 reviews</p>
+      <p className="text-xs text-gray-400">
+        {review_count == 1
+          ? `${review_count} review`
+          : `${review_count} reviews`}
+      </p>
     </Link>
   );
 };
