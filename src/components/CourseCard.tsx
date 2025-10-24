@@ -4,7 +4,7 @@ import { Star } from "lucide-react";
 type CourseCardProps = {
   code: string;
   name: string;
-  credits: number;
+  credits: string;
   rating: number;
   programCode: string | undefined;
   colorCode: string;

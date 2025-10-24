@@ -8,6 +8,7 @@ import ProgramHeader from "../components/Search";
 type Course = {
   code: string;
   name: string;
+  credits: string;
 };
 
 type Specialisation = {
@@ -40,7 +41,7 @@ const Program = () => {
               name,
               course_program_sections (
                 courses:courses (
-                  id, code, name,
+                  id, code, name, credits,
                   course_translations (
                     language_code
                   )
@@ -74,6 +75,7 @@ const Program = () => {
           (cm: any) => ({
             code: cm.courses.code as string,
             name: cm.courses.name ?? cm.courses.code,
+            credits: cm.courses.credits as string,
           })
         ),
       })
@@ -98,9 +100,10 @@ const Program = () => {
             .flatMap((spec) => spec.courses)
             .map((course) => [course.code, course]) // key by code
         ).values()
-      ).filter((course) =>
-        course.name.toLowerCase().includes(query.toLowerCase().trim()) || 
-        course.code.toLowerCase().includes(query.toLowerCase().trim())
+      ).filter(
+        (course) =>
+          course.name.toLowerCase().includes(query.toLowerCase().trim()) ||
+          course.code.toLowerCase().includes(query.toLowerCase().trim())
       )
     : [];
 
@@ -128,20 +131,20 @@ const Program = () => {
 
   return (
     <main className="flex flex-col items-center w-full px-6 py-10 space-y-16">
-
       <ProgramHeader
         title={programName}
-        subtitle={t("programCoursesDesc") ||
-            "Browse specialisations and their courses in this program."}
+        subtitle={
+          t("programCoursesDesc") ||
+          "Browse specialisations and their courses in this program."
+        }
         placeholder="Sök kurs…"
-        accent={colorCode} 
+        accent={colorCode}
         onSearch={(q) => setQuery(q)}
       />
 
       <div className="flex flex-wrap gap-4 w-full">
         {filtered.map((course) => (
           <CourseCard
-            credits={5}
             rating={5}
             key={`filtered - ${course.code}`}
             programCode={programCode}
@@ -160,7 +163,6 @@ const Program = () => {
           <div className="flex flex-wrap gap-4">
             {spec.courses.map((course) => (
               <CourseCard
-                credits={5}
                 rating={5}
                 key={course.code}
                 programCode={programCode}
