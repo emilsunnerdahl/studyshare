@@ -42,7 +42,7 @@ const Programs = () => {
   };
 
   return (
-    <main className="flex flex-col items-center w-full px-6 py-10 space-y-12">
+    <main className="flex flex-col items-center w-full sm:px-6 py-10 space-y-12">
       <header className="text-center max-w-3xl">
         <h1 className="text-3xl sm:text-4xl font-extrabold">
           {t("programsTitle") || "Programs"}
