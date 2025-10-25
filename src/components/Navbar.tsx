@@ -9,7 +9,7 @@ import ProfileDropDown from "./ProfileDropDown";
 const Navbar = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  //const location = useLocation(); 
+  //const location = useLocation();
 
   const { user } = useAuth();
 
@@ -27,8 +27,8 @@ const Navbar = () => {
 
   return (
     <header>
-      <div className="flex justify-between p-5 border-b border-gray-400 bg-blue-50/30">
-        <div className="flex gap-5 items-center">
+      <div className="grid grid-cols-3 items-center p-5 mx-30">
+        <div className="justify-self-start flex gap-5 items-center">
           <Link to="/">
             <img
               src="/graylogo.png"
@@ -39,14 +39,22 @@ const Navbar = () => {
               StudyShare
             </h1>
           </Link>
-          <Link to="/programs" className="">
+        </div>
+        <div className="justify-self-center flex items-center">
+          <Link
+            to="/programs"
+            className="hover:bg-gray-100 transition-colors duration-300  rounded-xl py-2 px-5"
+          >
             {t("programs")}
           </Link>
-          <Link to={checkLocalStorage()} className="">
+          <Link
+            to={checkLocalStorage()}
+            className="hover:bg-gray-100 transition-colors duration-300 py-2 rounded-xl px-5"
+          >
             {t("courses")}
           </Link>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="justify-self-end flex items-center gap-3">
           {user ? (
             <ProfileDropDown />
           ) : (
