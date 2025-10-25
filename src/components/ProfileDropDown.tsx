@@ -48,7 +48,7 @@ export default function ProfileDropdown() {
   return (
     <div
       ref={rootRef}
-      className="relative flex items-center justify-end w-full pr-4"
+      className="relative flex items-center justify-end w-full sm:pr-4"
       onKeyDown={onKeyDown}
     >
       <button

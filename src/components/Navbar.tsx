@@ -27,7 +27,7 @@ const Navbar = () => {
 
   return (
     <header>
-      <div className="grid grid-cols-3 items-center p-5 mx-30">
+      <div className="flex justify-between sm:grid sm:grid-cols-3 sm:items-center p-2 sm:p-5 sm:mx-30">
         <div className="justify-self-start flex gap-5 items-center">
           <Link to="/">
             <img
@@ -35,7 +35,7 @@ const Navbar = () => {
               alt="StudyShare logo"
               className="h-8 w-auto mr-2 inline-block"
             />
-            <h1 className="text-2xl font-bold inline-block align-middle">
+            <h1 className="text-2xl font-bold hidden sm:inline-block align-middle">
               StudyShare
             </h1>
           </Link>
@@ -43,13 +43,13 @@ const Navbar = () => {
         <div className="justify-self-center flex items-center">
           <Link
             to="/programs"
-            className="hover:bg-gray-100 transition-colors duration-300  rounded-xl py-2 px-5"
+            className="hover:bg-gray-100 transition-colors duration-300  rounded-xl py-2 px-2 sm:px-5"
           >
             {t("programs")}
           </Link>
           <Link
             to={checkLocalStorage()}
-            className="hover:bg-gray-100 transition-colors duration-300 py-2 rounded-xl px-5"
+            className="hover:bg-gray-100 transition-colors duration-300 py-2 rounded-xl px-2 sm:px-5"
           >
             {t("courses")}
           </Link>
