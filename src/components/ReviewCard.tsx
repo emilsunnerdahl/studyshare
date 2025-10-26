@@ -43,7 +43,7 @@ export default function ReviewCard({ review }: { review: Review }) {
   const { t } = useTranslation("courseDetail");
 
   return (
-    <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-[0_4px_20px_-5px_rgba(0,0,0,0.1)] max-w-xl w-full hover:shadow-[0_8px_30px_-5px_rgba(0,0,0,0.15)] transition-all">
+    <div className="bg-white rounded-3xl p-5 border border-gray-100 shadow-[0_4px_20px_-5px_rgba(0,0,0,0.1)] max-w-xl w-full hover:shadow-[0_8px_30px_-5px_rgba(0,0,0,0.15)] transition-all">
       <div className="flex flex-col mb-4">
         <div className="flex items-center space-x-3 mb-1">
           <h2 className="text-2xl font-semibold text-gray-900 tracking-tight">

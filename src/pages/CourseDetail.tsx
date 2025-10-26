@@ -267,7 +267,7 @@ const CourseDetail = () => {
           {t("reviews") || "Student Reviews"} ({reviews.length})
         </h2>
 
-        <div className="space-y-6">
+        <div className="grid grid-cols-2 gap-5">
           {reviews.map((review) => {
             return <ReviewCard key={review.id} review={review} />;
           })}
