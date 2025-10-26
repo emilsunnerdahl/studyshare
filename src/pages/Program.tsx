@@ -85,7 +85,24 @@ const Program = () => {
       })
     );
 
-    specs.sort((a, b) => a.title.localeCompare(b.title));
+    // Sortera utifrån Årskurs eller Specialisering osv.
+    specs.sort((a, b) => {
+      const getPriority = (title: string) => {
+        if (title.startsWith("Å")) return 0;
+        if (title.startsWith("S")) return 1;
+        if (title.startsWith("V")) return 2;
+        if (title.startsWith("Ext")) return 3;
+        return 4;
+      };
+
+      const pa = getPriority(a.title);
+      const pb = getPriority(b.title);
+
+      if (pa !== pb) return pa - pb;
+
+      return a.title.localeCompare(b.title, "sv", { sensitivity: "accent" });
+    });
+
     setSpecialisations(specs);
     setLoading(false);
   }
