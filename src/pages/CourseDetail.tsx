@@ -1,8 +1,10 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { Button } from "@/components/Button";
+import { GreyLinkButton } from "@/components/GreyLinkButton";
+import ReviewCard from "@/components/ReviewCard";
 import { useAuth } from "@/hooks/useAuth";
 
 type Review = {
@@ -45,7 +47,6 @@ const CourseDetail = () => {
   const [hasMyReview, setHasMyReview] = useState(false);
 
   // expand states
-  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [overviewOpen, setOverviewOpen] = useState(false); // bottom inner ratings window in Overview
 
   const round1 = (num: number) => Math.round(num * 10) / 10;
@@ -62,21 +63,6 @@ const CourseDetail = () => {
       workload: round1(reviews.reduce((s, r) => s + r.workload, 0) / len),
     };
   }, [reviews]);
-
-  // overall Average (single number) helpers
-  const perReviewAverage = useCallback(
-    (r: Review) =>
-      round1(
-        (r.rating +
-          r.difficulty +
-          r.fun +
-          r.lectures +
-          r.material +
-          r.workload) /
-          6
-      ),
-    []
-  );
 
   const courseOverallAverage = useMemo(() => {
     if (!avgRating) return undefined;
@@ -282,86 +268,8 @@ const CourseDetail = () => {
         </h2>
 
         <div className="space-y-6">
-          {reviews.map((r) => {
-            const isOpen = !!expanded[r.id];
-            return (
-              <article
-                key={r.id}
-                className="border border-gray-200 rounded-2xl shadow-sm overflow-hidden bg-white"
-                aria-expanded={isOpen}
-              >
-                <div className="p-5">
-                  <div className="flex items-start justify-between">
-                    <div className="text-xs text-gray-500">
-                      {new Date(r.created_at).toLocaleDateString()}
-                    </div>
-                  </div>
-
-                  {!isOpen && (
-                    <div className="mt-1 text-sm text-gray-600">
-                      {t("averageRating") || "Average"}:
-                      <span className="ml-2 text-xl font-semibold text-datarosa align-middle">
-                        {perReviewAverage(r)}
-                      </span>
-                    </div>
-                  )}
-
-                  {isOpen && (
-                    <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm text-gray-700">
-                      <ReviewStat
-                        label={t("rating") || "Rating"}
-                        value={r.rating}
-                      />
-                      <ReviewStat
-                        label={t("difficulty") || "Difficulty"}
-                        value={r.difficulty}
-                      />
-                      <ReviewStat label={t("fun") || "Fun"} value={r.fun} />
-                      <ReviewStat
-                        label={t("lectures") || "Lectures"}
-                        value={r.lectures}
-                      />
-                      <ReviewStat
-                        label={t("material") || "Material"}
-                        value={r.material}
-                      />
-                      <ReviewStat
-                        label={t("workload") || "Workload"}
-                        value={r.workload}
-                      />
-                    </div>
-                  )}
-
-                  <div className="mt-4 border-t border-gray-100 pt-3">
-                    <GreyLinkButton
-                      onClick={() =>
-                        setExpanded((prev) => ({ ...prev, [r.id]: !isOpen }))
-                      }
-                      ariaLabel={
-                        isOpen
-                          ? t("showLess") || "Show less"
-                          : t("showMore") || "Show more"
-                      }
-                    >
-                      {isOpen ? t("less") || "Less" : t("more") || "More"}
-                    </GreyLinkButton>
-                  </div>
-                </div>
-
-                <div className="h-px bg-gray-100" />
-
-                <div className="p-5 bg-gray-50">
-                  <h3 className="text-sm font-medium text-gray-800 mb-2">
-                    {t("reviewText") || "Review"}
-                  </h3>
-                  <p className="text-gray-700 whitespace-pre-wrap">
-                    {r.comment?.trim()
-                      ? r.comment
-                      : t("noComment") || "No comment provided."}
-                  </p>
-                </div>
-              </article>
-            );
+          {reviews.map((review) => {
+            return <ReviewCard key={review.id} review={review} />;
           })}
         </div>
       </section>
@@ -383,37 +291,4 @@ const StatBox = ({
     <div className="text-sm text-gray-500">{label}</div>
     <div className="text-xl font-semibold text-datarosa">{value}</div>
   </div>
-);
-
-const ReviewStat = ({
-  label,
-  value,
-}: {
-  label: string;
-  value: number | string;
-}) => (
-  <div className="flex items-baseline gap-2">
-    <span className="font-medium text-gray-800">{label}:</span>
-    <span className="text-gray-700">{value}</span>
-  </div>
-);
-
-/** Grey, stylish text-link button used at the bottom of windows */
-const GreyLinkButton = ({
-  onClick,
-  ariaLabel,
-  children,
-}: {
-  onClick: () => void;
-  ariaLabel?: string;
-  children: React.ReactNode;
-}) => (
-  <button
-    type="button"
-    onClick={onClick}
-    aria-label={ariaLabel}
-    className="mx-auto block text-gray-500 hover:text-gray-700 text-sm font-medium underline-offset-2 hover:underline"
-  >
-    {children}
-  </button>
 );
