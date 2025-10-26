@@ -13,5 +13,10 @@
   "reviews": "Reviews",
   "reviewText": "Comment",
   "courses": "Courses",
-  "signInToReview": "Create review"
+  "signInToReview": "Create review",
+  "updateReview": "Update review",
+  "createReview": "Create review",
+  "hideDetails": "Hide details",
+  "showDetails": "Show more",
+  "overallRating": "Overall ratings"
 }

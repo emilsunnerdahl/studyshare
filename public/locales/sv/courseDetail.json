@@ -7,11 +7,16 @@
   "difficulty": "Svårighetsgrad",
   "fun": "Rolig kurs",
   "lectures": "Föreläsningar",
-  "material": "Kvalité på kursmaterial",
+  "material": "Kursmaterial",
   "workload": "Tidsåtgång",
   "rating": "Rating",
   "reviews": "Recensioner",
   "reviewText": "Kommentar",
   "courses": "Kurser",
-  "signInToReview": "Skapa recension"
+  "signInToReview": "Skapa recension",
+  "updateReview": "Uppdatera recension",
+  "createReview": "Skapa recension",
+  "hideDetails": "Dölj detaljer",
+  "showDetails": "Visa mer",
+  "overallRating": "Kursens helhetsbetyg"
 }
