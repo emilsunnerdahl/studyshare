@@ -122,7 +122,7 @@ const CourseDetail = () => {
         <Button onClick={() => navigate(`/programs/${program}`)}>
           ← {t("courses")}
         </Button>
-        <div className="flex justify-between gap-4">
+        <div className="flex flex-col sm:flex-row justify-between gap-4">
           <h1 className="text-3xl font-bold text-gray-900">{course.name}</h1>
 
           <Button
@@ -151,7 +151,13 @@ const CourseDetail = () => {
           {t("reviews") || "Student Reviews"} ({reviews.length})
         </h2>
 
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          {reviews.map((review) => {
+            return <ReviewCard key={review.id} review={review} />;
+          })}
+          {reviews.map((review) => {
+            return <ReviewCard key={review.id} review={review} />;
+          })}
           {reviews.map((review) => {
             return <ReviewCard key={review.id} review={review} />;
           })}
