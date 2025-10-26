@@ -14,11 +14,11 @@ export default function ReviewCard({ review }: Props) {
 
   return (
     <div className="bg-white rounded-3xl p-5 border border-gray-100 shadow-[0_4px_20px_-5px_rgba(0,0,0,0.1)] max-w-xl w-full hover:shadow-[0_8px_30px_-5px_rgba(0,0,0,0.15)] transition-all">
-      <div className="flex flex-col mb-4">
-        <div className="flex items-center space-x-3 mb-1">
-          <h2 className="text-2xl font-semibold text-gray-900 tracking-tight">
-            {review.comment}
-          </h2>
+      <div className="flex sm:items-center gap-3 flex-col sm:flex-row space-x-3 mb-5">
+        <h2 className="text-2xl font-semibold text-gray-900 tracking-tight">
+          {review.comment}
+        </h2>
+        <div className="flex gap-3 items-center">
           <RatingStars value={review.rating} size="lg" />
           <span className="text-base font-semibold text-gray-700">
             {review.rating.toFixed(1)}

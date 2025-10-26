@@ -155,12 +155,6 @@ const CourseDetail = () => {
           {reviews.map((review) => {
             return <ReviewCard key={review.id} review={review} />;
           })}
-          {reviews.map((review) => {
-            return <ReviewCard key={review.id} review={review} />;
-          })}
-          {reviews.map((review) => {
-            return <ReviewCard key={review.id} review={review} />;
-          })}
         </div>
       </section>
     </main>
