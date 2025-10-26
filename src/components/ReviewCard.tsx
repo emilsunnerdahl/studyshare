@@ -1,44 +1,14 @@
 import { useState } from "react";
-import { Star, ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import RatingStars from "./RatingStars";
+import { Review } from "@/types";
 
-type Review = {
-  id: string;
-  rating: number;
-  difficulty: number;
-  fun: number;
-  lectures: number;
-  material: number;
-  workload: number;
-  comment: string;
-  created_at: string;
-  user_id?: string;
+type Props = {
+  review: Review;
 };
 
-const RatingStars = ({
-  value,
-  size = "md",
-}: {
-  value: number;
-  size: string;
-}) => {
-  const sizeClass =
-    size === "lg" ? "h-7 w-7" : size === "sm" ? "h-4 w-4" : "h-5 w-5";
-  return (
-    <div className="flex space-x-1">
-      {[1, 2, 3, 4, 5].map((i) => (
-        <Star
-          key={i}
-          className={`${sizeClass} ${
-            i <= value ? "text-yellow-500 fill-yellow-400" : "text-gray-200"
-          }`}
-        />
-      ))}
-    </div>
-  );
-};
-
-export default function ReviewCard({ review }: { review: Review }) {
+export default function ReviewCard({ review }: Props) {
   const [showDetails, setShowDetails] = useState(false);
   const { t } = useTranslation("courseDetail");
 

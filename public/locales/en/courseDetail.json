@@ -17,5 +17,6 @@
   "updateReview": "Update review",
   "createReview": "Create review",
   "hideDetails": "Hide details",
-  "showDetails": "Show more"
+  "showDetails": "Show more",
+  "overallRating": "Overall ratings"
 }

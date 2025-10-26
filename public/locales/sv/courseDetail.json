@@ -17,5 +17,6 @@
   "updateReview": "Uppdatera recension",
   "createReview": "Skapa recension",
   "hideDetails": "Dölj detaljer",
-  "showDetails": "Visa mer"
+  "showDetails": "Visa mer",
+  "overallRating": "Kursens helhetsbetyg"
 }
