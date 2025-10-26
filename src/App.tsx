@@ -1,5 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Layout from "./components/Layout";
 import ScrollToTop from "./components/ScrollToTop";
@@ -18,34 +19,41 @@ import ResetPassword from "./pages/ResetPassword";
 import SetNewPassword from "./pages/SetNewPassword";
 import NotFound from "./pages/NotFound";
 
+const queryClient = new QueryClient();
+
 const App = () => {
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <div className="relative">
-      {/* <Background />  */}
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Landing />} />
-          <Route path="/programs" element={<Programs />} />
-          <Route path="/programs/:program" element={<Program />} />
-          <Route path="/programs/:program/:code" element={<CourseDetail />} />
-          <Route
-            path="/programs/:program/:code/review"
-            element={<ReviewForm />}
-          />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/profile" element={<Profile />} />
-        </Route>
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/set-new-password" element={<SetNewPassword />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      </div>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <ScrollToTop />
+        <div className="relative">
+          {/* <Background />  */}
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Landing />} />
+              <Route path="/programs" element={<Programs />} />
+              <Route path="/programs/:program" element={<Program />} />
+              <Route
+                path="/programs/:program/:code"
+                element={<CourseDetail />}
+              />
+              <Route
+                path="/programs/:program/:code/review"
+                element={<ReviewForm />}
+              />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/profile" element={<Profile />} />
+            </Route>
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/set-new-password" element={<SetNewPassword />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 };
 
@@ -83,8 +91,5 @@ function Background() {
     </>
   );
 }
-
-
-
 
 export default App;

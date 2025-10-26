@@ -33,3 +33,10 @@ export type Specialisation = {
   title: string;
   courses: Course[];
 };
+
+export type Program = {
+  id: string;
+  name: string;
+  program_code: string;
+  color_code: string;
+};
