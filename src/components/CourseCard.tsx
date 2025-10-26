@@ -33,10 +33,7 @@ const CourseCard = ({
         {name}
       </h3>
       <p className="text-sm text-gray-700 mb-2">{credits} hp</p>
-      <div
-        className="text-sm font-medium flex items-center gap-1"
-        style={{ color: colorCode }}
-      >
+      <div className="text-sm font-medium flex items-center gap-1">
         {review_count == 0 ? "-" : `${avg_rating.toFixed(1)} / 5.0`}
         <Star size={16} fill="#facc15" className="text-[#facc15]" />
       </div>

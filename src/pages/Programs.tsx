@@ -2,39 +2,13 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/lib/supabaseClient";
-
-type Program = {
-  id: string;
-  name: string;
-  program_code: string;
-  color_code: string;
-};
+import { usePrograms } from "@/hooks/usePrograms";
 
 const Programs = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const [programs, setPrograms] = useState<Program[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    (async () => {
-      const { data, error } = await supabase
-        .from("programs")
-        .select("id, name, program_code, color_code")
-        .order("name", { ascending: true });
-
-      if (!error && data) setPrograms(data as Program[]);
-      setLoading(false);
-    })();
-  }, []);
-
-  // Optional: memoize a sorted list (already sorted server-side, but harmless)
-  const items = useMemo(() => programs, [programs]);
-
-  const handleNavigate = (id: string) => {
-    navigate(`/programs/${id}`);
-  };
+  const { data: programs, isLoading, error } = usePrograms();
 
   const handleClick = (program_code: string) => {
     localStorage.setItem("program_code", program_code);
@@ -47,17 +21,14 @@ const Programs = () => {
         <h1 className="text-3xl sm:text-4xl font-extrabold">
           {t("programsTitle") || "Programs"}
         </h1>
-        {/* <p className="mt-4 text-gray-700 text-lg">
-          {t("programsDesc") || "Browse programs and view their courses."}
-        </p> */}
       </header>
 
-      {loading ? (
+      {isLoading ? (
         <p className="text-gray-600">{t("loading") || "Loading..."}</p>
       ) : (
         <section className="w-full max-w-7xl">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {items.map((p) => (
+            {programs?.map((p) => (
               <button
                 key={p.id}
                 onClick={() => handleClick(p.program_code)}
