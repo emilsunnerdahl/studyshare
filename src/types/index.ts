@@ -25,4 +25,11 @@ export type Course = {
   name: string;
   id: string;
   credits: string;
+  avg_rating: number;
+  review_count: number;
+};
+
+export type Specialisation = {
+  title: string;
+  courses: Course[];
 };

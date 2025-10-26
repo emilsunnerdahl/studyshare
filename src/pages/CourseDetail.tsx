@@ -61,6 +61,8 @@ const CourseDetail = () => {
       name: translatedName,
       id: courseRow.id,
       credits: courseRow.credits,
+      avg_rating: 0,
+      review_count: 0,
     });
 
     await fetchReviews(courseRow.id);

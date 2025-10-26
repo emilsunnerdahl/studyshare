@@ -4,19 +4,7 @@ import { useTranslation } from "react-i18next";
 import { supabase } from "@/lib/supabaseClient";
 import CourseCard from "../components/CourseCard";
 import ProgramHeader from "../components/Search";
-
-type Course = {
-  code: string;
-  name: string;
-  credits: string;
-  avg_rating: number;
-  review_count: number;
-};
-
-type Specialisation = {
-  title: string;
-  courses: Course[];
-};
+import { Specialisation } from "@/types";
 
 const Program = () => {
   const { t } = useTranslation();
