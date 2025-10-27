@@ -4,12 +4,6 @@ import { supabase } from "@/lib/supabaseClient";
 import { useAuth } from "@/hooks/useAuth";
 import FormField from "../components/FormField";
 
-type UserRow = {
-  id: string;
-  email: string | null;
-  name: string | null;
-};
-
 const Profile = () => {
   const navigate = useNavigate();
   const { user: authUser, loading: authLoading } = useAuth();

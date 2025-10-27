@@ -1,7 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { supabase } from "@/lib/supabaseClient";
 import { usePrograms } from "@/hooks/usePrograms";
 
 const Programs = () => {
