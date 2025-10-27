@@ -246,9 +246,12 @@ const Auth = () => {
         </div>
 
         <div className="text-center text-sm pt-4">
-          <a href="/" className="text-gray-500 hover:underline">
-            {"← " + t("backToHome")}
-          </a>
+          <button
+            onClick={() => navigate(-1)}
+            className="text-gray-500 cursor-pointer hover:underline"
+          >
+            ← {t("backToHome")}
+          </button>
         </div>
       </div>
     </main>

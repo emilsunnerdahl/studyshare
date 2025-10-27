@@ -121,9 +121,7 @@ const CourseDetail = () => {
   return (
     <main className="p-6 space-y-12 max-w-5xl mx-auto">
       <header className="space-y-2">
-        <Button onClick={() => navigate(`/programs/${program}`)}>
-          ← {t("courses")}
-        </Button>
+        <Button onClick={() => navigate(-1)}>← {t("courses")}</Button>
         <div className="flex flex-col sm:flex-row justify-between gap-4">
           <h1 className="text-3xl font-bold text-gray-900">{course.name}</h1>
 
