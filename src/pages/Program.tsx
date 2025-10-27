@@ -1,106 +1,31 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { supabase } from "@/lib/supabaseClient";
 import CourseCard from "../components/CourseCard";
 import ProgramHeader from "../components/Search";
-import { Specialisation } from "@/types";
+import { useProgram } from "@/hooks/useProgram";
 
 const Program = () => {
   const { t } = useTranslation();
   const { program: programCode } = useParams<{ program: string }>();
-
-  const [programName, setProgramName] = useState<string>("");
-  const [specialisations, setSpecialisations] = useState<Specialisation[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
-  const [colorCode, setColorCode] = useState("");
   const [query, setQuery] = useState("");
+  const { data, isLoading, error } = useProgram(programCode ?? "");
 
-  async function getCoursesForProgram(id: string) {
-    const { data, error } = await supabase
-      .from("programs")
-      .select(
-        `
-          id,
-          name,
-          program_code,
-          color_code,
-          programs_program_sections (
-            program_sections:program_sections (
-              name,
-              course_program_sections (
-                courses:courses (
-                  id, code, name, credits, avg_rating, review_count,
-                  course_translations (
-                    language_code
-                  )
-                )
-              )
-            )
-          )
-        `
-      )
-      .eq("program_code", programCode)
-      /*       .eq(
-        "programs_program_sections.program_sections.course_program_sections.courses.course_translations.language_code",
-        "sv"
-      ) */
-      .maybeSingle();
-
-    if (error || !data) {
-      console.error("Error fetching program courses:", error?.message);
-      setNotFound(true);
-      setLoading(false);
-      return;
-    }
-
-    setProgramName(data.name as string);
-    setColorCode(data.color_code ?? "#000000");
-
-    const specs: Specialisation[] = (data.programs_program_sections || []).map(
-      (pm: any) => ({
-        title: pm.program_sections.name as string,
-        courses: (pm.program_sections.course_program_sections || []).map(
-          (cm: any) => ({
-            code: cm.courses.code as string,
-            name: cm.courses.name ?? cm.courses.code,
-            credits: cm.courses.credits as string,
-            avg_rating: cm.courses.avg_rating as number,
-            review_count: cm.courses.review_count as number,
-          })
-        ),
-      })
+  if (!data) {
+    return (
+      <main className="p-10 text-center">
+        <h1 className="text-2xl font-bold text-gray-800">
+          {t("programNotFound") || "Program not found"}
+        </h1>
+        <p className="text-gray-600 mt-2">
+          {t("programNotFoundDesc") ||
+            "We couldn't find that program. Try another from the Programs page."}
+        </p>
+      </main>
     );
-
-    // Sortera utifrån Årskurs eller Specialisering osv.
-    specs.sort((a, b) => {
-      const getPriority = (title: string) => {
-        if (title.startsWith("Å")) return 0;
-        if (title.startsWith("S")) return 1;
-        if (title.startsWith("V")) return 2;
-        if (title.startsWith("Ext")) return 3;
-        return 4;
-      };
-
-      const pa = getPriority(a.title);
-      const pb = getPriority(b.title);
-
-      if (pa !== pb) return pa - pb;
-
-      return a.title.localeCompare(b.title, "sv", { sensitivity: "accent" });
-    });
-
-    setSpecialisations(specs);
-    setLoading(false);
   }
 
-  useEffect(() => {
-    if (!programCode) return;
-    setLoading(true);
-    setNotFound(false);
-    getCoursesForProgram(programCode);
-  }, [programCode]);
+  const { specialisations, programName, colorCode } = data ?? {};
 
   const filtered = query
     ? Array.from(
@@ -116,24 +41,10 @@ const Program = () => {
       )
     : [];
 
-  if (loading) {
+  if (isLoading) {
     return (
       <main className="p-10 text-center">
         <p className="text-gray-600">{t("loading") || "Loading..."}</p>
-      </main>
-    );
-  }
-
-  if (notFound) {
-    return (
-      <main className="p-10 text-center">
-        <h1 className="text-2xl font-bold text-gray-800">
-          {t("programNotFound") || "Program not found"}
-        </h1>
-        <p className="text-gray-600 mt-2">
-          {t("programNotFoundDesc") ||
-            "We couldn't find that program. Try another from the Programs page."}
-        </p>
       </main>
     );
   }
