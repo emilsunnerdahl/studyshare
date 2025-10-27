@@ -11,6 +11,14 @@ const Program = () => {
   const [query, setQuery] = useState("");
   const { data, isLoading, error } = useProgram(programCode ?? "");
 
+  if (isLoading) {
+    return (
+      <main className="p-10 text-center">
+        <p className="text-gray-600">{t("loading") || "Loading..."}</p>
+      </main>
+    );
+  }
+
   if (!data) {
     return (
       <main className="p-10 text-center">
@@ -40,14 +48,6 @@ const Program = () => {
           course.code.toLowerCase().includes(query.toLowerCase().trim())
       )
     : [];
-
-  if (isLoading) {
-    return (
-      <main className="p-10 text-center">
-        <p className="text-gray-600">{t("loading") || "Loading..."}</p>
-      </main>
-    );
-  }
 
   return (
     <main className="flex flex-col items-center w-full px-6 py-10">

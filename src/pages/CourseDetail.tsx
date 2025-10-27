@@ -39,6 +39,16 @@ const CourseDetail = () => {
     setHasMyReview(reviews.some((r) => r.user_id === user.id));
   }, [reviews, user]);
 
+  if (isLoading) {
+    return (
+      <main className="p-6 text-center">
+        <h1 className="text-2xl font-bold text-gray-700">
+          {t("loading") || "Loading..."}
+        </h1>
+      </main>
+    );
+  }
+
   if (!data || !course) {
     return (
       <main className="p-6 text-center">

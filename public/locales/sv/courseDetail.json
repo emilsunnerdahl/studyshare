@@ -18,5 +18,6 @@
   "createReview": "Skapa recension",
   "hideDetails": "Dölj detaljer",
   "showDetails": "Visa mer",
-  "overallRating": "Kursens helhetsbetyg"
+  "overallRating": "Kursens helhetsbetyg",
+  "loading": "Loading..."
 }

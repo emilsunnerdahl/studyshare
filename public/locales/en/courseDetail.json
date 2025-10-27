@@ -18,5 +18,6 @@
   "createReview": "Create review",
   "hideDetails": "Hide details",
   "showDetails": "Show more",
-  "overallRating": "Overall ratings"
+  "overallRating": "Overall ratings",
+  "loading": "Loading..."
 }
