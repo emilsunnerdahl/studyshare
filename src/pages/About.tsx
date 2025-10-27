@@ -7,7 +7,6 @@ const About = () => {
 
   return (
     <main className="flex flex-col items-center">
-      {/* 👥 About Us */}
       <section className="w-full max-w-6xl px-6 py-20 space-y-6 text-center">
         <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900">
           {t("aboutUsTitle") || "Who we are"}
@@ -18,7 +17,6 @@ const About = () => {
         </p>
       </section>
 
-      {/* 🌐 About StudyShare */}
       <section className="w-full max-w-6xl px-6 py-20 space-y-6 bg-gray-50 text-center rounded-4xl">
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
           {t("aboutSiteTitle") || "What is StudyShare?"}
@@ -29,7 +27,6 @@ const About = () => {
         </p>
       </section>
 
-      {/* ⚙️ How it works */}
       <section className="w-full max-w-6xl px-6 py-20 bg-white space-y-10">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
           {t("howItWorksTitle") || "How it works"}
@@ -59,7 +56,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* 🚀 CTA */}
       <section className="w-full px-6 py-16 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center space-y-6 rounded-4xl">
         <h2 className="text-2xl sm:text-3xl font-semibold">
           {t("readyToStart") || "Ready to find your next great course?"}

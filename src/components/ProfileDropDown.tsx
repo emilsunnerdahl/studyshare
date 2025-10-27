@@ -14,8 +14,6 @@ export default function ProfileDropdown() {
   const navigate = useNavigate();
   const { user, loading } = useAuth();
 
-  // Wait for auth to load
-
   const name = user?.user_metadata?.full_name ?? "";
   const email = user?.email ?? "";
 
@@ -23,7 +21,6 @@ export default function ProfileDropdown() {
     await supabase.auth.signOut();
   };
 
-  // Close on outside click
   useEffect(() => {
     function onDocClick(e: MouseEvent) {
       if (!menuRef.current || !btnRef.current) return;
@@ -40,7 +37,6 @@ export default function ProfileDropdown() {
     return () => document.removeEventListener("mousedown", onDocClick);
   }, []);
 
-  // Basic keyboard handling
   function onKeyDown(e: KeyboardEvent<HTMLDivElement>) {
     if (e.key === "Escape") setOpen(false);
   }
@@ -99,10 +95,6 @@ export default function ProfileDropdown() {
           icon={<User className="h-4 w-4" />}
           onClick={() => navigate("/profile")}
         />
-        {/* <MenuItem
-                    name="Settings"
-                    icon={<Settings className="h-4 w-4" />}
-                /> */}
         <MenuItem
           name={t("Sign out")}
           icon={<LogOut className="h-4 w-4" />}

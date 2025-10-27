@@ -5,8 +5,6 @@ import InfoCard from "../components/InfoCard";
 import TestimonialCard from "../components/TestimonialCard";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabaseClient";
-
-// components
 import CTA from "../components/landing/cta";
 
 const Landing = () => {
@@ -30,7 +28,6 @@ const Landing = () => {
   return (
     <>
       <main className="flex flex-col items-center">
-        {/* 🎯 Hero Section */}
         <section
           className="w-full 
                  bg-[linear-gradient(45deg,rgba(191,217,255,1)_0%,rgba(245,247,250,1)_44%,rgba(191,217,255,1)_80%)]
@@ -43,28 +40,27 @@ const Landing = () => {
             {t("landingDesc")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {/* Courses  */}
             <Button onClick={() => handleClick()}>{t("courses")}</Button>
-            {/* Sign in  */}
             {!user && (
               <Button onClick={() => navigate("/auth")}>{t("signIn")}</Button>
             )}
           </div>
         </section>
 
-        {/* 💡 How It Works Section */}
         <section className="w-full max-w-6xl px-6 py-20 bg-white space-y-10 rounded-4xl mt-10 mb-20">
           <h2 className="text-2xl sm:text-3xl font-bold text-center">
             {t("howItWorksTitle")}
           </h2>
           <div className="flex flex-col md:flex-row gap-6">
-            <InfoCard title={t("browseCourses")} description={t("browseDesc")} />
+            <InfoCard
+              title={t("browseCourses")}
+              description={t("browseDesc")}
+            />
             <InfoCard title={t("writeReviews")} description={t("writeDesc")} />
             <InfoCard title={t("saveCourses")} description={t("saveDesc")} />
           </div>
         </section>
 
-        {/* 💬 Testimonials Section */}
         <section className="w-full max-w-6xl px-6 py-20 bg-gray-50 space-y-10 rounded-4xl mb-20">
           <h2 className="text-2xl sm:text-3xl font-bold text-center">
             {t("testimonialsTitle")}
@@ -92,4 +88,3 @@ const Landing = () => {
 };
 
 export default Landing;
-
