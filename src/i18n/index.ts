@@ -15,6 +15,11 @@ i18n
     interpolation: {
       escapeValue: false, // React already escapes
     },
+    detection: {
+      order: ["path", "localStorage", "navigator"],
+      lookupFromPathIndex: 0,
+      caches: ["localStorage"],
+    },
     backend: {
       loadPath: "/locales/{{lng}}/{{ns}}.json",
     },

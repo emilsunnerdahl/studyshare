@@ -1,21 +1,17 @@
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/useAuth";
-import { supabase } from "@/lib/supabaseClient";
+import { Globe } from "lucide-react";
 
 import { Button } from "./Button";
 import ProfileDropDown from "./ProfileDropDown";
 
 const Navbar = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  //const location = useLocation();
-
   const { user } = useAuth();
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-  };
+  const buttonStyles =
+    "hover:bg-gray-100 transition-colors duration-300 py-2 rounded-xl px-2 sm:px-5";
 
   const checkLocalStorage = () => {
     const programCode = localStorage.getItem("program_code");
@@ -23,6 +19,11 @@ const Navbar = () => {
       return `/programs/${programCode}`;
     }
     return "/programs";
+  };
+
+  const changeLanguage = () => {
+    const newLang = i18n.language === "sv" ? "en" : "sv";
+    i18n.changeLanguage(newLang);
   };
 
   return (
@@ -41,20 +42,21 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="justify-self-center flex items-center">
-          <Link
-            to="/programs"
-            className="hover:bg-gray-100 transition-colors duration-300  rounded-xl py-2 px-2 sm:px-5"
-          >
+          <Link to="/programs" className={buttonStyles}>
             {t("programs")}
           </Link>
-          <Link
-            to={checkLocalStorage()}
-            className="hover:bg-gray-100 transition-colors duration-300 py-2 rounded-xl px-2 sm:px-5"
-          >
+          <Link to={checkLocalStorage()} className={buttonStyles}>
             {t("courses")}
           </Link>
         </div>
         <div className="justify-self-end flex items-center gap-3">
+          <button
+            className={`${buttonStyles} cursor-pointer flex gap-2`}
+            onClick={changeLanguage}
+          >
+            <Globe />
+            {i18n.language === "en" ? "English" : "Svenska"}
+          </button>
           {user ? (
             <ProfileDropDown />
           ) : (

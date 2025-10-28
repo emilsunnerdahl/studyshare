@@ -247,7 +247,7 @@ const Auth = () => {
 
         <div className="text-center text-sm pt-4">
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/")}
             className="text-gray-500 cursor-pointer hover:underline"
           >
             ← {t("backToHome")}

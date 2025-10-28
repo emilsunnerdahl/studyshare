@@ -4,17 +4,12 @@ import { useNavigate } from "react-router-dom";
 import InfoCard from "../components/InfoCard";
 import TestimonialCard from "../components/TestimonialCard";
 import { useAuth } from "@/hooks/useAuth";
-import { supabase } from "@/lib/supabaseClient";
 import CTA from "../components/landing/cta";
 
 const Landing = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-  };
 
   const handleClick = () => {
     const programCode = localStorage.getItem("program_code");
@@ -66,18 +61,9 @@ const Landing = () => {
             {t("testimonialsTitle")}
           </h2>
           <div className="flex flex-col md:flex-row gap-6">
-            <TestimonialCard
-              quote="StudyShare helped me choose electives that actually matched my interests!"
-              author="Anna, KTH"
-            />
-            <TestimonialCard
-              quote="I finally avoided a boring course thanks to a review someone posted."
-              author="Erik, Lund University"
-            />
-            <TestimonialCard
-              quote="The platform is clean, simple, and useful. Love the anonymity!"
-              author="Sara, Chalmers"
-            />
+            <TestimonialCard quote="Lorem ipsum" author="x, LTH" />
+            <TestimonialCard quote="Lorem ipsum" author="x, LTH" />
+            <TestimonialCard quote="Lorem ipsum" author="x, LTH" />
           </div>
         </section>
 
