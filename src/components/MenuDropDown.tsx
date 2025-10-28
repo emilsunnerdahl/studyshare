@@ -11,6 +11,9 @@ export default function MenuDropDown({ changeLanguage }: Props) {
   const { t, i18n } = useTranslation();
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  console.log(open);
 
   const checkLocalStorage = () => {
     const programCode = localStorage.getItem("program_code");
@@ -22,7 +25,12 @@ export default function MenuDropDown({ changeLanguage }: Props) {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
         setOpen(false);
       }
     }
@@ -33,6 +41,7 @@ export default function MenuDropDown({ changeLanguage }: Props) {
   return (
     <div className="relative inline-block text-left">
       <button
+        ref={buttonRef}
         onClick={() => setOpen(!open)}
         className="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
         aria-expanded={open}
