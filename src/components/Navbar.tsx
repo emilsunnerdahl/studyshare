@@ -28,7 +28,10 @@ const Navbar = () => {
 
   return (
     <header>
-      <div className="flex justify-between sm:grid sm:grid-cols-3 sm:items-center p-2 sm:p-5 sm:mx-30">
+      <div className="flex justify-between md:grid md:grid-cols-3 md:items-center p-2 sm:p-5 md:mx-30">
+        <div className="block md:hidden">
+          <MenuDropDown changeLanguage={changeLanguage} />
+        </div>
         <div className="justify-self-start flex gap-5 items-center">
           <Link to="/">
             <img
@@ -36,12 +39,12 @@ const Navbar = () => {
               alt="StudyShare logo"
               className="h-8 w-auto mr-2 inline-block"
             />
-            <h1 className="text-2xl font-bold inline-block align-middle">
+            <h1 className="text-lg sm:text-2xl font-bold inline-block align-middle">
               StudyShare
             </h1>
           </Link>
         </div>
-        <div className="justify-self-center hidden sm:flex items-center">
+        <div className="justify-self-center hidden md:flex items-center">
           <Link to="/programs" className={buttonStyles}>
             {t("programs")}
           </Link>
@@ -51,7 +54,7 @@ const Navbar = () => {
         </div>
         <div className="justify-self-end flex items-center gap-3">
           <button
-            className={`${buttonStyles} hidden sm:flex gap-2`}
+            className={`${buttonStyles} hidden md:flex gap-2`}
             onClick={changeLanguage}
           >
             <Globe />
@@ -62,9 +65,6 @@ const Navbar = () => {
           ) : (
             <Button onClick={() => navigate("/auth")}>{t("signIn")}</Button>
           )}
-          <div className="block sm:hidden">
-            <MenuDropDown changeLanguage={changeLanguage} />
-          </div>
         </div>
       </div>
     </header>

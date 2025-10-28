@@ -53,7 +53,7 @@ export default function MenuDropDown({ changeLanguage }: Props) {
         role="menu"
         aria-label="Explore menu"
         aria-hidden={!open}
-        className={`absolute z-10 right-0 mt-2 w-40 origin-top-right rounded-xl border border-gray-200 
+        className={`absolute z-10 left-0 mt-2 w-40 origin-top-right rounded-xl border border-gray-200 
                     bg-white text-gray-700 shadow-lg p-2 transform transition duration-150 
                     ${
                       open
