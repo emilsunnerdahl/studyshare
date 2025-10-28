@@ -92,12 +92,12 @@ export default function ProfileDropdown() {
 
         <MenuItem
           name={t("profile")}
-          icon={<User className="h-4 w-4" />}
+          icon={<User />}
           onClick={() => navigate("/profile")}
         />
         <MenuItem
           name={t("Sign out")}
-          icon={<LogOut className="h-4 w-4" />}
+          icon={<LogOut />}
           onClick={handleSignOut}
         />
       </div>
@@ -143,7 +143,7 @@ function MenuItem({ name, onClick, icon }: MenuItemProps) {
       onClick={onClick}
       className="flex w-full items-center gap-2 rounded-md px-2 py-2 
                        hover:bg-gray-100 hover:text-gray-900 
-                       transition duration-100 text-left"
+                       transition duration-100 text-xl text-left"
     >
       {icon}
       {name}

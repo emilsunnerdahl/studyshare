@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Globe, Menu } from "lucide-react";
+import { GraduationCap, Book, Globe, Menu } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -62,18 +62,23 @@ export default function MenuDropDown({ changeLanguage }: Props) {
                     }`}
       >
         <div className="flex text-xl flex-col">
-          <Link className="p-2" to="/programs">
+          <Link className="p-2 flex items-center gap-2" to="/programs">
+            <GraduationCap />
             {t("programs")}
           </Link>
-          <Link className="p-2" to={checkLocalStorage()}>
+          <Link
+            className="p-2 flex items-center gap-2"
+            to={checkLocalStorage()}
+          >
+            <Book />
             {t("courses")}
           </Link>
           <button
             className="flex p-2 items-center gap-2"
             onClick={changeLanguage}
           >
-            {i18n.language === "en" ? "English" : "Svenska"}
             <Globe />
+            {i18n.language === "en" ? "English" : "Svenska"}
           </button>
         </div>
       </div>
