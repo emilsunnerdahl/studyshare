@@ -63,7 +63,7 @@ const Navbar = () => {
             <Button onClick={() => navigate("/auth")}>{t("signIn")}</Button>
           )}
           <div className="block sm:hidden">
-            <MenuDropDown />
+            <MenuDropDown changeLanguage={changeLanguage} />
           </div>
         </div>
       </div>

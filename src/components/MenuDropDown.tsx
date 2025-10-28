@@ -1,9 +1,13 @@
 import { useState, useRef, useEffect } from "react";
-import { Menu } from "lucide-react";
+import { Globe, Menu } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-export default function MenuDropDown() {
+type Props = {
+  changeLanguage: () => void;
+};
+
+export default function MenuDropDown({ changeLanguage }: Props) {
   const { t, i18n } = useTranslation();
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -53,6 +57,10 @@ export default function MenuDropDown() {
         <div className="flex flex-col">
           <Link to="/programs">{t("programs")}</Link>
           <Link to={checkLocalStorage()}>{t("courses")}</Link>
+          <button className="flex gap-2" onClick={changeLanguage}>
+            {i18n.language === "en" ? "English" : "Svenska"}
+            <Globe />
+          </button>
         </div>
       </div>
     </div>
