@@ -13,8 +13,6 @@ export default function MenuDropDown({ changeLanguage }: Props) {
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  console.log(open);
-
   const checkLocalStorage = () => {
     const programCode = localStorage.getItem("program_code");
     if (programCode) {
@@ -55,7 +53,7 @@ export default function MenuDropDown({ changeLanguage }: Props) {
         role="menu"
         aria-label="Explore menu"
         aria-hidden={!open}
-        className={`absolute right-0 mt-2 w-40 origin-top-right rounded-xl border border-gray-200 
+        className={`absolute z-10 right-0 mt-2 w-40 origin-top-right rounded-xl border border-gray-200 
                     bg-white text-gray-700 shadow-lg p-2 transform transition duration-150 
                     ${
                       open
@@ -63,10 +61,17 @@ export default function MenuDropDown({ changeLanguage }: Props) {
                         : "opacity-0 scale-95 pointer-events-none"
                     }`}
       >
-        <div className="flex flex-col">
-          <Link to="/programs">{t("programs")}</Link>
-          <Link to={checkLocalStorage()}>{t("courses")}</Link>
-          <button className="flex gap-2" onClick={changeLanguage}>
+        <div className="flex text-xl flex-col">
+          <Link className="p-2" to="/programs">
+            {t("programs")}
+          </Link>
+          <Link className="p-2" to={checkLocalStorage()}>
+            {t("courses")}
+          </Link>
+          <button
+            className="flex p-2 items-center gap-2"
+            onClick={changeLanguage}
+          >
             {i18n.language === "en" ? "English" : "Svenska"}
             <Globe />
           </button>
