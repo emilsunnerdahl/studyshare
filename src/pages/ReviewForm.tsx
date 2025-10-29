@@ -9,7 +9,7 @@ const ReviewForm = () => {
   const { program, code } = useParams<{ program: string; code: string }>();
   const navigate = useNavigate();
   const { user, loading } = useAuth();
-  const { t } = useTranslation();
+  const { t } = useTranslation("courseDetail");
 
   const [courseId, setCourseId] = useState<string>("");
   const [formData, setFormData] = useState({
