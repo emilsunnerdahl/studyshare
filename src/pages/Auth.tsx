@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { use, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/lib/supabaseClient";
+import MessagePopup from "@/components/MessagePopup";
 
 const Auth = () => {
   const { t } = useTranslation("login");
@@ -67,6 +68,10 @@ const Auth = () => {
         navigate("/");
       }
     } else {
+      const [notice, setNotice] = useState<string | null>(null);
+
+      <MessagePopup message={notice} onClose={() => setNotice(null)} />
+
       // --- SIGN UP ---
       const email = formData.email.trim();
       const password = formData.password; //Don't trim
@@ -84,6 +89,7 @@ const Auth = () => {
         password,
         options: {
           data: { full_name, username },
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
       });
 
@@ -96,7 +102,8 @@ const Auth = () => {
       // If email confirmations are ON in Supabase, there won't be a session yet.
       // Show a notice instead of navigating immediately.
       if (!data.session) {
-        alert("Check your inbox to confirm your email, then sign in.");
+        setNotice("Check your inbox cto confirm your email, then sign in.");
+        //alert("Check your inbox to confirm your email, then sign in.");
       } else {
         // If confirmations are OFF, you may get a session right away.
         navigate("/");
