@@ -1,10 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabaseClient";
 import { Review, Course } from "@/types";
+import { useTranslation } from "react-i18next";
 
 export function useCourseDetail(code: string) {
+  const { i18n } = useTranslation();
+  const lang = i18n.language;
+
   return useQuery({
-    queryKey: ["course", code],
+    queryKey: ["course", code, lang],
     enabled: !!code,
     staleTime: 1000 * 60 * 30, // 30 minuter ny fetch,
     gcTime: 1000 * 60 * 10, // ta bort data om oanvänd i 10 min,
@@ -16,7 +20,10 @@ export function useCourseDetail(code: string) {
               code,
               name,
               credits,
-              id
+              id,
+              course_translations (
+                name
+              )
             `
         )
         .eq("code", code)
@@ -48,10 +55,18 @@ export function useCourseDetail(code: string) {
         throw reviewsErr;
       }
 
+      let name;
+
+      if (lang === "sv") {
+        name = courseData.name;
+      } else {
+        name = courseData.course_translations[0].name;
+      }
+
       return {
         course: {
           code: courseData.code,
-          name: courseData.name ?? courseData.code,
+          name: name,
           id: courseData.id,
           credits: courseData.credits,
           avg_rating: 0,
