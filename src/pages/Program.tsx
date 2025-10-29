@@ -73,10 +73,7 @@ const Program = () => {
       </div>
 
       {specialisations.map((spec, id) => (
-        <section
-          key={id}
-          className="w-full max-w-7xl bg-gray-100 m-3 p-3 rounded-2xl"
-        >
+        <section key={id} className="w-full max-w-7xl m-3 p-3 rounded-2xl">
           <Specialisations
             spec={spec}
             programCode={programCode}
