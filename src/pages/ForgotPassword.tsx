@@ -1,11 +1,12 @@
 import { useState } from "react";
+import {supabase} from "@/lib/supabaseClient";
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!email.includes("@")) {
             setError("Please enter a valid email address.");
@@ -16,7 +17,7 @@ const ForgotPassword = () => {
         setSubmitted(true);
 
         // 🔗 Supabase integration goes here
-        // await supabase.auth.resetPasswordForEmail(email)
+        const res = await supabase.auth.resetPasswordForEmail(email);
     };
 
     return (

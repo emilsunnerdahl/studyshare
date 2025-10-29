@@ -1,12 +1,14 @@
 import { useState } from "react";
+import {supabase} from "@/lib/supabaseClient";
 
 const ResetPassword = () => {
     const [password, setPassword] = useState("");
     const [confirm, setConfirm] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (password.length < 6) {
@@ -18,11 +20,27 @@ const ResetPassword = () => {
             return;
         }
 
+        
+
+        setError("");
+        setLoading(true);
+
+        // 🔗 Supabase integration goes here:
+        const {error: err} = await supabase.auth.updateUser({ password });
+
+        setLoading(false);
+
         setError("");
         setSuccess(true);
 
-        // 🔗 Supabase integration goes here:
-        // await supabase.auth.updateUser({ password })
+        if (err) {
+            setError(err.message);
+            return;
+        }
+
+        setSuccess(true);
+
+        
     };
 
     return (
