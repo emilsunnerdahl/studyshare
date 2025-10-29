@@ -29,7 +29,7 @@ const Navbar = () => {
   return (
     <header>
       <div className="flex justify-between md:grid md:grid-cols-3 md:items-center p-2 sm:p-5 md:mx-30">
-        <div className="block md:hidden">
+        <div className="block lg:hidden">
           <MenuDropDown changeLanguage={changeLanguage} />
         </div>
         <div className="justify-self-start flex gap-5 items-center">
@@ -44,7 +44,7 @@ const Navbar = () => {
             </h1>
           </Link>
         </div>
-        <div className="justify-self-center hidden md:flex items-center">
+        <div className="justify-self-center hidden lg:flex items-center">
           <Link to="/programs" className={buttonStyles}>
             {t("programs")}
           </Link>
@@ -54,7 +54,7 @@ const Navbar = () => {
         </div>
         <div className="justify-self-end flex items-center gap-3">
           <button
-            className={`${buttonStyles} hidden md:flex gap-2`}
+            className={`${buttonStyles} hidden lg:flex gap-2`}
             onClick={changeLanguage}
           >
             <Globe />
