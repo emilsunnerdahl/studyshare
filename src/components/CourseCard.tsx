@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { Star } from "lucide-react";
+import RatingStars from "./RatingStars";
+import { useTranslation } from "react-i18next";
 
 type CourseCardProps = {
   code: string;
@@ -22,6 +24,8 @@ const CourseCard = ({
   programCode,
   colorCode,
 }: CourseCardProps) => {
+  const { t } = useTranslation();
+
   return (
     <Link
       className="hover:bg-[var(--hoverColor)]/30 hover:-translate-y-1 bg-o shadow-md border-2 border-[var(--hoverColor)] rounded-xl p-4 w-full sm:w-[calc(50%-1rem)] md:w-[calc(33%-1rem)] lg:w-[calc(25%-1rem)] transition-transform duration-200"
@@ -34,8 +38,11 @@ const CourseCard = ({
       </h3>
       <p className="text-sm text-gray-700 mb-2">{credits} hp</p>
       <div className="text-sm font-medium flex items-center gap-1">
-        {review_count == 0 ? "-" : `${avg_rating.toFixed(1)} / 5.0`}
-        <Star size={16} fill="#facc15" className="text-[#facc15]" />
+        {review_count == 0 ? (
+          t("reviewMissing")
+        ) : (
+          <RatingStars value={parseInt(avg_rating.toFixed(1))} />
+        )}
       </div>
       <p className="text-xs text-gray-400">
         {review_count == 1
