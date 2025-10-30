@@ -19,9 +19,9 @@ export default function CourseHeader({ avgRating }: Props) {
         </div>
 
         <div className="flex items-center sm:ml-10 mt-3 sm:mt-0 space-x-3">
-          <RatingStars value={Math.round(avgRating?.rating || 0)} size="lg" />
+          <RatingStars value={avgRating?.rating || 0} size="lg" />
           <span className="text-xl sm:text-3xl font-bold text-gray-800">
-            {avgRating?.rating.toFixed(1)}
+            {avgRating?.rating}
           </span>
         </div>
       </div>
