@@ -15,7 +15,8 @@ const ReviewForm = () => {
   const [formData, setFormData] = useState({
     rating: 0,
     difficulty: 0,
-    fun: 0,
+    labs: 0,
+    relevance: 0,
     lectures: 0,
     material: 0,
     workload: 0,
@@ -61,7 +62,9 @@ const ReviewForm = () => {
 
       const { data: review, error: reviewErr } = await supabase
         .from("reviews")
-        .select("rating,difficulty,fun,lectures,material,workload,comment")
+        .select(
+          "rating,difficulty,labs,relevance,lectures,material,workload,comment"
+        )
         .eq("course_id", course.id)
         .eq("user_id", user.id)
         .maybeSingle();
@@ -77,7 +80,8 @@ const ReviewForm = () => {
         setFormData({
           rating: review.rating ?? 0,
           difficulty: review.difficulty ?? 0,
-          fun: review.fun ?? 0,
+          labs: review.labs ?? 0,
+          relevance: review.relevance ?? 0,
           lectures: review.lectures ?? 0,
           material: review.material ?? 0,
           workload: review.workload ?? 0,
@@ -139,26 +143,17 @@ const ReviewForm = () => {
   };
 
   const pageTitle = useMemo(
-    () =>
-      hasExistingReview
-        ? t("editReviewTitle", {
-            defaultValue: "Edit your review for {{code}}",
-            code,
-          })
-        : t("createReviewTitle", {
-            defaultValue: "Create new review for {{code}}",
-            code,
-          }),
+    () => (hasExistingReview ? t("editReviewTitle") : t("createReviewTitle")),
     [hasExistingReview, code, t]
   );
 
-  const submitLabel = hasExistingReview
-    ? t("updateReview", { defaultValue: "Update Review" })
-    : t("submitReview", { defaultValue: "Submit Review" });
+  const submitLabel = hasExistingReview ? t("updateReview") : t("submitReview");
 
   return (
     <main className="max-w-3xl mx-auto p-6 space-y-8">
-      <h1 className="text-2xl font-bold text-gray-800">{pageTitle}</h1>
+      <h1 className="text-2xl font-bold text-gray-800">
+        {pageTitle} {code}
+      </h1>
 
       {isFetching ? (
         <p className="text-gray-500">
@@ -166,45 +161,53 @@ const ReviewForm = () => {
         </p>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-6">
-          <RatingField
-            label={t("overallRating", { defaultValue: "Overall Rating" })}
-            value={formData.rating}
-            onChange={(val) => handleStarChange("rating", val)}
-          />
-          <RatingField
-            label={t("difficulty", { defaultValue: "Difficulty" })}
-            value={formData.difficulty}
-            onChange={(val) => handleStarChange("difficulty", val)}
-          />
-          <RatingField
-            label={t("fun", { defaultValue: "Fun" })}
-            value={formData.fun}
-            onChange={(val) => handleStarChange("fun", val)}
-          />
-          <RatingField
-            label={t("lectures", { defaultValue: "Lectures" })}
-            value={formData.lectures}
-            onChange={(val) => handleStarChange("lectures", val)}
-          />
-          <RatingField
-            label={t("material", { defaultValue: "Material" })}
-            value={formData.material}
-            onChange={(val) => handleStarChange("material", val)}
-          />
-          <RatingField
-            label={t("workload", { defaultValue: "Workload" })}
-            value={formData.workload}
-            onChange={(val) => handleStarChange("workload", val)}
-          />
+          <div className="grid grid-cols-1 sm:grid-cols-2">
+            <RatingField
+              label={t("overallRating", { defaultValue: "Overall Rating" })}
+              value={formData.rating}
+              onChange={(val) => handleStarChange("rating", val)}
+            />
+            <RatingField
+              label={t("difficulty", { defaultValue: "Difficulty" })}
+              value={formData.difficulty}
+              onChange={(val) => handleStarChange("difficulty", val)}
+            />
+            <RatingField
+              label={t("labs", { defaultValue: "Labs" })}
+              value={formData.labs}
+              onChange={(val) => handleStarChange("labs", val)}
+            />
+            <RatingField
+              label={t("lectures", { defaultValue: "Lectures" })}
+              value={formData.lectures}
+              onChange={(val) => handleStarChange("lectures", val)}
+            />
+            <RatingField
+              label={t("material", { defaultValue: "Material" })}
+              value={formData.material}
+              onChange={(val) => handleStarChange("material", val)}
+            />
+            <RatingField
+              label={t("relevance", { defaultValue: "Relevance" })}
+              value={formData.relevance}
+              onChange={(val) => handleStarChange("relevance", val)}
+            />
+            <RatingField
+              label={t("workload", { defaultValue: "Workload" })}
+              value={formData.workload}
+              onChange={(val) => handleStarChange("workload", val)}
+            />
+          </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              {t("comment", { defaultValue: "Comment" })}
+              {t("reviewText")}
             </label>
             <textarea
               className="w-full border border-gray-300 rounded-md px-4 py-2 resize-none"
               rows={5}
               value={formData.comment}
+              placeholder={t("reviewPlaceholder")}
               onChange={(e) =>
                 setFormData((prev) => ({ ...prev, comment: e.target.value }))
               }

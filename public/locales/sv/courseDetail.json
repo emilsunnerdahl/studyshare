@@ -5,7 +5,8 @@
   "overallAverage": "Medelbetyg",
   "averageRating": "Medelbetyg",
   "difficulty": "Svårighetsgrad",
-  "fun": "Rolig kurs",
+  "labs": "Laborationer",
+  "relevance": "Relevans för utbildningen",
   "lectures": "Föreläsningar",
   "material": "Kursmaterial",
   "workload": "Tidsåtgång",
@@ -14,10 +15,14 @@
   "reviewText": "Kommentar",
   "courses": "Kurser",
   "signInToReview": "Skapa recension",
-  "updateReview": "Uppdatera recension",
   "createReview": "Skapa recension",
   "hideDetails": "Dölj detaljer",
   "showDetails": "Visa mer",
   "overallRating": "Kursens helhetsbetyg",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "editReviewTitle": "Ändra din recension för",
+  "createReviewTitle": "Skapa en recension för",
+  "reviewPlaceholder": "Skriv gärna en utförlig kommentar. Vad tyckte du vad bra och mindre bra med kursen? Något som va extra roligt? Vilka tips vill du ge framtida studenter?",
+  "submitReview": "Skapa recension",
+  "updateReview": "Uppdatera recension"
 }

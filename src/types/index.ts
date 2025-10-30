@@ -1,7 +1,8 @@
 export type AvgReviews = {
   rating: number;
   difficulty: number;
-  fun: number;
+  labs: number;
+  relevance: number;
   lectures: number;
   material: number;
   workload: number;
@@ -11,7 +12,8 @@ export type Review = {
   id: string;
   rating: number;
   difficulty: number;
-  fun: number;
+  labs: number;
+  relevance: number;
   lectures: number;
   material: number;
   workload: number;

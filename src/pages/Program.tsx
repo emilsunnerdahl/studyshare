@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import CourseCard from "../components/CourseCard";
 import ProgramHeader from "../components/Search";
+import Specialisations from "@/components/Specialisations";
+import CourseCard from "@/components/CourseCard";
 import { useProgram } from "@/hooks/useProgram";
 
 const Program = () => {
   const { t } = useTranslation();
-  const { program: programCode } = useParams<{ program: string }>();
+  const { program: programCodeParam } = useParams<{ program: string }>();
   const [query, setQuery] = useState("");
-  const { data, isLoading, error } = useProgram(programCode ?? "");
+  const { data, isLoading, error } = useProgram(programCodeParam ?? "");
 
   if (isLoading) {
     return (
@@ -33,7 +34,7 @@ const Program = () => {
     );
   }
 
-  const { specialisations, programName, colorCode } = data ?? {};
+  const { specialisations, programName, programCode, colorCode } = data ?? {};
 
   const filtered = query
     ? Array.from(
@@ -72,21 +73,12 @@ const Program = () => {
       </div>
 
       {specialisations.map((spec, id) => (
-        <section key={id} className="w-full max-w-7xl my-10">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">
-            {spec.title}
-          </h2>
-          <div className="flex flex-wrap gap-4">
-            {spec.courses.map((course) => (
-              <CourseCard
-                rating={5}
-                key={course.code}
-                programCode={programCode}
-                colorCode={colorCode}
-                {...course}
-              />
-            ))}
-          </div>
+        <section key={id} className="w-full max-w-7xl m-3 p-3 rounded-2xl">
+          <Specialisations
+            spec={spec}
+            programCode={programCode}
+            colorCode={colorCode}
+          />
         </section>
       ))}
     </main>

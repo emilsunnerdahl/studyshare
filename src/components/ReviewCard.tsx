@@ -36,27 +36,33 @@ export default function ReviewCard({ review }: Props) {
           </div>
           <div className="flex justify-between items-center">
             <span className="text-sm text-gray-700 font-medium">
+              {t("labs")}
+            </span>
+            <RatingStars value={review.labs} size="sm" />
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-gray-700 font-medium">
               {t("lectures")}
             </span>
             <RatingStars value={review.lectures} size="sm" />
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-700 font-medium">
-              {t("workload")}
-            </span>
-            <RatingStars value={review.workload} size="sm" />
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-700 font-medium">
-              {t("fun")}
-            </span>
-            <RatingStars value={review.fun} size="sm" />
           </div>
           <div className="flex justify-between items-center">
             <span className="text-sm text-gray-700 font-medium mb-1">
               {t("material")}
             </span>
             <RatingStars value={review.material} size="sm" />
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-gray-700 font-medium mb-1">
+              {t("relevance")}
+            </span>
+            <RatingStars value={review.relevance} size="sm" />
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-gray-700 font-medium">
+              {t("workload")}
+            </span>
+            <RatingStars value={review.workload} size="sm" />
           </div>
         </div>
       )}

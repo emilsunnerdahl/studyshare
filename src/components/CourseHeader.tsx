@@ -19,14 +19,14 @@ export default function CourseHeader({ avgRating }: Props) {
         </div>
 
         <div className="flex items-center sm:ml-10 mt-3 sm:mt-0 space-x-3">
-          <RatingStars value={Math.round(avgRating?.rating || 0)} size="lg" />
+          <RatingStars value={avgRating?.rating || 0} size="lg" />
           <span className="text-xl sm:text-3xl font-bold text-gray-800">
-            {avgRating?.rating.toFixed(1)}
+            {avgRating?.rating}
           </span>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="flex flex-col items-start">
           <span className="text-sm text-gray-700 font-medium mb-1">
             {t("difficulty")}
@@ -36,9 +36,9 @@ export default function CourseHeader({ avgRating }: Props) {
 
         <div className="flex flex-col items-start">
           <span className="text-sm text-gray-700 font-medium mb-1">
-            {t("fun")}
+            {t("labs")}
           </span>
-          <RatingStars value={avgRating?.fun || 0} />
+          <RatingStars value={avgRating?.labs || 0} />
         </div>
 
         <div className="flex flex-col items-start">
@@ -50,16 +50,23 @@ export default function CourseHeader({ avgRating }: Props) {
 
         <div className="flex flex-col items-start">
           <span className="text-sm text-gray-700 font-medium mb-1">
-            {t("workload")}
+            {t("material")}
           </span>
-          <RatingStars value={avgRating?.workload || 0} />
+          <RatingStars value={avgRating?.material || 0} />
         </div>
 
         <div className="flex flex-col items-start">
           <span className="text-sm text-gray-700 font-medium mb-1">
-            {t("material")}
+            {t("relevance")}
           </span>
-          <RatingStars value={avgRating?.material || 0} />
+          <RatingStars value={avgRating?.relevance || 0} />
+        </div>
+
+        <div className="flex flex-col items-start">
+          <span className="text-sm text-gray-700 font-medium mb-1">
+            {t("workload")}
+          </span>
+          <RatingStars value={avgRating?.workload || 0} />
         </div>
       </div>
     </section>
