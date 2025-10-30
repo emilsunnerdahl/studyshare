@@ -26,7 +26,7 @@ export default function CourseHeader({ avgRating }: Props) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         <div className="flex flex-col items-start">
           <span className="text-sm text-gray-700 font-medium mb-1">
             {t("difficulty")}

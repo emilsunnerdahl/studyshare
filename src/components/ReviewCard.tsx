@@ -13,9 +13,16 @@ export default function ReviewCard({ review }: Props) {
   const { t } = useTranslation("courseDetail");
 
   return (
-    <div className="bg-white rounded-3xl p-5 border border-gray-100 shadow-[0_4px_20px_-5px_rgba(0,0,0,0.1)] max-w-xl w-full hover:shadow-[0_8px_30px_-5px_rgba(0,0,0,0.15)] transition-all">
-      <div className="flex sm:items-center gap-3 flex-col sm:flex-row space-x-3 mb-5">
-        <h2 className="text-2xl font-semibold text-gray-900 tracking-tight">
+    <div
+      onClick={() => setShowDetails((prev) => !prev)}
+      className="bg-white cursor-pointer rounded-3xl p-5 border border-gray-100 shadow-[0_4px_20px_-5px_rgba(0,0,0,0.1)] max-w-xl w-full hover:shadow-[0_8px_30px_-5px_rgba(0,0,0,0.15)] transition-all"
+    >
+      <div className="flex gap-3 flex-col space-x-3 mb-5">
+        <h2
+          className={`text-lg font-semibold text-gray-900 ${
+            !showDetails && "text-nowrap overflow-hidden overflow-ellipsis"
+          } tracking-tight`}
+        >
           {review.comment}
         </h2>
         <div className="flex gap-3 items-center">
@@ -67,10 +74,7 @@ export default function ReviewCard({ review }: Props) {
         </div>
       )}
 
-      <button
-        onClick={() => setShowDetails(!showDetails)}
-        className="flex cursor-pointer items-center text-sm text-blue-600 hover:text-blue-800 font-medium mb-4 transition-colors"
-      >
+      <button className="flex cursor-pointer items-center text-sm text-blue-600 hover:text-blue-800 font-medium mb-4 transition-colors">
         {showDetails ? (
           <>
             {t("hideDetails")} <ChevronUp className="ml-1 h-4 w-4" />
