@@ -18,14 +18,14 @@ const Specialisations = ({ spec, programCode, colorCode }: Props) => {
         onClick={() => setOpen((prev) => !prev)}
         className={`text-2xl font-bold text-gray-800 ${
           open && "mb-6"
-        } cursor-pointer flex items-center gap-2`}
+        } cursor-pointer flex items-center gap-2 border-l-[3px] border-gray-300 pl-3 w-fit`}
       >
         {spec.title}
         {open ? <ChevronUp /> : <ChevronDown />}
       </h2>
       {open && (
-        <div className="flex flex-wrap gap-4">
-          {spec.courses.map((course) => (
+        <div className="flex flex-wrap gap-4" >
+          {spec.courses.map((course, i) => (
             <CourseCard
               rating={5}
               key={course.code}
