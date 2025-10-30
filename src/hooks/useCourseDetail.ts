@@ -38,7 +38,8 @@ export function useCourseDetail(code: string) {
           `
               created_at,
               difficulty,
-              fun,
+              relevance,
+              labs,
               lectures,
               material,
               workload,

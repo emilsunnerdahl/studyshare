@@ -15,7 +15,8 @@ const ReviewForm = () => {
   const [formData, setFormData] = useState({
     rating: 0,
     difficulty: 0,
-    fun: 0,
+    labs: 0,
+    relevance: 0,
     lectures: 0,
     material: 0,
     workload: 0,
@@ -61,7 +62,9 @@ const ReviewForm = () => {
 
       const { data: review, error: reviewErr } = await supabase
         .from("reviews")
-        .select("rating,difficulty,fun,lectures,material,workload,comment")
+        .select(
+          "rating,difficulty,labs,relevance,lectures,material,workload,comment"
+        )
         .eq("course_id", course.id)
         .eq("user_id", user.id)
         .maybeSingle();
@@ -77,7 +80,8 @@ const ReviewForm = () => {
         setFormData({
           rating: review.rating ?? 0,
           difficulty: review.difficulty ?? 0,
-          fun: review.fun ?? 0,
+          labs: review.labs ?? 0,
+          relevance: review.relevance ?? 0,
           lectures: review.lectures ?? 0,
           material: review.material ?? 0,
           workload: review.workload ?? 0,
@@ -177,9 +181,9 @@ const ReviewForm = () => {
             onChange={(val) => handleStarChange("difficulty", val)}
           />
           <RatingField
-            label={t("fun", { defaultValue: "Fun" })}
-            value={formData.fun}
-            onChange={(val) => handleStarChange("fun", val)}
+            label={t("labs", { defaultValue: "Labs" })}
+            value={formData.labs}
+            onChange={(val) => handleStarChange("labs", val)}
           />
           <RatingField
             label={t("lectures", { defaultValue: "Lectures" })}
@@ -190,6 +194,11 @@ const ReviewForm = () => {
             label={t("material", { defaultValue: "Material" })}
             value={formData.material}
             onChange={(val) => handleStarChange("material", val)}
+          />
+          <RatingField
+            label={t("relevance", { defaultValue: "Relevance" })}
+            value={formData.relevance}
+            onChange={(val) => handleStarChange("relevance", val)}
           />
           <RatingField
             label={t("workload", { defaultValue: "Workload" })}

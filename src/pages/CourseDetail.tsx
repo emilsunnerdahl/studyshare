@@ -24,7 +24,8 @@ const CourseDetail = () => {
     return {
       rating: round1(reviews.reduce((s, r) => s + r.rating, 0) / len),
       difficulty: round1(reviews.reduce((s, r) => s + r.difficulty, 0) / len),
-      fun: round1(reviews.reduce((s, r) => s + r.fun, 0) / len),
+      labs: round1(reviews.reduce((s, r) => s + r.labs, 0) / len),
+      relevance: round1(reviews.reduce((s, r) => s + r.relevance, 0) / len),
       lectures: round1(reviews.reduce((s, r) => s + r.lectures, 0) / len),
       material: round1(reviews.reduce((s, r) => s + r.material, 0) / len),
       workload: round1(reviews.reduce((s, r) => s + r.workload, 0) / len),
