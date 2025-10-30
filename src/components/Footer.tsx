@@ -18,6 +18,12 @@ const Footer = () => {
                     <Link to="/contact" className="">
                         {t("contact")}
                     </Link>
+                    <Link to="/terms" className="">
+                        {"Terms"}
+                    </Link>
+                    <Link to="/privacy" className="">
+                        {"Privacy"}
+                    </Link>
                 </div>
             </div>
         </footer>
