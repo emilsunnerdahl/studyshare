@@ -15,10 +15,14 @@
   "reviewText": "Comment",
   "courses": "Courses",
   "signInToReview": "Create review",
-  "updateReview": "Update review",
   "createReview": "Create review",
   "hideDetails": "Hide details",
   "showDetails": "Show more",
   "overallRating": "Overall ratings",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "editReviewTitle": "Edit your review for",
+  "createReviewTitle": "Create review for",
+  "reviewPlaceholder": "Feel free to write a detailed comment. What did you think was good and what could be improved about the course? Was there something you particularly enjoyed? What tips would you give to future students?",
+  "submitReview": "Create review",
+  "updateReview": "Update review"
 }
