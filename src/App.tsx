@@ -15,7 +15,6 @@ import Profile from "./pages/Profile";
 import Auth from "./pages/Auth";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
-import SetNewPassword from "./pages/SetNewPassword";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
@@ -39,7 +38,6 @@ const App = () => {
         <Route path="/auth" element={<Auth />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/set-new-password" element={<SetNewPassword />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

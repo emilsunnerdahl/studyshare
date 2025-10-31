@@ -9,8 +9,7 @@ const Auth = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    username: "",
-    full_name: "",
+    name: "",
   });
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -26,8 +25,7 @@ const Auth = () => {
     if (!formData.email.includes("@")) errs.email = "Invalid email address";
     if (formData.password.length < 6) errs.password = "Password too short";
     if (isSignUp) {
-      if (!formData.username) errs.username = "Username is required";
-      if (!formData.full_name) errs.full_name = "Full name is required";
+      if (!formData.name) errs.name = "A name is required";
     }
     return errs;
   };
@@ -60,7 +58,6 @@ const Auth = () => {
             id: user.id, // must equal auth.users.id
             email: user.email, // safe to store
             name: user.user_metadata?.name ?? null,
-            username: user.user_metadata?.username ?? null,
           });
           if (upsertError) {
             setErrors((p) => ({ ...p, _form: upsertError.message }));
@@ -75,8 +72,7 @@ const Auth = () => {
       // --- SIGN UP ---
       const email = formData.email.trim();
       const password = formData.password; //Don't trim
-      const full_name = formData.full_name.trim();
-      const username = formData.username.trim();
+      const name = formData.name.trim();
 
       if (!email.endsWith("@student.lu.se"))
         return setErrors((p) => ({
@@ -88,7 +84,7 @@ const Auth = () => {
         email,
         password,
         options: {
-          data: { full_name, username },
+          data: {name},
         },
       });
 
@@ -146,33 +142,17 @@ const Auth = () => {
             <>
               <div>
                 <label className="text-sm font-medium text-gray-700 block mb-1">
-                  Full Name
+                  Name
                 </label>
                 <input
                   type="text"
-                  name="full_name"
-                  value={formData.full_name}
+                  name="name"
+                  value={formData.name}
                   onChange={handleChange}
                   className="w-full border border-gray-300 px-4 py-2 rounded-md"
                 />
-                {errors.full_name && (
-                  <p className="text-sm text-red-600">{errors.full_name}</p>
-                )}
-              </div>
-
-              <div>
-                <label className="text-sm font-medium text-gray-700 block mb-1">
-                  Username
-                </label>
-                <input
-                  type="text"
-                  name="username"
-                  value={formData.username}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 px-4 py-2 rounded-md"
-                />
-                {errors.username && (
-                  <p className="text-sm text-red-600">{errors.username}</p>
+                {errors.name && (
+                  <p className="text-sm text-red-600">{errors.name}</p>
                 )}
               </div>
             </>
