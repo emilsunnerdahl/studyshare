@@ -46,6 +46,11 @@ const Auth = () => {
         password: formData.password,
       });
       if (error) {
+
+        //remove later
+        console.log("Auth error:", { status: error.status, name: error.name, message: error.message });
+
+        //
         setErrors((prev) => ({ ...prev, _form: error.message }));
         return;
       } else {
