@@ -94,7 +94,7 @@ const Auth = () => {
         return;
       }
 
-      // If email confirmations are ON in Supabase, there won't be a session yet.
+      // If email confirmations are ON in Supabase, there won't be a session yet. ( We can remove this )
       // Show a notice instead of navigating immediately.
       if (!data.session) {
         alert("Check your inbox to confirm your email, then sign in.");
