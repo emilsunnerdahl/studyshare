@@ -5,8 +5,8 @@ const FormField = ({
   value,
   onChange,
   placeholder,
-  readOnly = false,   // ✨ ADDED
-  disabled = false,   // ✨ ADDED
+  readOnly = false,
+  disabled = false,
 }: {
   label: string;
   name: string;
@@ -14,8 +14,8 @@ const FormField = ({
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
-  readOnly?: boolean;   // ✨ ADDED
-  disabled?: boolean;   // ✨ ADDED
+  readOnly?: boolean;
+  disabled?: boolean;
 }) => (
   <div>
     <label
@@ -31,8 +31,8 @@ const FormField = ({
       value={value}
       placeholder={placeholder}
       onChange={onChange}
-      readOnly={readOnly}   // ✨ PASSED THROUGH
-      disabled={disabled}   // ✨ PASSED THROUGH
+      readOnly={readOnly}
+      disabled={disabled}
       className="w-full border border-gray-300 rounded-md px-4 py-2
                  disabled:bg-gray-100 disabled:text-gray-500
                  read-only:bg-gray-100 read-only:text-gray-500"

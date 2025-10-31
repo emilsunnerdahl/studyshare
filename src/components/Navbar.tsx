@@ -1,20 +1,17 @@
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/useAuth";
-import { supabase } from "@/lib/supabaseClient";
-
+import { Globe } from "lucide-react";
+import MenuDropDown from "./MenuDropDown";
 import { Button } from "./Button";
+import ProfileDropDown from "./ProfileDropDown";
 
 const Navbar = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const location = useLocation(); // ✨ CHANGED: we'll use this to hide the Profile button on the Profile page
-
   const { user } = useAuth();
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-  };
+  const buttonStyles =
+    "hover:bg-gray-100 transition-colors duration-300 py-2 rounded-xl px-2 sm:px-5 cursor-pointer";
 
   const checkLocalStorage = () => {
     const programCode = localStorage.getItem("program_code");
@@ -24,45 +21,47 @@ const Navbar = () => {
     return "/programs";
   };
 
+  const changeLanguage = () => {
+    const newLang = i18n.language === "sv" ? "en" : "sv";
+    i18n.changeLanguage(newLang);
+  };
+
   return (
     <header>
-      <div className="flex justify-between p-5 border-b border-gray-400">
-        <div className="flex gap-5 items-center">
+      <div className="flex justify-between md:grid md:grid-cols-3 md:items-center p-2 sm:p-5 md:mx-30">
+        <div className="block lg:hidden">
+          <MenuDropDown changeLanguage={changeLanguage} />
+        </div>
+        <div className="justify-self-start flex gap-5 items-center">
           <Link to="/">
             <img
               src="/graylogo.png"
               alt="StudyShare logo"
               className="h-8 w-auto mr-2 inline-block"
             />
-            <h1 className="text-2xl font-bold inline-block align-middle">
+            <h1 className="text-lg sm:text-2xl font-bold inline-block align-middle">
               StudyShare
             </h1>
           </Link>
-          <Link to="/programs" className="">
+        </div>
+        <div className="justify-self-center hidden lg:flex items-center">
+          <Link to="/programs" className={buttonStyles}>
             {t("programs")}
           </Link>
-          <Link to={checkLocalStorage()} className="">
+          <Link to={checkLocalStorage()} className={buttonStyles}>
             {t("courses")}
           </Link>
         </div>
-
-        {/* ✨ CHANGED: wrap right-side actions so we can show both Profile and Sign out */}
-        <div className="flex items-center gap-3">
-          {" "}
-          {/* ✨ CHANGED */}
+        <div className="justify-self-end flex items-center gap-3">
+          <button
+            className={`${buttonStyles} hidden lg:flex gap-2`}
+            onClick={changeLanguage}
+          >
+            <Globe />
+            {i18n.language === "en" ? "English" : "Svenska"}
+          </button>
           {user ? (
-            <>
-              {/* ✨ CHANGED: show a Profile button if we're not already on /profile */}
-              {location.pathname !== "/profile" && ( // ✨ CHANGED
-                <Button onClick={() => navigate("/profile")}>
-                  {" "}
-                  {/* ✨ CHANGED */}
-                  {/* If you prefer i18n: t("profile", { defaultValue: "Profile" }) */}
-                  {t("profile")}
-                </Button>
-              )}
-              <Button onClick={handleSignOut}>{t("Sign out")}</Button>
-            </>
+            <ProfileDropDown />
           ) : (
             <Button onClick={() => navigate("/auth")}>{t("signIn")}</Button>
           )}

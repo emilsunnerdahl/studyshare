@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useTranslation } from "react-i18next"; // NEW: i18n for labels/titles (optional, but matches your app)
+import { useTranslation } from "react-i18next";
 import RatingField from "../components/RatingField";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabaseClient";
@@ -9,16 +9,14 @@ const ReviewForm = () => {
   const { program, code } = useParams<{ program: string; code: string }>();
   const navigate = useNavigate();
   const { user, loading } = useAuth();
-
-  const { t } = useTranslation(); // NEW: useTranslation to keep strings localized
+  const { t } = useTranslation("courseDetail");
 
   const [courseId, setCourseId] = useState<string>("");
-
-  // CHANGED: initialize as before
   const [formData, setFormData] = useState({
     rating: 0,
     difficulty: 0,
-    fun: 0,
+    labs: 0,
+    relevance: 0,
     lectures: 0,
     material: 0,
     workload: 0,
@@ -26,26 +24,22 @@ const ReviewForm = () => {
   });
 
   const [errors, setErrors] = useState<string | null>(null);
+  const [isFetching, setIsFetching] = useState(true);
+  const [hasExistingReview, setHasExistingReview] = useState(false);
 
-  const [isFetching, setIsFetching] = useState(true); // NEW: show loading state while fetching course/review
-  const [hasExistingReview, setHasExistingReview] = useState(false); // NEW: toggle Create vs Edit UI
-
-  // CHANGED: include `navigate` in deps (React best practice), and guard on loading
   useEffect(() => {
     if (loading) return;
     if (!user) {
-      navigate("/auth"); // SAME behavior: redirect to auth when not logged in
+      navigate("/auth");
     }
-  }, [user, loading, navigate]); // WHY: add `navigate` to avoid stale closure warnings
+  }, [user, loading, navigate]);
 
-  // CHANGED: single effect to fetch course AND any existing review by this user
   useEffect(() => {
     const fetchData = async () => {
-      if (!code || !user) return; // WHY: only fetch when both are available
+      if (!code || !user) return;
       setIsFetching(true);
       setErrors(null);
 
-      // 1) Fetch course id (same logic as before)
       const { data: course, error: courseErr } = await supabase
         .from("courses")
         .select("id")
@@ -53,7 +47,7 @@ const ReviewForm = () => {
         .maybeSingle();
 
       if (courseErr) {
-        setErrors("Error fetching course: " + courseErr.message); // CHANGED: clearer message
+        setErrors("Error fetching course: " + courseErr.message);
         setIsFetching(false);
         return;
       }
@@ -66,10 +60,11 @@ const ReviewForm = () => {
 
       setCourseId(course.id);
 
-      // 2) NEW: Check for existing review from this user for this course
       const { data: review, error: reviewErr } = await supabase
         .from("reviews")
-        .select("rating,difficulty,fun,lectures,material,workload,comment")
+        .select(
+          "rating,difficulty,labs,relevance,lectures,material,workload,comment"
+        )
         .eq("course_id", course.id)
         .eq("user_id", user.id)
         .maybeSingle();
@@ -81,35 +76,34 @@ const ReviewForm = () => {
       }
 
       if (review) {
-        setHasExistingReview(true); // NEW: we’re in “Edit” mode
+        setHasExistingReview(true);
         setFormData({
           rating: review.rating ?? 0,
           difficulty: review.difficulty ?? 0,
-          fun: review.fun ?? 0,
+          labs: review.labs ?? 0,
+          relevance: review.relevance ?? 0,
           lectures: review.lectures ?? 0,
           material: review.material ?? 0,
           workload: review.workload ?? 0,
           comment: review.comment ?? "",
-        }); // NEW: prefill the form
+        });
       } else {
-        setHasExistingReview(false); // NEW: “Create” mode
+        setHasExistingReview(false);
       }
 
       setIsFetching(false);
     };
 
     fetchData();
-  }, [code, user]); // WHY: rerun when route code/user changes
+  }, [code, user]);
 
-  // CHANGED: functional update to avoid depending on stale formData
   const handleStarChange = (field: keyof typeof formData, value: number) => {
-    setFormData((prev) => ({ ...prev, [field]: value })); // WHY: safer state update
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // SAME: validation, but slightly clearer messages
     if (
       Object.entries(formData).some(([, v]) => typeof v === "number" && v === 0)
     ) {
@@ -127,7 +121,6 @@ const ReviewForm = () => {
       return;
     }
 
-    // SAME core DB behavior: upsert so it creates or updates
     const { error } = await supabase
       .from("reviews")
       .upsert(
@@ -136,7 +129,7 @@ const ReviewForm = () => {
           course_id: courseId,
           user_id: user.id,
         },
-        { onConflict: "user_id,course_id" } // SAME: ensures one review per user/course
+        { onConflict: "user_id,course_id" }
       )
       .select()
       .single();
@@ -146,82 +139,77 @@ const ReviewForm = () => {
       return;
     }
 
-    navigate(`/programs/${program}/${code}`); // SAME redirect
+    navigate(`/programs/${program}/${code}`);
   };
 
-  // NEW: dynamic title + submit label (falls back to English if translation key missing)
   const pageTitle = useMemo(
-    () =>
-      hasExistingReview
-        ? t("editReviewTitle", {
-            defaultValue: "Edit your review for {{code}}",
-            code,
-          })
-        : t("createReviewTitle", {
-            defaultValue: "Create new review for {{code}}",
-            code,
-          }),
+    () => (hasExistingReview ? t("editReviewTitle") : t("createReviewTitle")),
     [hasExistingReview, code, t]
   );
 
-  const submitLabel = hasExistingReview
-    ? t("updateReview", { defaultValue: "Update Review" })
-    : t("submitReview", { defaultValue: "Submit Review" });
+  const submitLabel = hasExistingReview ? t("updateReview") : t("submitReview");
 
   return (
     <main className="max-w-3xl mx-auto p-6 space-y-8">
-      {/* CHANGED: dynamic title instead of fixed "Write a review for {code}" */}
-      <h1 className="text-2xl font-bold text-gray-800">{pageTitle}</h1>
+      <h1 className="text-2xl font-bold text-gray-800">
+        {pageTitle} {code}
+      </h1>
 
-      {/* NEW: show a simple loading state while course/review are being fetched */}
       {isFetching ? (
         <p className="text-gray-500">
           {t("loading", { defaultValue: "Loading..." })}
         </p>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-6">
-          <RatingField
-            label={t("overallRating", { defaultValue: "Overall Rating" })}
-            value={formData.rating}
-            onChange={(val) => handleStarChange("rating", val)}
-          />
-          <RatingField
-            label={t("difficulty", { defaultValue: "Difficulty" })}
-            value={formData.difficulty}
-            onChange={(val) => handleStarChange("difficulty", val)}
-          />
-          <RatingField
-            label={t("fun", { defaultValue: "Fun" })}
-            value={formData.fun}
-            onChange={(val) => handleStarChange("fun", val)}
-          />
-          <RatingField
-            label={t("lectures", { defaultValue: "Lectures" })}
-            value={formData.lectures}
-            onChange={(val) => handleStarChange("lectures", val)}
-          />
-          <RatingField
-            label={t("material", { defaultValue: "Material" })}
-            value={formData.material}
-            onChange={(val) => handleStarChange("material", val)}
-          />
-          <RatingField
-            label={t("workload", { defaultValue: "Workload" })}
-            value={formData.workload}
-            onChange={(val) => handleStarChange("workload", val)}
-          />
+          <div className="grid grid-cols-1 sm:grid-cols-2">
+            <RatingField
+              label={t("overallRating", { defaultValue: "Overall Rating" })}
+              value={formData.rating}
+              onChange={(val) => handleStarChange("rating", val)}
+            />
+            <RatingField
+              label={t("difficulty", { defaultValue: "Difficulty" })}
+              value={formData.difficulty}
+              onChange={(val) => handleStarChange("difficulty", val)}
+            />
+            <RatingField
+              label={t("labs", { defaultValue: "Labs" })}
+              value={formData.labs}
+              onChange={(val) => handleStarChange("labs", val)}
+            />
+            <RatingField
+              label={t("lectures", { defaultValue: "Lectures" })}
+              value={formData.lectures}
+              onChange={(val) => handleStarChange("lectures", val)}
+            />
+            <RatingField
+              label={t("material", { defaultValue: "Material" })}
+              value={formData.material}
+              onChange={(val) => handleStarChange("material", val)}
+            />
+            <RatingField
+              label={t("relevance", { defaultValue: "Relevance" })}
+              value={formData.relevance}
+              onChange={(val) => handleStarChange("relevance", val)}
+            />
+            <RatingField
+              label={t("workload", { defaultValue: "Workload" })}
+              value={formData.workload}
+              onChange={(val) => handleStarChange("workload", val)}
+            />
+          </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              {t("comment", { defaultValue: "Comment" })}
+              {t("reviewText")}
             </label>
             <textarea
               className="w-full border border-gray-300 rounded-md px-4 py-2 resize-none"
               rows={5}
               value={formData.comment}
-              onChange={
-                (e) =>
-                  setFormData((prev) => ({ ...prev, comment: e.target.value })) // CHANGED: functional update pattern
+              placeholder={t("reviewPlaceholder")}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, comment: e.target.value }))
               }
             />
           </div>
@@ -232,7 +220,7 @@ const ReviewForm = () => {
             type="submit"
             className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-md transition"
           >
-            {submitLabel} {/* NEW: text reflects Create vs Edit */}
+            {submitLabel}
           </button>
         </form>
       )}

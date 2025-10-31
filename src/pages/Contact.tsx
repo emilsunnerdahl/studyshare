@@ -38,7 +38,6 @@ const Contact = () => {
 
   return (
     <main className="flex flex-col items-center">
-      {/* 📨 Contact Section */}
       <section className="w-full max-w-3xl px-6 py-20 text-center space-y-6">
         <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900">
           {t("contactTitle") || "Get in touch"}

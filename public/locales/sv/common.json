@@ -8,7 +8,7 @@
   "contact": "Kontakt",
   "madeBy": "Gjord av studenter, för studenter.",
   "landingTitle": "Upptäck och utvärdera kurser tillsammans",
-  "landingDesc": "StudyShare är en plattform där studenter kan recensera kurser anonymt - så att du kan fatta välgrundade beslut",
+  "landingDesc": "StudyShare är en plattform för LTH där studenter kan recensera kurser anonymt - så att du kan fatta välgrundade beslut",
   "aboutUsTitle": "Vilka vi är",
   "aboutUsDesc": "Vi är två studenter på datateknik på LTH som vill göra det lättare för studenter att navigera i valet av specialiseringskurser.",
   "aboutSiteTitle": "Vad är StudyShare?",
@@ -26,15 +26,7 @@
   "writeDesc": "Skriv recensioner på kurser du läst för att hjälpa andra studenter inför sitt kursval.",
   "saveCourses": "Spara Favoriter",
   "saveDesc": "Spara kurser som favoriter för att enkelt hitta tillbaka senare.",
-  "coursesTitle": "Datavetenskapliga Specialiseringar",
-  "coursesDesc": "LTH Datateknik (D) - Läsår 2025/26",
   "courseNotFound": "Kursen kunde inte hittas",
-  "averageRating": "Genomsnittligt betyg",
-  "difficulty": "Svårighetsgrad",
-  "fun": "Rolighet",
-  "lectures": "Föreläsningar",
-  "material": "Material",
-  "workload": "Arbetsbelastning",
   "reviews": "Studentrecensioner",
   "rating": "Betyg",
   "notFoundText": "Ledsen, sidan du letar efter finns inte.",
@@ -45,5 +37,6 @@
   "programsTitle": "Program",
   "programs": "Program",
   "searchCourse": "Sök kurs...",
-  "searchResult": "Inga sökresultat..."
+  "searchResult": "Inga sökresultat...",
+  "reviewMissing": "Inga recensioner"
 }

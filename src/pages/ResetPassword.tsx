@@ -45,8 +45,8 @@ const ResetPassword = () => {
 
         setLoading(false);
 
-        setError("");
-        setSuccess(true);
+    setError("");
+    setSuccess(true);
 
         if (err) {
             setError(err.message);
@@ -100,6 +100,7 @@ const ResetPassword = () => {
               />
             </div>
 
+            {error && <p className="text-sm text-red-600">{error}</p>}
             {error && <p className="text-sm text-red-600">{error}</p>}
 
             <button

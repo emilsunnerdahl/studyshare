@@ -1,110 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { supabase } from "@/lib/supabaseClient";
-import CourseCard from "../components/CourseCard";
 import ProgramHeader from "../components/Search";
-
-type Course = {
-  code: string;
-  name: string;
-};
-
-type Specialisation = {
-  title: string;
-  courses: Course[];
-};
+import Specialisations from "@/components/Specialisations";
+import CourseCard from "@/components/CourseCard";
+import { useProgram } from "@/hooks/useProgram";
 
 const Program = () => {
   const { t } = useTranslation();
-  const { program: programCode } = useParams<{ program: string }>();
-
-  const [programName, setProgramName] = useState<string>("");
-  const [specialisations, setSpecialisations] = useState<Specialisation[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
-  const [colorCode, setColorCode] = useState("");
+  const { program: programCodeParam } = useParams<{ program: string }>();
   const [query, setQuery] = useState("");
+  const { data, isLoading, error } = useProgram(programCodeParam ?? "");
 
-  async function getCoursesForProgram(id: string) {
-    const { data, error } = await supabase
-      .from("programs")
-      .select(
-        `
-          id,
-          name,
-          program_code,
-          color_code,
-          programs_program_sections (
-            program_sections:program_sections (
-              name,
-              course_program_sections (
-                courses:courses (
-                  id, code, name,
-                  course_translations (
-                    language_code
-                  )
-                )
-              )
-            )
-          )
-        `
-      )
-      .eq("program_code", programCode)
-      /*       .eq(
-        "programs_program_sections.program_sections.course_program_sections.courses.course_translations.language_code",
-        "sv"
-      ) */
-      .maybeSingle();
-
-    if (error || !data) {
-      console.error("Error fetching program courses:", error?.message);
-      setNotFound(true);
-      setLoading(false);
-      return;
-    }
-
-    setProgramName(data.name as string);
-    setColorCode(data.color_code ?? "#000000");
-
-    const specs: Specialisation[] = (data.programs_program_sections || []).map(
-      (pm: any) => ({
-        title: pm.program_sections.name as string,
-        courses: (pm.program_sections.course_program_sections || []).map(
-          (cm: any) => ({
-            code: cm.courses.code as string,
-            name: cm.courses.name ?? cm.courses.code,
-          })
-        ),
-      })
-    );
-
-    specs.sort((a, b) => a.title.localeCompare(b.title));
-    setSpecialisations(specs);
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    if (!programCode) return;
-    setLoading(true);
-    setNotFound(false);
-    getCoursesForProgram(programCode);
-  }, [programCode]);
-
-  const filtered = query
-    ? Array.from(
-        new Map(
-          specialisations
-            .flatMap((spec) => spec.courses)
-            .map((course) => [course.code, course]) // key by code
-        ).values()
-      ).filter((course) =>
-        course.name.toLowerCase().includes(query.toLowerCase().trim()) || 
-        course.code.toLowerCase().includes(query.toLowerCase().trim())
-      )
-    : [];
-
-  if (loading) {
+  if (isLoading) {
     return (
       <main className="p-10 text-center">
         <p className="text-gray-600">{t("loading") || "Loading..."}</p>
@@ -112,7 +20,7 @@ const Program = () => {
     );
   }
 
-  if (notFound) {
+  if (!data) {
     return (
       <main className="p-10 text-center">
         <h1 className="text-2xl font-bold text-gray-800">
@@ -126,22 +34,34 @@ const Program = () => {
     );
   }
 
-  return (
-    <main className="flex flex-col items-center w-full px-6 py-10 space-y-16">
+  const { specialisations, programName, programCode, colorCode } = data ?? {};
 
+  const filtered = query
+    ? Array.from(
+        new Map(
+          specialisations
+            .flatMap((spec) => spec.courses)
+            .map((course) => [course.code, course]) // key by code
+        ).values()
+      ).filter(
+        (course) =>
+          course.name.toLowerCase().includes(query.toLowerCase().trim()) ||
+          course.code.toLowerCase().includes(query.toLowerCase().trim())
+      )
+    : [];
+
+  return (
+    <main className="flex flex-col items-center w-full px-6 py-10">
       <ProgramHeader
         title={programName}
-        subtitle={t("programCoursesDesc") ||
-            "Browse specialisations and their courses in this program."}
         placeholder="Sök kurs…"
-        accent={colorCode} 
+        accent={colorCode}
         onSearch={(q) => setQuery(q)}
       />
 
       <div className="flex flex-wrap gap-4 w-full">
         {filtered.map((course) => (
           <CourseCard
-            credits={5}
             rating={5}
             key={`filtered - ${course.code}`}
             programCode={programCode}
@@ -153,22 +73,12 @@ const Program = () => {
       </div>
 
       {specialisations.map((spec, id) => (
-        <section key={id} className="w-full max-w-7xl">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">
-            {spec.title}
-          </h2>
-          <div className="flex flex-wrap gap-4">
-            {spec.courses.map((course) => (
-              <CourseCard
-                credits={5}
-                rating={5}
-                key={course.code}
-                programCode={programCode}
-                colorCode={colorCode}
-                {...course}
-              />
-            ))}
-          </div>
+        <section key={id} className="w-full max-w-7xl m-3 p-3 rounded-2xl">
+          <Specialisations
+            spec={spec}
+            programCode={programCode}
+            colorCode={colorCode}
+          />
         </section>
       ))}
     </main>
