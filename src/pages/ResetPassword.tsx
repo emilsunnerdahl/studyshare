@@ -1,64 +1,63 @@
 import { useState, useEffect } from "react";
-import {supabase} from "@/lib/supabaseClient";
+import { useSearchParams } from "react-router-dom";
+import { supabase } from "@/lib/supabaseClient";
 
 const ResetPassword = () => {
-    const [password, setPassword] = useState("");
-    const [confirm, setConfirm] = useState("");
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [hasSession, setSession] = useState<boolean | null>(null);
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+  const email = searchParams.get("email");
 
-    useEffect(() => {
-        (async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            console.log("Recovery session present?", !!session, "email:", session?.user?.email);
-        })();
-    }, []);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
+    if (password !== confirm) {
+      setError("Passwords do not match.");
+      return;
+    }
 
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session) {
-            setError("This page must be opened from the password reset email.");
-            return;
-        }
+    if (token && email) {
+      const { data, error } = await supabase.auth.verifyOtp({
+        email,
+        token,
+        type: "recovery",
+      });
 
-        if (password.length < 6) {
-            setError("Password must be at least 6 characters.");
-            return;
-        }
-        if (password !== confirm) {
-            setError("Passwords do not match.");
-            return;
-        }
-
-        
-
+      if (error) {
+        setError(error.message);
+      } else {
         setError("");
-        setLoading(true);
+      }
 
-        // 🔗 Supabase integration goes here:
-        const {error: err} = await supabase.auth.updateUser({ password });
-        console.log(err);
+      setLoading(true);
 
-        setLoading(false);
+      // 🔗 Supabase integration goes here:
+      const { error: err } = await supabase.auth.updateUser({ password });
+      console.log(err);
 
-    setError("");
-    setSuccess(true);
+      setLoading(false);
 
-        if (err) {
-            setError(err.message);
-            return;
-        }
+      setError("");
+      setSuccess(true);
 
-        setSuccess(true);
+      if (err) {
+        setError(err.message);
+        return;
+      }
 
-        
-    };
+      setSuccess(true);
+    }
+  };
 
-    return (
+  return (
     <main className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
       <div className="w-full max-w-md bg-white shadow-md rounded-xl p-6 space-y-6">
         <h1 className="text-2xl font-bold text-center text-gray-800">
@@ -70,7 +69,8 @@ const ResetPassword = () => {
             Your password has been updated. You can now{" "}
             <a className="text-indigo-600 underline" href="/auth">
               sign in
-            </a>.
+            </a>
+            .
           </p>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
