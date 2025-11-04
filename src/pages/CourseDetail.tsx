@@ -30,7 +30,6 @@ const CourseDetail = () => {
       material: round1(reviews.reduce((s, r) => s + r.material, 0) / len),
       workload: round1(reviews.reduce((s, r) => s + r.workload, 0) / len),
     };
-    console.log(ratings);
 
     return ratings;
   }, [reviews]);
@@ -66,7 +65,9 @@ const CourseDetail = () => {
   return (
     <main className="p-6 space-y-12 max-w-5xl mx-auto">
       <header className="space-y-2">
-        <Button onClick={() => navigate(-1)}>← {t("courses")}</Button>
+        <Button onClick={() => navigate(`/programs/${program}`)}>
+          ← {t("courses")}
+        </Button>
         <div className="flex flex-col sm:flex-row justify-between gap-4">
           <h1 className="text-3xl font-bold text-gray-900">{course.name}</h1>
 

@@ -21,7 +21,7 @@ export default function CourseHeader({ avgRating }: Props) {
         <div className="flex items-center sm:ml-10 mt-3 sm:mt-0 space-x-3">
           <RatingStars value={avgRating?.rating || 0} size="lg" />
           <span className="text-xl sm:text-3xl font-bold text-gray-800">
-            {avgRating?.rating}
+            {avgRating?.rating.toFixed(1)}
           </span>
         </div>
       </div>
@@ -31,42 +31,60 @@ export default function CourseHeader({ avgRating }: Props) {
           <span className="text-sm text-gray-700 font-medium mb-1">
             {t("difficulty")}
           </span>
-          <RatingStars value={avgRating?.difficulty || 0} />
+          <div className="flex items-center gap-2">
+            <RatingStars value={avgRating?.difficulty || 0} />
+            {avgRating?.difficulty.toFixed(1)}
+          </div>
         </div>
 
         <div className="flex flex-col items-start">
           <span className="text-sm text-gray-700 font-medium mb-1">
             {t("labs")}
           </span>
-          <RatingStars value={avgRating?.labs || 0} />
+          <div className="flex items-center gap-2">
+            <RatingStars value={avgRating?.labs || 0} />
+            {avgRating?.labs.toFixed(1)}
+          </div>
         </div>
 
         <div className="flex flex-col items-start">
           <span className="text-sm text-gray-700 font-medium mb-1">
             {t("lectures")}
           </span>
-          <RatingStars value={avgRating?.lectures || 0} />
+          <div className="flex items-center gap-2">
+            <RatingStars value={avgRating?.lectures || 0} />
+            {avgRating?.lectures.toFixed(1)}
+          </div>
         </div>
 
         <div className="flex flex-col items-start">
           <span className="text-sm text-gray-700 font-medium mb-1">
             {t("material")}
           </span>
-          <RatingStars value={avgRating?.material || 0} />
+          <div className="flex items-center gap-2">
+            <RatingStars value={avgRating?.material || 0} />
+            {avgRating?.material.toFixed(1)}
+          </div>
         </div>
 
         <div className="flex flex-col items-start">
           <span className="text-sm text-gray-700 font-medium mb-1">
             {t("relevance")}
           </span>
-          <RatingStars value={avgRating?.relevance || 0} />
+          <div className="flex items-center gap-2">
+            <RatingStars value={avgRating?.relevance || 0} />
+            {avgRating?.relevance.toFixed(1)}
+          </div>
         </div>
 
         <div className="flex flex-col items-start">
           <span className="text-sm text-gray-700 font-medium mb-1">
             {t("workload")}
           </span>
-          <RatingStars value={avgRating?.workload || 0} />
+          <div className="flex items-center gap-2">
+            <RatingStars value={avgRating?.workload || 0} />
+            {avgRating?.workload.toFixed(1)}
+          </div>
         </div>
       </div>
     </section>

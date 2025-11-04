@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import ProgramHeader from "../components/Search";
@@ -11,6 +11,14 @@ const Program = () => {
   const { program: programCodeParam } = useParams<{ program: string }>();
   const [query, setQuery] = useState("");
   const { data, isLoading, error } = useProgram(programCodeParam ?? "");
+
+  useEffect(() => {
+    const saved = sessionStorage.getItem("scrollY");
+    if (saved) {
+      window.scrollTo(0, parseInt(saved));
+      sessionStorage.removeItem("scrollY");
+    }
+  }, []);
 
   if (isLoading) {
     return (
