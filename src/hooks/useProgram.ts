@@ -62,31 +62,17 @@ export function useProgram(programCode: string) {
           ),
         }));
 
-        // Sortera utifrån Årskurs eller Specialisering osv.
-        specs.sort((a, b) => {
-          const getPriority = (title: string) => {
-            if (title.startsWith("Å")) return 0;
-            if (title.startsWith("S")) return 1;
-            if (title.startsWith("V")) return 2;
-            if (title.startsWith("Ext")) return 3;
-            return 4;
-          };
-
-          const pa = getPriority(a.title);
-          const pb = getPriority(b.title);
-
-          if (pa !== pb) return pa - pb;
-
-          return a.title.localeCompare(b.title, "sv", {
-            sensitivity: "accent",
-          });
-        });
+        const filteredAndSorted = specs
+          .filter((spec) => spec.title.startsWith("Sp"))
+          .sort((a, b) =>
+            a.title.localeCompare(b.title, "sv", { sensitivity: "accent" })
+          );
 
         return {
           programName: data.name as string,
           programCode: data.program_code as string,
           colorCode: data.color_code ?? "#000000",
-          specialisations: specs as Specialisation[],
+          specialisations: filteredAndSorted as Specialisation[],
         };
       } else {
         const { data, error } = await supabase
@@ -147,31 +133,17 @@ export function useProgram(programCode: string) {
           ),
         }));
 
-        // Sortera utifrån Årskurs eller Specialisering osv.
-        specs.sort((a, b) => {
-          const getPriority = (title: string) => {
-            if (title.startsWith("St")) return 0;
-            if (title.startsWith("Sp")) return 1;
-            if (title.startsWith("Ele")) return 2;
-            if (title.startsWith("Ext")) return 3;
-            return 4;
-          };
-
-          const pa = getPriority(a.title);
-          const pb = getPriority(b.title);
-
-          if (pa !== pb) return pa - pb;
-
-          return a.title.localeCompare(b.title, "sv", {
-            sensitivity: "accent",
-          });
-        });
+        const filteredAndSorted = specs
+          .filter((spec) => spec.title.startsWith("Sp"))
+          .sort((a, b) =>
+            a.title.localeCompare(b.title, "sv", { sensitivity: "accent" })
+          );
 
         return {
           programName: data.translations[0].name as string,
           programCode: data.program_code as string,
           colorCode: data.color_code ?? "#000000",
-          specialisations: specs as Specialisation[],
+          specialisations: filteredAndSorted as Specialisation[],
         };
       }
     },
