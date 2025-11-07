@@ -104,17 +104,14 @@ const ReviewForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const optionalFields = new Set<string>(["rating", "labs"]);
+    const mandatoryFields = new Set<string>(["rating", "labs"]);
 
     if (
-      Object.entries(formData).some(
-        ([key, value]) =>
-          typeof value === "number" &&
-          value === 0 &&
-          optionalFields.has(key)
+      Array.from(mandatoryFields).some(
+        (key) => formData[key as keyof typeof formData] === 0
       )
     ) {
-      setErrors("Please rate all categories.");
+      setErrors("Not all mandatory fields are filled, overall rating and labs are required.");
       return;
     }
 
