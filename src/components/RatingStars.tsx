@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+import { Star, HelpCircle } from "lucide-react";
 
 const RatingStars = ({
   value,
@@ -19,6 +19,14 @@ const RatingStars = ({
   };
 
   const colorClass = getColorClasses(value);
+
+  if (value === 0) {
+    return (
+      <div className="flex">
+      <HelpCircle aria-label="unknown rating" className={`${sizeClass} text-gray-300`} />
+      </div>
+    );
+  }
 
   return (
     <div className="flex space-x-1">

@@ -104,8 +104,15 @@ const ReviewForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const optionalFields = new Set<string>(["rating", "labs"]);
+
     if (
-      Object.entries(formData).some(([, v]) => typeof v === "number" && v === 0)
+      Object.entries(formData).some(
+        ([key, value]) =>
+          typeof value === "number" &&
+          value === 0 &&
+          optionalFields.has(key)
+      )
     ) {
       setErrors("Please rate all categories.");
       return;
@@ -135,7 +142,8 @@ const ReviewForm = () => {
       .single();
 
     if (error) {
-      setErrors(error.message);
+      setErrors("Failed to submit review");
+      console.error("Review submission error:", error);
       return;
     }
 
