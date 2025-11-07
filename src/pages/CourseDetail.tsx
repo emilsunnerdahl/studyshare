@@ -20,15 +20,24 @@ const CourseDetail = () => {
 
   const avgRating: AvgReviews | null = useMemo(() => {
     if (!data || reviews.length === 0) return null;
-    const len = reviews.length;
+
+    const calculateAvg = (field: keyof Review) => {
+      const validScores = reviews
+        .map((r) => r[field])
+        .filter((score) => score > 0);
+      return validScores.length > 0
+        ? round1(validScores.reduce((s, score) => s + (score as number), 0) / validScores.length)
+        : 0;
+    };
+
     const ratings = {
-      rating: round1(reviews.reduce((s, r) => s + r.rating, 0) / len),
-      difficulty: round1(reviews.reduce((s, r) => s + r.difficulty, 0) / len),
-      labs: round1(reviews.reduce((s, r) => s + r.labs, 0) / len),
-      relevance: round1(reviews.reduce((s, r) => s + r.relevance, 0) / len),
-      lectures: round1(reviews.reduce((s, r) => s + r.lectures, 0) / len),
-      material: round1(reviews.reduce((s, r) => s + r.material, 0) / len),
-      workload: round1(reviews.reduce((s, r) => s + r.workload, 0) / len),
+      rating: calculateAvg("rating"),
+      difficulty: calculateAvg("difficulty"),
+      labs: calculateAvg("labs"),
+      relevance: calculateAvg("relevance"),
+      lectures: calculateAvg("lectures"),
+      material: calculateAvg("material"),
+      workload: calculateAvg("workload"),
     };
 
     return ratings;
