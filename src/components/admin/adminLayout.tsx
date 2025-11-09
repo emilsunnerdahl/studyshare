@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Outlet, NavLink } from "react-router-dom";
-import { Menu, X, Home, Users, Settings, BookCheck } from "lucide-react";
+import { Menu, X, Home, Users, ArrowLeftToLine, BookCheck } from "lucide-react";
 
 interface NavItem {
   name: string;
@@ -34,7 +34,7 @@ export default function AdminLayout() {
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
       >
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
-          <h1 className="text-xl font-semibold text-gray-900">Admin Panel</h1>
+          <h1 className="text-xl font-semibold text-gray-900">Studyshare Admin</h1>
           <button
             className="md:hidden p-2 hover:bg-gray-200 rounded-lg"
             onClick={() => setSidebarOpen(false)}
@@ -63,6 +63,17 @@ export default function AdminLayout() {
             </NavLink>
           ))}
         </nav>
+
+        {/* button to go back to main site */}
+        <div className="absolute bottom-0 w-full p-4 border-t border-gray-200">
+          <a
+            href="/"
+            className="flex items-center justify-center gap-2 p-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 transition"
+          >
+            <ArrowLeftToLine />
+            <span>Studyshare.se</span>
+          </a>
+        </div>
       </aside>
 
       {/* Main Content */}
