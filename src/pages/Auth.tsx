@@ -46,9 +46,12 @@ const Auth = () => {
         password: formData.password,
       });
       if (error) {
-
         //remove later
-        console.log("Auth error:", { status: error.status, name: error.name, message: error.message });
+        console.log("Auth error:", {
+          status: error.status,
+          name: error.name,
+          message: error.message,
+        });
 
         //
         setErrors((prev) => ({ ...prev, _form: error.message }));
@@ -71,7 +74,6 @@ const Auth = () => {
         navigate("/");
       }
     } else {
-
       // --- SIGN UP ---
       const email = formData.email.trim();
       const password = formData.password; //Don't trim
@@ -88,7 +90,7 @@ const Auth = () => {
         password,
         options: {
           emailRedirectTo: `${window.location.origin}/auth/callback`,
-          data: {name},
+          data: { name },
         },
       });
 
@@ -137,33 +139,35 @@ const Auth = () => {
 
   return (
     <>
-      {notice && <MessagePopup message={notice} onClose={() => setNotice(null)} />}
+      {notice && (
+        <MessagePopup message={notice} onClose={() => setNotice(null)} />
+      )}
       <main className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
         <div className="w-full max-w-md bg-white shadow-md rounded-xl p-6 space-y-6">
           <h1 className="text-2xl font-bold text-center text-gray-800">
             {isSignUp ? t("createAccount") : t("signIn")}
           </h1>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {isSignUp && (
-            <>
-              <div>
-                <label className="text-sm font-medium text-gray-700 block mb-1">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 px-4 py-2 rounded-md"
-                />
-                {errors.name && (
-                  <p className="text-sm text-red-600">{errors.name}</p>
-                )}
-              </div>
-            </>
-          )}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {isSignUp && (
+              <>
+                <div>
+                  <label className="text-sm font-medium text-gray-700 block mb-1">
+                    {t("name")}
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full border border-gray-300 px-4 py-2 rounded-md"
+                  />
+                  {errors.name && (
+                    <p className="text-sm text-red-600">{errors.name}</p>
+                  )}
+                </div>
+              </>
+            )}
 
             <div>
               <label className="text-sm font-medium text-gray-700 block mb-1">
