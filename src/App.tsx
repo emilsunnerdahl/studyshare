@@ -21,6 +21,7 @@ import AuthCallback from "./pages/AuthCallback";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import AdminLayout from "./components/admin/adminLayout";
+import Reviews from "./components/admin/reviews";
 
 const queryClient = new QueryClient();
 
@@ -58,7 +59,7 @@ const App = () => {
             <Route element={<AdminLayout />}>
               <Route path="/admin/dashboard" element={<div>Admin Dashboard</div>} />
               <Route path="/admin/users" element={<div>Admin Users</div>} />
-              <Route path="/admin/reviews" element={<div>Admin Reviews</div>} />
+              <Route path="/admin/reviews" element={<Reviews />} />
             </Route>
           </Routes>
         </div>
