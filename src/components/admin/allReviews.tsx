@@ -6,7 +6,52 @@ import { useState, useMemo } from "react";
 type SortColumn = "course_name" | "course_code" | "comment" | "rating" | "created_at" | null;
 type SortDirection = "asc" | "desc";
 
-export default function Reviews() {
+interface HeaderConfig {
+    key: SortColumn;
+    label: string;
+    isRounded?: "left" | "right" | undefined;
+}
+
+const HEADERS: HeaderConfig[] = [
+    { key: "course_name", label: "Course Name", isRounded: "left" },
+    { key: "course_code", label: "Course Code" },
+    { key: "comment", label: "Review Comment" },
+    { key: "rating", label: "Rating" },
+    { key: "created_at", label: "Created At" },
+];
+
+interface TableHeaderProps {
+    column: SortColumn;
+    label: string;
+    isRounded?: "left" | "right" | undefined;
+    sortColumn: SortColumn;
+    sortDirection: SortDirection;
+    onSort: (column: SortColumn) => void;
+}
+
+function TableHeader({ column, label, isRounded, sortColumn, sortDirection, onSort }: TableHeaderProps) {
+    const getRoundedClass = () => {
+        if (isRounded === "left") return "rounded-tl-2xl";
+        if (isRounded === "right") return "rounded-tr-2xl";
+        return "";
+    };
+
+    const isActive = sortColumn === column;
+
+    return (
+        <th
+            className={`px-6 py-3 text-left ${isRounded ? getRoundedClass() : ""} cursor-pointer hover:bg-gray-200 transition`}
+            onClick={() => onSort(column)}
+        >
+            <div className="flex items-center gap-2">
+                {label}
+                {isActive && (sortDirection === "asc" ? <ChevronUp size={16} /> : <ChevronDown size={16} />)}
+            </div>
+        </th>
+    );
+}
+
+export default function AllReviews() {
 
     const { data: reviews = [] } = useCourseReviews();
     const { handleDeleteReview } = useDeleteReview();
@@ -85,61 +130,17 @@ export default function Reviews() {
                 <table className="min-w-full text-sm text-gray-700">
                     <thead className="bg-gray-100 text-gray-900 uppercase text-xs tracking-wider">
                         <tr>
-                            <th
-                                className="px-6 py-3 text-left rounded-tl-2xl cursor-pointer hover:bg-gray-200 transition"
-                                onClick={() => handleSort("course_name")}
-                            >
-                                <div className="flex items-center gap-2">
-                                    Course Name
-                                    {sortColumn === "course_name" && (
-                                        sortDirection === "asc" ? <ChevronUp size={16} /> : <ChevronDown size={16} />
-                                    )}
-                                </div>
-                            </th>
-                            <th
-                                className="px-6 py-3 text-left cursor-pointer hover:bg-gray-200 transition"
-                                onClick={() => handleSort("course_code")}
-                            >
-                                <div className="flex items-center gap-2">
-                                    Course Code
-                                    {sortColumn === "course_code" && (
-                                        sortDirection === "asc" ? <ChevronUp size={16} /> : <ChevronDown size={16} />
-                                    )}
-                                </div>
-                            </th>
-                            <th
-                                className="px-6 py-3 text-left cursor-pointer hover:bg-gray-200 transition"
-                                onClick={() => handleSort("comment")}
-                            >
-                                <div className="flex items-center gap-2">
-                                    Review Comment
-                                    {sortColumn === "comment" && (
-                                        sortDirection === "asc" ? <ChevronUp size={16} /> : <ChevronDown size={16} />
-                                    )}
-                                </div>
-                            </th>
-                            <th
-                                className="px-6 py-3 text-left cursor-pointer hover:bg-gray-200 transition"
-                                onClick={() => handleSort("rating")}
-                            >
-                                <div className="flex items-center gap-2">
-                                    Rating
-                                    {sortColumn === "rating" && (
-                                        sortDirection === "asc" ? <ChevronUp size={16} /> : <ChevronDown size={16} />
-                                    )}
-                                </div>
-                            </th>
-                            <th
-                                className="px-6 py-3 text-left cursor-pointer hover:bg-gray-200 transition"
-                                onClick={() => handleSort("created_at")}
-                            >
-                                <div className="flex items-center gap-2">
-                                    Created At
-                                    {sortColumn === "created_at" && (
-                                        sortDirection === "asc" ? <ChevronUp size={16} /> : <ChevronDown size={16} />
-                                    )}
-                                </div>
-                            </th>
+                            {HEADERS.map((header) => (
+                                <TableHeader
+                                    key={header.key}
+                                    column={header.key}
+                                    label={header.label}
+                                    isRounded={header.isRounded}
+                                    sortColumn={sortColumn}
+                                    sortDirection={sortDirection}
+                                    onSort={handleSort}
+                                />
+                            ))}
                             <th className="px-6 py-3 text-center rounded-tr-2xl"></th>
                         </tr>
                     </thead>

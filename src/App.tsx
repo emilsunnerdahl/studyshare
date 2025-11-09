@@ -21,7 +21,7 @@ import AuthCallback from "./pages/AuthCallback";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import AdminLayout from "./components/admin/adminLayout";
-import Reviews from "./components/admin/reviews";
+import Reviews from "./pages/admin/Reviews";
 
 const queryClient = new QueryClient();
 

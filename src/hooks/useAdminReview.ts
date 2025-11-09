@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabaseClient";
-import { ReviewTable, Review } from "@/types";
+import { ReviewTable } from "@/types";
 
 export function useCourseReviews() {
     return useQuery({
