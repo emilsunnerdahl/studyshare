@@ -89,7 +89,7 @@ const CourseDetail = () => {
   }
 
   return (
-    <main className="p-6 space-y-12 max-w-5xl mx-auto">
+    <main className="sm:p-6 space-y-12 max-w-5xl mx-auto">
       <header className="space-y-2">
         <Button onClick={() => navigate(`/programs/${program}`)}>
           ← {t("courses")}
