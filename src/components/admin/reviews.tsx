@@ -1,13 +1,28 @@
 import { useCourseReviews } from "@/hooks/useAdminReview";
+import { supabase } from "@/lib/supabaseClient";
 import { Trash2, ChevronUp, ChevronDown } from "lucide-react";
 import { useState, useMemo } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 type SortColumn = "course_name" | "course_code" | "comment" | "rating" | "created_at" | null;
 type SortDirection = "asc" | "desc";
 
+const deleteReview = async (reviewId: string) => {
+    console.log("Deleting review with ID:", reviewId);
+    const { error } = await supabase
+        .from("reviews")
+        .delete()
+        .eq("id", reviewId);
+
+    if (error) {
+        throw error;
+    }
+};
+
 export default function Reviews() {
 
     const { data: reviews = [] } = useCourseReviews();
+    const queryClient = useQueryClient();
     const [sortColumn, setSortColumn] = useState<SortColumn>(null);
     const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
     const [searchQuery, setSearchQuery] = useState<string>("");
@@ -65,8 +80,15 @@ export default function Reviews() {
     }, [filteredReviews, sortColumn, sortDirection]);
 
     const handleDeleteReview = (reviewId: string) => {
-        // TODO: Implement delete functionality
-        console.log("Delete review:", reviewId);
+        deleteReview(reviewId)
+            .then(() => {
+                console.log("Review deleted:", reviewId);
+                // Invalidate the cache so it refetches the reviews
+                queryClient.invalidateQueries({ queryKey: ["reviews", "sv"] });
+            })
+            .catch((error) => {
+                console.error("Error deleting review:", error);
+            });
     };
 
     return (
