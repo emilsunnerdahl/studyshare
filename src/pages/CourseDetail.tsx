@@ -8,6 +8,15 @@ import CourseHeader from "@/components/CourseHeader";
 import { useAuth } from "@/hooks/useAuth";
 import { useCourseDetail } from "@/hooks/useCourseDetail";
 
+type NumericReviewFields =
+  | "rating"
+  | "difficulty"
+  | "labs"
+  | "relevance"
+  | "lectures"
+  | "material"
+  | "workload";
+
 const CourseDetail = () => {
   const { code, program } = useParams<{ code: string; program: string }>();
   const { t } = useTranslation("courseDetail");
@@ -16,17 +25,25 @@ const CourseDetail = () => {
   const [hasMyReview, setHasMyReview] = useState(false);
   const round1 = (num: number) => Math.round(num * 10) / 10;
   const { data, isLoading, error } = useCourseDetail(code ?? "");
-  const { course, reviews } = data ?? { course: null, reviews: [] as Review[] };
+  const { course, ownReview, reviews } = data ?? {
+    course: null,
+    reviews: [] as Review[],
+  };
+
+  const allReviews = ownReview ? [...reviews, ownReview] : reviews;
 
   const avgRating: AvgReviews | null = useMemo(() => {
-    if (!data || reviews.length === 0) return null;
+    if (!data || allReviews.length === 0) return null;
 
-    const calculateAvg = (field: keyof Review) => {
-      const validScores = reviews
+    const calculateAvg = (field: NumericReviewFields) => {
+      const validScores = allReviews
         .map((r) => r[field])
         .filter((score) => score > 0);
       return validScores.length > 0
-        ? round1(validScores.reduce((s, score) => s + (score as number), 0) / validScores.length)
+        ? round1(
+            validScores.reduce((s, score) => s + (score as number), 0) /
+              validScores.length
+          )
         : 0;
     };
 
@@ -41,15 +58,15 @@ const CourseDetail = () => {
     };
 
     return ratings;
-  }, [reviews]);
+  }, [allReviews]);
 
   useEffect(() => {
     if (!user) {
       setHasMyReview(false);
       return;
     }
-    setHasMyReview(reviews.some((r) => r.user_id === user.id));
-  }, [reviews, user]);
+    setHasMyReview(allReviews.some((r) => r.user_id === user.id));
+  }, [allReviews, user]);
 
   if (isLoading) {
     return (
@@ -72,7 +89,7 @@ const CourseDetail = () => {
   }
 
   return (
-    <main className="p-6 space-y-12 max-w-5xl mx-auto">
+    <main className="sm:p-6 space-y-12 max-w-5xl mx-auto">
       <header className="space-y-2">
         <Button onClick={() => navigate(`/programs/${program}`)}>
           ← {t("courses")}
@@ -103,12 +120,16 @@ const CourseDetail = () => {
 
       <section>
         <h2 className="text-2xl font-semibold mb-6">
-          {t("reviews") || "Student Reviews"} ({reviews.length})
+          {t("reviews") || "Student Reviews"} (
+          {reviews.length + ownReview ? 1 : 0})
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          {ownReview && <ReviewCard ownReview={true} review={ownReview} />}
           {reviews.map((review) => {
-            return <ReviewCard key={review.id} review={review} />;
+            return (
+              <ReviewCard ownReview={false} key={review.id} review={review} />
+            );
           })}
         </div>
       </section>

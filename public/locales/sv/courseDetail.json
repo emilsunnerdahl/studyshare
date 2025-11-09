@@ -24,5 +24,8 @@
   "createReviewTitle": "Skapa en recension för",
   "reviewPlaceholder": "Skriv gärna en utförlig kommentar. Vad tyckte du vad bra och mindre bra med kursen? Något som va extra roligt? Vilka tips vill du ge framtida studenter?",
   "submitReview": "Skapa recension",
-  "updateReview": "Uppdatera recension"
+  "updateReview": "Uppdatera recension",
+  "ownReview": "Din recension",
+  "verifiedReview": "Verifierad",
+  "notVerifiedReview": "Ej verifierad"
 }

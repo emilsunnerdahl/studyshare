@@ -20,6 +20,7 @@ export type Review = {
   comment: string;
   created_at: string;
   user_id?: string;
+  verified_review?: boolean;
 };
 
 export type ReviewTable = Review & {

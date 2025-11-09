@@ -7,5 +7,9 @@
   "noAccount": "Don't have an account? Sign up",
   "backToHome": "Back to home",
   "resendEmail": "Resend confirmation email",
-  "studentEmail": "Email must end with @student.lu.se."
+  "studentEmail": "Email must end with @student.lu.se.",
+  "name": "Full name",
+  "forgotPw": "Forgot password",
+  "sendResetLink": "Send reset link",
+  "backToSignIn": "Back to sign in"
 }

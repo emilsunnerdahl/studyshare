@@ -8,5 +8,9 @@
   "backToHome": "Tillbaka hem",
   "resendEmail": "Skicka email igen",
   "email": "Email - Lunds universitet (@student.lu.se)",
-  "studentEmail": "Email måste sluta med @student.lu.se."
+  "studentEmail": "Email måste sluta med @student.lu.se.",
+  "name": "För- och efternamn",
+  "forgotPw": "Glömt lösenord",
+  "sendResetLink": "Skicka återställningslänk",
+  "backToSignIn": "Tillbaka till sign in"
 }
