@@ -24,5 +24,8 @@
   "createReviewTitle": "Create review for",
   "reviewPlaceholder": "Feel free to write a detailed comment. What did you think was good and what could be improved about the course? Was there something you particularly enjoyed? What tips would you give to future students?",
   "submitReview": "Create review",
-  "updateReview": "Update review"
+  "updateReview": "Update review",
+  "ownReview": "Your review",
+  "verifiedReview": "Verified",
+  "notVerifiedReview": "Not verified"
 }

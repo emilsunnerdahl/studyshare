@@ -6,17 +6,44 @@ import { Review } from "@/types";
 
 type Props = {
   review: Review;
+  ownReview: boolean;
 };
 
-export default function ReviewCard({ review }: Props) {
+export default function ReviewCard({ review, ownReview }: Props) {
   const [showDetails, setShowDetails] = useState(false);
   const { t } = useTranslation("courseDetail");
+
+  function formatDate(dateString: string) {
+    const date = new Date(dateString);
+    return date.toLocaleString("sv-SE", {
+      dateStyle: "short",
+    });
+  }
 
   return (
     <div
       onClick={() => setShowDetails((prev) => !prev)}
       className="bg-white cursor-pointer rounded-3xl p-5 border border-gray-100 shadow-[0_4px_20px_-5px_rgba(0,0,0,0.1)] max-w-xl w-full hover:shadow-[0_8px_30px_-5px_rgba(0,0,0,0.15)] transition-all"
     >
+      <div className="flex justify-between">
+        <div className="flex gap-2">
+          {ownReview && (
+            <span className="rounded-full bg-green-400 text-xs px-2 py-1">
+              {t("ownReview")}
+            </span>
+          )}
+          {review.verified_review ? (
+            <span className="rounded-full bg-blue-400 text-xs px-2 py-1">
+              {t("verifiedReview")}
+            </span>
+          ) : (
+            <span className="rounded-full bg-red-400 text-xs px-2 py-1">
+              {t("notVerifiedReview")}
+            </span>
+          )}
+        </div>
+        <span>{formatDate("2025-11-04T21:42:48.698828+00:00")}</span>
+      </div>
       <div className="flex gap-3 flex-col space-x-3 mb-5">
         <h2
           className={`text-lg font-semibold text-gray-900 ${
