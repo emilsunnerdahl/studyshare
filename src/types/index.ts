@@ -22,6 +22,11 @@ export type Review = {
   user_id?: string;
 };
 
+export type ReviewTable = Review & {
+  course_name: string;
+  course_code: string;
+};
+
 export type Course = {
   code: string;
   name: string;
