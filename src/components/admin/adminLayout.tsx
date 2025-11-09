@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { Outlet, NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { Menu, X, Home, Users, ArrowLeftToLine, BookCheck } from "lucide-react";
+import { supabase } from "@/lib/supabaseClient";
 
 interface NavItem {
   name: string;
@@ -16,14 +17,54 @@ const navItems: NavItem[] = [
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+  const navigate = useNavigate();
+
+  // Check if user is admin on mount
+  useEffect(() => {
+    const checkAdminAccess = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+          navigate("/");
+          return;
+        }
+
+        const { data: profile } = await supabase
+          .from("users")
+          .select("role")
+          .eq("id", user.id)
+          .single();
+
+        if (profile?.role !== "admin") {
+          navigate("/");
+        } else {
+          setIsAdmin(true);
+        }
+      } catch (error) {
+        console.error("Error checking admin access:", error);
+        navigate("/");
+      }
+    };
+
+    checkAdminAccess();
+  }, [navigate]);
+
+  if (isAdmin === null) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAdmin) {
+    return null;
+  }
+
 
   return (
     <div className="flex h-screen bg-white text-gray-900">
       {/* Mobile overlay */}
       <div
-        className={`fixed inset-0 bg-black/50 z-30 transition-opacity md:hidden ${
-          sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 bg-black/50 z-30 transition-opacity md:hidden ${sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         onClick={() => setSidebarOpen(false)}
       />
 
@@ -50,10 +91,9 @@ export default function AdminLayout() {
               to={path}
               className={({ isActive }) =>
                 `flex items-center w-full gap-3 p-2 rounded-lg transition
-                ${
-                  isActive
-                    ? "bg-blue-100 text-blue-600"
-                    : "hover:bg-gray-200 text-gray-700"
+                ${isActive
+                  ? "bg-blue-100 text-blue-600"
+                  : "hover:bg-gray-200 text-gray-700"
                 }`
               }
               onClick={() => setSidebarOpen(false)} // closes on mobile
