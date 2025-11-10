@@ -25,6 +25,11 @@ export type Review = {
   verified_review?: boolean;
 };
 
+export type ReviewTable = Review & {
+  course_name: string;
+  course_code: string;
+};
+
 export type Course = {
   code: string;
   name: string;
