@@ -20,6 +20,8 @@ import NotFound from "./pages/NotFound";
 import AuthCallback from "./pages/AuthCallback";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import AdminLayout from "./components/admin/adminLayout";
+import Reviews from "./pages/admin/Reviews";
 
 const queryClient = new QueryClient();
 
@@ -53,7 +55,12 @@ const App = () => {
             <Route path="/auth/callback" element={<AuthCallback />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<NotFound />} />
+            <Route element={<AdminLayout />}>
+              <Route path="/admin/dashboard" element={<div>Admin Dashboard</div>} />
+              <Route path="/admin/users" element={<div>Admin Users</div>} />
+              <Route path="/admin/reviews" element={<Reviews />} />
+            </Route>
           </Routes>
         </div>
       </BrowserRouter>
