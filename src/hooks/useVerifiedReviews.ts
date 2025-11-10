@@ -1,6 +1,7 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabaseClient";
 import { ReviewTable } from "@/types";
+import useCourses from "./useCourses";
 
 const REVIEW_COLUMNS = "id, rating, difficulty, labs, relevance, lectures, material, workload, comment, created_at, user_id, course_id";
 const CACHE_CONFIG = {
@@ -9,22 +10,20 @@ const CACHE_CONFIG = {
 };
 
 async function fetchNonVerifiedReviews(): Promise<ReviewTable[]> {
+    const coursesQuery = useCourses();
+    const courses = coursesQuery.data || [];
+
+    console.log("Courses fetched:", courses.length);
+    
     // Fetch unverified reviews
     const { data: reviews, error: reviewError } = await supabase
         .from("reviews")
         .select(REVIEW_COLUMNS)
         .order("created_at", { ascending: false });
+        enabled: courses.length > 0;
 
     if (reviewError) throw reviewError;
     if (!reviews) throw new Error("No reviews found");
-
-    // Fetch all courses
-    const { data: courses, error: coursesError } = await supabase
-        .from("courses")
-        .select("id, name, code");
-
-    if (coursesError) throw coursesError;
-    if (!courses) throw new Error("No courses found");
 
     // Fetch verified review IDs
     const { data: verifiedReviewIds, error: verifiedError } = await supabase
@@ -49,11 +48,26 @@ async function fetchNonVerifiedReviews(): Promise<ReviewTable[]> {
 }
 
 async function addVerifiedReview(review_id: string): Promise<void> {
+    // print user jwt token for debugging
+    const {
+        data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session) {
+        throw new Error("User is not authenticated");
+    }
+
+    console.log(JSON.parse(atob(session.access_token.split('.')[1])));
+
+
     const { error } = await supabase
         .from("verified_reviews")
         .insert([{ review_id }]);
 
-    if (error) throw error;
+    if (error) {
+        console.error("Error adding verified review:", error);
+        throw new Error(`Failed to verify review: ${error.message}`);
+    }
 }
 
 export default function useNonVerifiedReviews(): UseQueryResult<ReviewTable[], Error> {

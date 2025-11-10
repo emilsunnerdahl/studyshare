@@ -1,12 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabaseClient";
 import { ReviewTable } from "@/types";
+import useCourses from "./useCourses";
 
 export function useCourseReviews() {
+    const coursesQuery = useCourses();
+    const courses = coursesQuery.data || [];
+
     return useQuery({
-        queryKey: ["reviews", "sv"],
+        queryKey: ["reviews", "sv", courses.length],
         staleTime: 1000 * 60 * 30, // Data anses färsk i 30 min
         gcTime: 1000 * 60 * 10, // Rensas om oanvänd i 10 min
+        enabled: courses.length > 0, // Only run query when courses are available
 
         queryFn: async () => {
             // Hämta alla rader i "reviews"-tabellen
@@ -16,13 +21,6 @@ export function useCourseReviews() {
                 .order("created_at", { ascending: false });
 
             if (error) throw error;
-
-            const { data: courses, error: coursesErr } = await supabase
-                .from("courses")
-                .select("id, name, code");
-
-            if (coursesErr) throw coursesErr;
-            if (!courses) throw new Error("No courses found");
 
             const courseNameMap = new Map(courses.map((course) => [course.id, course.name]));
             const courseCodeMap = new Map(courses.map((course) => [course.id, course.code]));
