@@ -30,9 +30,7 @@
   "verifiedReview": "Verifierad",
   "notVerifiedReview": "Ej verifierad",
   "examPassed": "Klarade du tentan?",
-  "examComment": "Tentamens-kommentar:",
-  "courseComment": "Kurs-kommentar:",
-  "examPassed1": "Har klarat tentan.",
-  "examFailed": "Har inte klarat tentan."
-
+  "examComment": "Tenta:",
+  "examPassed1": "Tenta - har klarat tentan:",
+  "examFailed": "Tenta - har inte klarat tentan:"
 }

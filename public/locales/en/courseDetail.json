@@ -30,9 +30,6 @@
   "verifiedReview": "Verified",
   "notVerifiedReview": "Not verified",
   "examPassed": "Did you pass the exam?",
-  "examComment": "Exam comment:",
-  "courseComment": "Course comment:",
-  "examPassed1": "Has passed the exam.",
-  "examFailed": "Has not passed the exam."
-
+  "examPassed1": "Exam - has passed the exam:",
+  "examFailed": "Exam - has not passed the exam:"
 }

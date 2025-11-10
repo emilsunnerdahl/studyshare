@@ -47,32 +47,10 @@ export default function ReviewCard({ review, ownReview }: Props) {
       <div className="flex gap-3 flex-col space-x-3 mb-5">
         <h2
           className={`text-lg font-semibold text-gray-900 ${
-            !showDetails && "text-nowrap overflow-hidden overflow-ellipsis"
+            !showDetails && "text-nowrap truncate"
           } tracking-tight`}
         >
-          <div>
-            <label className="block text-sm font-semibold text-gray-600 uppercase tracking-wide mb-1">
-              {t("courseComment")}
-            </label>
-          
-            <p className = "text-base text-gray-800 bg-gray-50 rounded-xl p-3 shadow-sm border border-gray-100">
-              {review.comment}
-            </p>
-            
-          </div>
-
-          {review.examComment && (
-            <>
-              <div> 
-                <label className="block text-sm font-semibold text-gray-600 uppercase tracking-wide mb-1"> {t("examComment")}</label>
-                <p className = "text-base text-gray-800 bg-gray-50 rounded-xl p-3 shadow-sm border border-gray-100">
-                  {review.examComment} 
-                </p>
-                
-              </div>
-            </>
-
-          )}
+          {review.comment}
         </h2>
 
         <div className="flex gap-3 items-center">
@@ -84,47 +62,59 @@ export default function ReviewCard({ review, ownReview }: Props) {
       </div>
 
       {showDetails && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-3 gap-x-6 mb-4 animate-fadeIn">
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-700 font-medium">
-              {t("difficulty")}
-            </span>
-            <RatingStars value={review.difficulty} size="sm" />
+        <div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-3 gap-x-6 mb-4 animate-fadeIn">
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-700 font-medium">
+                {t("difficulty")}
+              </span>
+              <RatingStars value={review.difficulty} size="sm" />
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-700 font-medium">
+                {t("labs")}
+              </span>
+              <RatingStars value={review.labs} size="sm" />
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-700 font-medium">
+                {t("lectures")}
+              </span>
+              <RatingStars value={review.lectures} size="sm" />
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-700 font-medium mb-1">
+                {t("material")}
+              </span>
+              <RatingStars value={review.material} size="sm" />
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-700 font-medium mb-1">
+                {t("relevance")}
+              </span>
+              <RatingStars value={review.relevance} size="sm" />
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-700 font-medium">
+                {t("workload")}
+              </span>
+              <RatingStars value={review.workload} size="sm" />
+            </div>
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-700 font-medium">
-              {t("labs")}
-            </span>
-            <RatingStars value={review.labs} size="sm" />
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-700 font-medium">
-              {t("lectures")}
-            </span>
-            <RatingStars value={review.lectures} size="sm" />
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-700 font-medium mb-1">
-              {t("material")}
-            </span>
-            <RatingStars value={review.material} size="sm" />
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-700 font-medium mb-1">
-              {t("relevance")}
-            </span>
-            <RatingStars value={review.relevance} size="sm" />
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-700 font-medium">
-              {t("workload")}
-            </span>
-            <RatingStars value={review.workload} size="sm" />
-          </div>
-          <div>
-            {review.examPassed? t("examPassed1") : t("examFailed")}
-          </div>
-
+          {review.examComment && (
+            <>
+              <div>
+                <label className="flex gap-3 text-sm font-semibold text-gray-600 tracking-wide mb-1">
+                  <div>
+                    {review.examPassed ? t("examPassed1") : t("examFailed")}
+                  </div>
+                </label>
+                <p className="text-base text-gray-800 mb-2">
+                  {review.examComment}
+                </p>
+              </div>
+            </>
+          )}
         </div>
       )}
 
