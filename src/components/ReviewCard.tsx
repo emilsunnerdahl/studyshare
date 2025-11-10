@@ -46,9 +46,9 @@ export default function ReviewCard({ review, ownReview }: Props) {
       </div>
       <div className="flex gap-3 flex-col space-x-3 mb-5">
         <h2
-          className={`text-lg font-semibold text-gray-900 ${
+          className={`text-lg text-gray-900 ${
             !showDetails && "text-nowrap truncate"
-          } tracking-tight`}
+          } tracking-tight mt-3`}
         >
           {review.comment}
         </h2>
