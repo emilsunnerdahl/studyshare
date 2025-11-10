@@ -23,9 +23,16 @@
   "editReviewTitle": "Edit your review for",
   "createReviewTitle": "Create review for",
   "reviewPlaceholder": "Feel free to write a detailed comment. What did you think was good and what could be improved about the course? Was there something you particularly enjoyed? What tips would you give to future students?",
+  "examPlaceholder": "Feel free to write a comment about the exam, how did it go? Was it difficult?",
   "submitReview": "Create review",
   "updateReview": "Update review",
   "ownReview": "Your review",
   "verifiedReview": "Verified",
-  "notVerifiedReview": "Not verified"
+  "notVerifiedReview": "Not verified",
+  "examPassed": "Did you pass the exam?",
+  "examComment": "Exam comment:",
+  "courseComment": "Course comment:",
+  "examPassed1": "Has passed the exam.",
+  "examFailed": "Has not passed the exam."
+
 }

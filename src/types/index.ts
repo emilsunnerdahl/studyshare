@@ -18,6 +18,8 @@ export type Review = {
   material: number;
   workload: number;
   comment: string;
+  examPassed: boolean;
+  examComment: string;
   created_at: string;
   user_id?: string;
   verified_review?: boolean;

@@ -20,7 +20,9 @@ const ReviewForm = () => {
     lectures: 0,
     material: 0,
     workload: 0,
+    examPassed: false,
     comment: "",
+    examComment: "",
   });
 
   const [errors, setErrors] = useState<string | null>(null);
@@ -63,7 +65,7 @@ const ReviewForm = () => {
       const { data: review, error: reviewErr } = await supabase
         .from("reviews")
         .select(
-          "rating,difficulty,labs,relevance,lectures,material,workload,comment"
+          "rating,difficulty,labs,relevance,lectures,material,workload,comment,examPassed,examComment"
         )
         .eq("course_id", course.id)
         .eq("user_id", user.id)
@@ -85,7 +87,9 @@ const ReviewForm = () => {
           lectures: review.lectures ?? 0,
           material: review.material ?? 0,
           workload: review.workload ?? 0,
+          examPassed: review.examPassed ?? false,
           comment: review.comment ?? "",
+          examComment: review.examComment ?? "",
         });
       } else {
         setHasExistingReview(false);
@@ -129,6 +133,11 @@ const ReviewForm = () => {
 
     if (formData.comment.length > 1000) {
       setErrors("Comment must be less than 1000 chars");
+      return;
+    }
+
+    if (formData.examComment.length > 500) {
+      setErrors("Exam comment must be less than 500 chars");
       return;
     }
 
@@ -207,6 +216,42 @@ const ReviewForm = () => {
               label={t("workload", { defaultValue: "Workload" })}
               value={formData.workload}
               onChange={(val) => handleStarChange("workload", val)}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {t("examPassed")}
+            </label>
+            <input
+              type = "checkbox"
+              id = "passed"
+              checked={formData.examPassed}
+              onChange = {(e) => 
+                setFormData((prev) => ({...prev, examPassed: !prev.examPassed}))
+              }
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {t("reviewText")}
+              <span
+                className={`text-gray-500 text-xs ml-2 ${
+                  formData.examComment.length > 500 && "text-red-500"
+                }`}
+              >
+                {formData.examComment.length}/500
+              </span>
+            </label>
+            <textarea
+              className="w-full border border-gray-300 rounded-md px-4 py-2 resize-none"
+              rows={2}
+              value={formData.examComment}
+              placeholder={t("examPlaceholder")}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, examComment: e.target.value }))
+              }
             />
           </div>
 

@@ -50,8 +50,31 @@ export default function ReviewCard({ review, ownReview }: Props) {
             !showDetails && "text-nowrap overflow-hidden overflow-ellipsis"
           } tracking-tight`}
         >
-          {review.comment}
+          <div>
+            <label className="block text-sm font-semibold text-gray-600 uppercase tracking-wide mb-1">
+              {t("courseComment")}
+            </label>
+          
+            <p className = "text-base text-gray-800 bg-gray-50 rounded-xl p-3 shadow-sm border border-gray-100">
+              {review.comment}
+            </p>
+            
+          </div>
+
+          {review.examComment && (
+            <>
+              <div> 
+                <label className="block text-sm font-semibold text-gray-600 uppercase tracking-wide mb-1"> {t("examComment")}</label>
+                <p className = "text-base text-gray-800 bg-gray-50 rounded-xl p-3 shadow-sm border border-gray-100">
+                  {review.examComment} 
+                </p>
+                
+              </div>
+            </>
+
+          )}
         </h2>
+
         <div className="flex gap-3 items-center">
           <RatingStars value={review.rating} size="lg" />
           <span className="text-base font-semibold text-gray-700">
@@ -98,6 +121,10 @@ export default function ReviewCard({ review, ownReview }: Props) {
             </span>
             <RatingStars value={review.workload} size="sm" />
           </div>
+          <div>
+            {review.examPassed? t("examPassed1") : t("examFailed")}
+          </div>
+
         </div>
       )}
 

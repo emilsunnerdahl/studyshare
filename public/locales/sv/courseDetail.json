@@ -23,9 +23,16 @@
   "editReviewTitle": "Ändra din recension för",
   "createReviewTitle": "Skapa en recension för",
   "reviewPlaceholder": "Skriv gärna en utförlig kommentar. Vad tyckte du vad bra och mindre bra med kursen? Något som va extra roligt? Vilka tips vill du ge framtida studenter?",
+  "examPlaceholder": "Skriv gärna en kommentar om tentan, hur gick det? Var det svårt?",
   "submitReview": "Skapa recension",
   "updateReview": "Uppdatera recension",
   "ownReview": "Din recension",
   "verifiedReview": "Verifierad",
-  "notVerifiedReview": "Ej verifierad"
+  "notVerifiedReview": "Ej verifierad",
+  "examPassed": "Klarade du tentan?",
+  "examComment": "Tentamens-kommentar:",
+  "courseComment": "Kurs-kommentar:",
+  "examPassed1": "Har klarat tentan.",
+  "examFailed": "Har inte klarat tentan."
+
 }
