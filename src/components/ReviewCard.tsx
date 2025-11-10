@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import RatingStars from "./RatingStars";
+import RatingBar from "./RatingBar"
 import { Review } from "@/types";
 
 type Props = {
@@ -89,37 +90,48 @@ export default function ReviewCard({ review, ownReview }: Props) {
             <span className="text-sm text-gray-700 font-medium">
               {t("difficulty")}
             </span>
-            <RatingStars value={review.difficulty} size="sm" />
+            <div className="flex-1">
+              <RatingBar value={review.difficulty} size="sm" />
+            </div>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-sm text-gray-700 font-medium">
               {t("labs")}
             </span>
-            <RatingStars value={review.labs} size="sm" />
+            <div className="flex-1">
+              <RatingBar value={review.difficulty} size="sm" />
+            </div>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-sm text-gray-700 font-medium">
               {t("lectures")}
             </span>
-            <RatingStars value={review.lectures} size="sm" />
-          </div>
+            <div className="flex-1">
+              <RatingBar value={review.difficulty} size="sm" />
+            </div>          </div>
           <div className="flex justify-between items-center">
             <span className="text-sm text-gray-700 font-medium mb-1">
               {t("material")}
             </span>
-            <RatingStars value={review.material} size="sm" />
+            <div className="flex-1">
+              <RatingBar value={review.difficulty} size="sm" />
+            </div>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-sm text-gray-700 font-medium mb-1">
               {t("relevance")}
             </span>
-            <RatingStars value={review.relevance} size="sm" />
+            <div className="flex-1">
+              <RatingBar value={review.difficulty} size="sm" />
+            </div>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-sm text-gray-700 font-medium">
               {t("workload")}
             </span>
-            <RatingStars value={review.workload} size="sm" />
+            <div className="flex-1">
+              <RatingBar value={review.difficulty} size="sm" />
+            </div>
           </div>
           <div>
             {review.examPassed? t("examPassed1") : t("examFailed")}
