@@ -111,6 +111,14 @@ export default function AllReviews() {
         return sorted;
     }, [filteredReviews, sortColumn, sortDirection]);
 
+    function formatDate(dateString: string) {
+        const date = new Date(dateString);
+        return date.toLocaleString("sv-SE", {
+            dateStyle: "short",
+            timeStyle: "short",
+        });
+    }
+
     return (
         <div>
             <h1 className="text-2xl font-bold mb-6 text-gray-900">Reviews</h1>
@@ -164,7 +172,7 @@ export default function AllReviews() {
                                     {review.rating}
                                 </td>
                                 <td className="px-6 py-4 text-gray-700">
-                                    {review.created_at}
+                                    {formatDate(review.created_at)}
                                 </td>
                                 <td className="px-6 py-4 text-center">
                                     <button

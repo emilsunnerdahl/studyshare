@@ -1,11 +1,14 @@
-import useNonVerifiedReviews, { addVerifiedReview } from "@/hooks/useVerifiedReviews";
+import useNonVerifiedReviews, { getAddVerifiedReviewFn } from "@/hooks/useVerifiedReviews";
 import { Trash2, Check } from "lucide-react";
 import { useMemo } from "react";
 import { useDeleteReview } from "@/hooks/useDeleteReview";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function NonVerifiedReviews() {
     const { data: nonVerifiedReviews = [] } = useNonVerifiedReviews();
     const { handleDeleteReview } = useDeleteReview();
+    const queryClient = useQueryClient();
+    const handleAddVerifiedReview = getAddVerifiedReviewFn(queryClient);
 
     const sortedReviews = useMemo(() => {
         return [...nonVerifiedReviews].sort((a, b) => {
@@ -16,6 +19,14 @@ export default function NonVerifiedReviews() {
     }, [nonVerifiedReviews]);
 
     if (nonVerifiedReviews.length === 0) return null;
+
+    function formatDate(dateString: string) {
+        const date = new Date(dateString);
+        return date.toLocaleString("sv-SE", {
+            dateStyle: "short",
+            timeStyle: "short",
+        });
+    }
 
     return (
         <div className="mb-4">
@@ -53,13 +64,13 @@ export default function NonVerifiedReviews() {
                                     {review.rating}
                                 </td>
                                 <td className="px-6 py-4 text-gray-700">
-                                    {review.created_at}
+                                    {formatDate(review.created_at)}
                                 </td>
                                 <td className="px-6 py-4 text-center space-x-2 flex justify-center">
                                     <button
                                         className="inline-flex items-center justify-center p-2 text-green-600 hover:bg-green-50 rounded-lg transition"
                                         aria-label="Approve review"
-                                        onClick={() => addVerifiedReview(review.id)}
+                                        onClick={() => handleAddVerifiedReview(review.id)}
                                     >
                                         <Check size={18} />
                                     </button>

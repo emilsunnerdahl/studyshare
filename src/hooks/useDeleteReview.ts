@@ -5,7 +5,6 @@ export const useDeleteReview = () => {
     const queryClient = useQueryClient();
 
     const deleteReview = async (reviewId: string) => {
-        console.log("Deleting review with ID:", reviewId);
         const { error } = await supabase
             .from("reviews")
             .delete()
@@ -19,8 +18,6 @@ export const useDeleteReview = () => {
     const handleDeleteReview = (reviewId: string) => {
         deleteReview(reviewId)
             .then(() => {
-                console.log("Review deleted:", reviewId);
-                // Invalidate the cache so it refetches the reviews
                 queryClient.invalidateQueries({ queryKey: ["reviews", "sv"] });
             })
             .catch((error) => {

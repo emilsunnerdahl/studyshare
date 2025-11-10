@@ -8,7 +8,7 @@ export function useCourseReviews() {
     const courses = coursesQuery.data || [];
 
     return useQuery({
-        queryKey: ["reviews", "sv", courses.length],
+        queryKey: ["reviews", "sv"],
         staleTime: 1000 * 60 * 30, // Data anses färsk i 30 min
         gcTime: 1000 * 60 * 10, // Rensas om oanvänd i 10 min
         enabled: courses.length > 0, // Only run query when courses are available
