@@ -1,12 +1,10 @@
 import useNonVerifiedReviews, { getAddVerifiedReviewFn } from "@/hooks/useVerifiedReviews";
 import { Trash2, Check } from "lucide-react";
 import { useMemo } from "react";
-import { useDeleteReview } from "@/hooks/useDeleteReview";
 import { useQueryClient } from "@tanstack/react-query";
 
-export default function NonVerifiedReviews() {
+export default function NonVerifiedReviews({ setDeleting }: { setDeleting: (value: string | null) => void }) {
     const { data: nonVerifiedReviews = [] } = useNonVerifiedReviews();
-    const { handleDeleteReview } = useDeleteReview();
     const queryClient = useQueryClient();
     const handleAddVerifiedReview = getAddVerifiedReviewFn(queryClient);
 
@@ -77,7 +75,7 @@ export default function NonVerifiedReviews() {
                                     <button
                                         className="inline-flex items-center justify-center p-2 text-red-600 hover:bg-red-50 rounded-lg transition"
                                         aria-label="Reject review"
-                                        onClick={() => handleDeleteReview(review.id)}
+                                        onClick={() => setDeleting(review.id)}
                                     >
                                         <Trash2 size={18} />
                                     </button>

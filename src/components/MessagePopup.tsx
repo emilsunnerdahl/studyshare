@@ -41,7 +41,7 @@ export default function MessagePopup({ message, onClose }: { message: string | n
               onClick={handleClose}
               className="ml-3 inline-flex items-center justify-center rounded-md bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700 hover:bg-gray-200 transition"
             >
-              Close
+              Ok
             </button>
           </div>
         </div>

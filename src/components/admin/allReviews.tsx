@@ -1,5 +1,4 @@
 import { useCourseReviews } from "@/hooks/useAdminReview";
-import { useDeleteReview } from "@/hooks/useDeleteReview";
 import { Trash2, ChevronUp, ChevronDown } from "lucide-react";
 import { useState, useMemo } from "react";
 
@@ -51,10 +50,9 @@ function TableHeader({ column, label, isRounded, sortColumn, sortDirection, onSo
     );
 }
 
-export default function AllReviews() {
+export default function AllReviews( { setDeleting }: { setDeleting: (value: string | null) => void } ) {
 
     const { data: reviews = [] } = useCourseReviews();
-    const { handleDeleteReview } = useDeleteReview();
     const [sortColumn, setSortColumn] = useState<SortColumn>(null);
     const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
     const [searchQuery, setSearchQuery] = useState<string>("");
@@ -176,7 +174,7 @@ export default function AllReviews() {
                                 </td>
                                 <td className="px-6 py-4 text-center">
                                     <button
-                                        onClick={() => handleDeleteReview(review.id)}
+                                        onClick={() => {setDeleting(review.id)}}
                                         className="inline-flex items-center justify-center p-2 text-red-600 hover:bg-red-50 rounded-lg transition"
                                         aria-label="Delete review"
                                     >
