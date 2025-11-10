@@ -111,7 +111,9 @@ const ReviewForm = () => {
         (key) => formData[key as keyof typeof formData] === 0
       )
     ) {
-      setErrors("Not all mandatory fields are filled, overall rating and labs are required.");
+      setErrors(
+        "Not all mandatory fields are filled, overall rating and labs are required."
+      );
       return;
     }
 
@@ -122,6 +124,11 @@ const ReviewForm = () => {
 
     if (!courseId || !user) {
       setErrors("Course or user not loaded yet.");
+      return;
+    }
+
+    if (formData.comment.length > 1000) {
+      setErrors("Comment must be less than 1000 chars");
       return;
     }
 
@@ -140,7 +147,6 @@ const ReviewForm = () => {
 
     if (error) {
       setErrors("Failed to submit review");
-      console.error("Review submission error:", error);
       return;
     }
 
@@ -207,6 +213,13 @@ const ReviewForm = () => {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               {t("reviewText")}
+              <span
+                className={`text-gray-500 text-xs ml-2 ${
+                  formData.comment.length > 1000 && "text-red-500"
+                }`}
+              >
+                {formData.comment.length}/1000
+              </span>
             </label>
             <textarea
               className="w-full border border-gray-300 rounded-md px-4 py-2 resize-none"
