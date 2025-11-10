@@ -45,17 +45,7 @@ export function useCourseDetail(code: string) {
         .from("reviews")
         .select(
           `
-              created_at,
-              difficulty,
-              relevance,
-              labs,
-              lectures,
-              material,
-              workload,
-              rating,
-              id,
-              comment,
-              user_id,
+              *,
               verified_reviews!inner (
                 review_id
               )
