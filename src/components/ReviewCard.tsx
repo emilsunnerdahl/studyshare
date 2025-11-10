@@ -61,7 +61,7 @@ export default function ReviewCard({ review, ownReview }: Props) {
       </div>
 
       {showDetails && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 mb-4 animate-fadeIn">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-3 gap-x-6 mb-4 animate-fadeIn">
           <div className="flex justify-between items-center">
             <span className="text-sm text-gray-700 font-medium">
               {t("difficulty")}
