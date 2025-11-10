@@ -121,7 +121,7 @@ const CourseDetail = () => {
       <section>
         <h2 className="text-2xl font-semibold mb-6">
           {t("reviews") || "Student Reviews"} (
-          {reviews.length + ownReview ? 1 : 0})
+          {reviews.length + (ownReview ? 1 : 0)})
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
