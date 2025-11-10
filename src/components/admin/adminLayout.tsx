@@ -30,13 +30,9 @@ export default function AdminLayout() {
           return;
         }
 
-        const { data: profile } = await supabase
-          .from("users")
-          .select("role")
-          .eq("id", user.id)
-          .single();
+        const role = user?.app_metadata?.role;
 
-        if (profile?.role !== "admin") {
+        if (role !== "admin") {
           navigate("/");
         } else {
           setIsAdmin(true);
