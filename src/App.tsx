@@ -22,6 +22,7 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import AdminLayout from "./components/admin/adminLayout";
 import Reviews from "./pages/admin/Reviews";
+import Users from "./pages/admin/Users";
 
 const queryClient = new QueryClient();
 
@@ -57,8 +58,11 @@ const App = () => {
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="*" element={<NotFound />} />
             <Route element={<AdminLayout />}>
-              <Route path="/admin/dashboard" element={<div>Admin Dashboard</div>} />
-              <Route path="/admin/users" element={<div>Admin Users</div>} />
+              <Route
+                path="/admin/dashboard"
+                element={<div>Admin Dashboard</div>}
+              />
+              <Route path="/admin/users" element={<Users />} />
               <Route path="/admin/reviews" element={<Reviews />} />
             </Route>
           </Routes>
