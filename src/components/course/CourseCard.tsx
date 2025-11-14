@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Star } from "lucide-react";
-import RatingStars from "./RatingStars";
+import RatingStars from "../reviews/RatingStars";
 import { useTranslation } from "react-i18next";
 
 type CourseCardProps = {

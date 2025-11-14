@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import TestimonialCard from "@/components/TestimonialCard";
+import TestimonialCard from "@/components/landing/TestimonialCard";
 import { useAuth } from "@/hooks/useAuth";
 import CTA from "@/components/landing/cta";
 import Hero from "@/components/landing/hero";

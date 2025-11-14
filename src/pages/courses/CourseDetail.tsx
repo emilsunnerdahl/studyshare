@@ -1,10 +1,10 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState, useMemo } from "react";
-import { Button } from "@/components/Button";
+import { Button } from "@/components/ui/Button";
 import { AvgReviews, Review } from "@/types";
-import ReviewCard from "@/components/ReviewCard";
-import CourseHeader from "@/components/CourseHeader";
+import ReviewCard from "@/components/reviews/ReviewCard";
+import CourseHeader from "@/components/course/CourseHeader";
 import { useAuth } from "@/hooks/useAuth";
 import { useCourseDetail } from "@/hooks/useCourseDetail";
 

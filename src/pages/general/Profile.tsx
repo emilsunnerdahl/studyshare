@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
 import { useAuth } from "@/hooks/useAuth";
-import FormField from "@/components/FormField";
+import FormField from "@/components/ui/FormField";
 
 const Profile = () => {
   const navigate = useNavigate();

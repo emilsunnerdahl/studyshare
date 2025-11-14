@@ -1,5 +1,5 @@
 import { Specialisation } from "@/types";
-import CourseCard from "../components/CourseCard";
+import CourseCard from "../course/CourseCard";
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
@@ -24,7 +24,7 @@ const Specialisations = ({ spec, programCode, colorCode }: Props) => {
         {open ? <ChevronUp /> : <ChevronDown />}
       </h2>
       {open && (
-        <div className="flex flex-wrap gap-4" >
+        <div className="flex flex-wrap gap-4">
           {spec.courses.map((course, i) => (
             <CourseCard
               rating={5}

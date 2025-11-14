@@ -2,9 +2,9 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/useAuth";
 import { Globe } from "lucide-react";
-import MenuDropDown from "./MenuDropDown";
-import { Button } from "./Button";
-import ProfileDropDown from "./ProfileDropDown";
+import MenuDropDown from "../ui/MenuDropDown";
+import { Button } from "../ui/Button";
+import ProfileDropDown from "../ui/ProfileDropDown";
 
 const Navbar = () => {
   const { t, i18n } = useTranslation();

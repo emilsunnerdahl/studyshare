@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import InfoCard from "../InfoCard";
+import InfoCard from "./InfoCard";
 import { Heart } from "lucide-react";
 import { Compass, Edit3, Bookmark } from "lucide-react";
 

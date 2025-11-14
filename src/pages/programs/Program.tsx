@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import ProgramHeader from "@/components/Search";
-import Specialisations from "@/components/Specialisations";
-import CourseCard from "@/components/CourseCard";
+import ProgramHeader from "@/components/program/Search";
+import Specialisations from "@/components/program/Specialisations";
+import CourseCard from "@/components/course/CourseCard";
 import { useProgram } from "@/hooks/useProgram";
 
 const Program = () => {

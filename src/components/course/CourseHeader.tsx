@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { AvgReviews } from "@/types";
-import RatingStars from "./RatingStars";
+import RatingStars from "../reviews/RatingStars";
 
 type Props = {
   avgRating: AvgReviews | null;

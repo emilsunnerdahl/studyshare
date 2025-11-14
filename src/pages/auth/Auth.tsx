@@ -2,7 +2,7 @@ import { use, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/lib/supabaseClient";
-import MessagePopup from "@/components/MessagePopup";
+import MessagePopup from "@/components/ui/MessagePopup";
 
 const Auth = () => {
   const { t } = useTranslation("login");
