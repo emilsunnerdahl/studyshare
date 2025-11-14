@@ -1,4 +1,4 @@
-# StudyShare
+# [StudyShare](https://studyshare.se/)
 
 StudyShare is a platform for course reviews at **Lunds Tekniska Högskola (LTH)**.  
 It helps master students make informed decisions about which courses to take by collecting anonymous, structured, and verified reviews from students.
