@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import TestimonialCard from "../components/TestimonialCard";
+import TestimonialCard from "@/components/TestimonialCard";
 import { useAuth } from "@/hooks/useAuth";
-import CTA from "../components/landing/cta";
-import Hero from "../components/landing/hero";
+import CTA from "@/components/landing/cta";
+import Hero from "@/components/landing/hero";
 import HowItWorks from "@/components/landing/howItWorks";
 
 const Landing = () => {

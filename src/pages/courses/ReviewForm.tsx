@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import RatingField from "../components/RatingField";
+import RatingField from "@/components/RatingField";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabaseClient";
 
@@ -224,11 +224,14 @@ const ReviewForm = () => {
               {t("examPassed")}
             </label>
             <input
-              type = "checkbox"
-              id = "passed"
+              type="checkbox"
+              id="passed"
               checked={formData.examPassed}
-              onChange = {(e) => 
-                setFormData((prev) => ({...prev, examPassed: !prev.examPassed}))
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  examPassed: !prev.examPassed,
+                }))
               }
             />
           </div>
@@ -250,7 +253,10 @@ const ReviewForm = () => {
               value={formData.examComment}
               placeholder={t("examPlaceholder")}
               onChange={(e) =>
-                setFormData((prev) => ({ ...prev, examComment: e.target.value }))
+                setFormData((prev) => ({
+                  ...prev,
+                  examComment: e.target.value,
+                }))
               }
             />
           </div>
